@@ -18,12 +18,18 @@ Embed reference (also works if you embed this whole dashboard note instead):
 
 ## Recent Braindumps
 
-```dataview
-TABLE domain, project, date
-FROM "00-inbox" OR "02-personal/braindumps" OR "03-professional/braindumps" OR "04-projects"
-WHERE type = "braindump"
-SORT date DESC
-LIMIT 5
+Shows the full text of your last 3 braindumps, newest first, not just links. Uses `dataviewjs` since braindumps live across several folders and get created ad hoc (no single stable filename to point a Note card at, unlike the daily brief above). Add this as a **Dataview** card in Hearth, or embed this whole dashboard note.
+
+```dataviewjs
+const pages = dv.pages('"00-inbox" or "02-personal/braindumps" or "03-professional/braindumps" or "04-projects"')
+  .where(p => p.type === "braindump")
+  .sort(p => p.date, 'desc')
+  .limit(3);
+
+for (const p of pages) {
+  dv.header(4, p.file.link);
+  dv.paragraph(`![[${p.file.path}]]`);
+}
 ```
 
 ## Active Projects at a Glance
