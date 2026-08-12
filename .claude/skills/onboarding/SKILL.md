@@ -16,6 +16,17 @@ Welcome new users and collect essential information to personalize their COG exp
 - User wants to update their profile or add new projects
 - Any time profile customization is needed
 
+## Interview Mode (opt-in)
+
+If the user says "interview me," "ask me questions," or otherwise asks for a real back-and-forth instead of one open prompt, switch out of the single-question flow in Step 1 and run a short multi-round interview instead. This is a deliberate, real alternate path, not an improvisation to reinvent each time it's requested.
+
+Rules for interview mode:
+- Still no numbered menus and no option-pickers. Each round is one open-ended question, same tone as the default flow, just more rounds.
+- Cap it at 4-5 rounds. This is a lightweight onboarding interview, not an exhaustive intake form.
+- Cover, roughly one round each: (1) who they are and what they do, (2) what they're actively working on right now (projects, by name, with enough detail to extract a real project mention per Step 6's project-overview generation, including a path or repo location if it's a real codebase), (3) what they want to stay sharp on (interests, for daily briefs), (4) any tools/services worth connecting (GitHub, Slack, Linear, etc., feeding Step 5.6's integration discovery), (5) anything they want COG to know that didn't fit the first four.
+- Skip a round outright if the user already answered it earlier in the interview, same "don't ask redundant questions" rule as the default flow.
+- After the last round, do Step 5's confirm-and-create summary exactly as normal before generating files. Everything downstream (role pack matching, integration discovery, file generation) is identical to the default flow; only the question-gathering shape changes.
+
 ## Core Design Principle: Smart, Low-Friction Onboarding
 
 **The onboarding MUST feel like a natural conversation, NOT a form to fill out.**
