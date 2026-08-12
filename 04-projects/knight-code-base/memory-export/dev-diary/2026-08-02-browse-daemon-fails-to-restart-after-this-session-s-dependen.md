@@ -1,0 +1,8 @@
+---
+type: "dev-diary"
+date: "2026-08-02"
+tags: ["knight-code", "dev-diary"]
+---
+# browse daemon fails to restart after this session's dependency changes, needs real investigation
+
+Follow-up to this session's earlier browse-skill dev-diary entry (sharp/detect-libc mismatch breaking the screenshot command). After finishing the KnightOS mockup-capture work, attempted to cleanly shut down the browse daemon via `browse stop`, which reported "Server connection lost. Restarting... Server failed to start within 15s." A subsequent `browse status` call also failed to start the server within 15 seconds. The daemon started successfully at the beginning of this same session (the first `goto` command worked normally), so this is a new failure, not a pre-existing condition.  Not root-caused. Given this session's earlier bare `npm install <pkg> --no-save` calls in `C:\Users\Chris Brown\.claude\skills\knight-code` (run with no `package.json` to constrain them, confirmed empty/near-empty `package-lock.json`) already visibly shuffled unrelated packages twice, it is a real, live possibility that one of those installs disturbed something the server process itself depends on, beyond the sharp/detect-libc issue already logged. Did not attempt a third round of blind dependency fixes here, that pattern already failed twice this session and risks making the actual problem harder to find. Flagging plainly rather than guessing further: whoever next touches this skill should treat its `node_modules` as being in a real, currently-broken state (not just the previously-logged sharp issue) and consider a clean reinstall from a proper lockfile rather than incremental patches.</body> <parameter name="tags">["browse-skill", "environment", "regression"]

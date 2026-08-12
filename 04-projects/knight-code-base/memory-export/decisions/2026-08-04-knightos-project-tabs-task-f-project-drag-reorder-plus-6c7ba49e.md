@@ -1,0 +1,22 @@
+---
+id: "6c7ba49e-49ad-4065-af1d-9da3cf143974"
+type: "decision"
+date: "2026-08-04"
+scope: "repo"
+source: "agent"
+confidence: 8
+tags: ["knight-code", "decision"]
+---
+# Decision: KnightOS Project Tabs Task F (Project drag-reorder plus keyboard equivalent) is complete: built, tes...
+
+## Decision
+
+KnightOS Project Tabs Task F (Project drag-reorder plus keyboard equivalent) is complete: built, tested, and reviewed on both axes. Commits `34726da` (shared ordering core), `ec23157` (rail drag plus keyboard UI), `219df9e` (simplify pass), on master. Two substantive calls inside it. (1) The channel strip's ordering logic was extracted into a generic core over any id-bearing array (`src/renderer/src/reorder.ts`: `reorderById`, `moveByOneStep`, `Identified`), rather than copying it for `ProjectState[]`. Per-axis wrappers survive only where an axis word needs translating into a numeric delta (`moveTabByOneStep` for left/right, `moveProjectByOneStep` for up/down); a drop carries a target id rather than a direction, so callers use `reorderById` directly and the two pure pass-through wrappers created mid-task were deleted by the simplify pass. (2) The keyboard equivalent shipped as `Ctrl+ArrowUp`/`Ctrl+ArrowDown` on a focused Project chip, NOT the `Ctrl+Shift+Up/Down` the Project Tabs Feature Spec's Task F description proposes and explicitly marks "pending confirmation". Project order needed no new persistence path: the session file already stores Projects as an ordered list, so a reorder changes the persisted-shape key the save effect already watches. Verified: typecheck clean, 191/191 Vitest (up from 176, net +15 after removing 12 duplicated tests), 46/46 Playwright e2e on a full serial `--workers=1` run (up from 42, 4 new Task F specs including a real reorder-then-relaunch persistence check that reads session.json off disk).
+
+## Rationale
+
+Task F's own acceptance criteria (drag reorder in the rail, a keyboard equivalent moving the focused Project one position, order persisting across restart via the session file) are all three met and independently verified rather than asserted, including reading the real session.json from disk mid-test and confirming the new order came back after a genuine relaunch. The two-axis `knightcode-code-review` ran against the diff: Standards axis found zero hard violations and resolved both flagged judgement calls as defensible; Spec axis found all three criteria met, no scope creep, and nothing implemented wrongly, confirming Task G's territory (Ctrl+Tab, Ctrl+Shift+N/W, menu.ts, palette scoping) was correctly left untouched. On the keybinding, the spec itself left the combo open ("pending confirmation"), and the acceptance criterion mandates only "a keyboard equivalent," not a specific combo. `Ctrl+Arrow` mirrors the already-shipped, already-tested channel-strip equivalent exactly one tier up; both listeners are scoped to a focused rail control, so there is nothing for an extra Shift to disambiguate against. Section 7's `Ctrl+Shift+*` combos are global app-level shortcuts of a different class, and using Ctrl+Shift here would blur that distinction. Collision risk was checked rather than assumed: `menu.ts` binds no `Ctrl+Arrow` accelerator, and `TerminalPane`'s xterm.js key handler intercepts only Ctrl+C/Ctrl+V, so the terminal never competes for these keys.
+
+## Alternatives Considered
+
+Duplicating `reorderTabs`/`moveTabByOneStep` for `ProjectState[]` instead of extracting a generic core (rejected: two copies of identical index arithmetic would drift on an edge case, exactly the Duplicated Code the simplify pass exists to catch). Keeping named `reorderTabs`/`reorderProjects` wrappers for symmetry with the surviving `moveBy...` pair (rejected by the simplify pass: their whole body forwarded identical arguments and added no axis vocabulary, and they created duplicate unit coverage of one code path through a transparent alias). Extracting ProjectRail's four drag handlers into a shared hook with ShopRail's (deferred, not rejected: the Standards axis called the remaining duplication thin, branch-free event wiring with the drift-prone ordering semantics already centralized, and worth a shared hook only if a third rail appears; logged to TODOS.md rather than built now). Shipping the spec's literal `Ctrl+Shift+Up/Down` (rejected as the default but genuinely reversible in one line, and surfaced to Chris rather than closed silently, since the spec marked it pending his confirmation).

@@ -1,0 +1,8 @@
+---
+type: "dev-diary"
+date: "2026-08-07"
+tags: ["knight-code", "dev-diary", "skills", "grill-me", "interview-me", "correction"]
+---
+# interview-me deleted, grill-me is now the sole standalone skill
+
+The Aug 5 commit that ported grilling's design-tree mechanism into interview-me also added grill-me, but as a content-free, disable-model-invocation:true pointer skill that just ran interview-me. Chris caught this today: "replace interview-me with grill-me" was implemented as a rename-plus-shim, not an actual replacement. He was explicit that folding interview-me's content into grill-me as a derivative graft was also not what he wanted -- he wanted grill-me to BE the skill, full stop, with interview-me gone.  Fixed: interview-me/ removed (source dir git rm'd, installed ~/.claude/skills/knightcode-interview-me deleted). grill-me/SKILL.md.tmpl now carries the full round-based interview mechanism as its own native content (preamble-tier bumped 1 -> 2 to match, since the mechanism needs voice/ask-user-format/completeness sections). disable-model-invocation removed from grill-me's frontmatter and its description restored to interview-me's old ambient trigger-phrase wording, per Chris's explicit choice when asked whether the survivor should be ambient or explicit-only. Cross-references in SKILL-CATALOG.md, planning-and-task-breakdown/SKILL.md.tmpl, and doubt-driven-development/SKILL.md.tmpl updated from knightcode-interview-me to knightcode-grill-me. Regenerated via gen:skill-docs, published via skills:install, verified clean via skills:check (62 skills matching, no drift or orphans) and a fresh skills-graph query (only knightcode-grill-me appears, no interview-me residue).

@@ -1,0 +1,8 @@
+---
+type: "dev-diary"
+date: "2026-08-08"
+tags: ["knight-code", "dev-diary", "mnemosyne", "bug-fix", "windows-python-resolution", "verification"]
+---
+# resolvePythonExecutable in lib/mnemosyne-env.ts verified working, still uncommitted
+
+The other open session's fix for the "Python was not found" App Execution Alias stub bug (resolvePythonExecutable() in lib/mnemosyne-env.ts, wired into session-start-memory-hook.ts in place of a bare 'python' call) verified live: py.exe exists at the first well-known path checked (C:\Users\Chris Brown\AppData\Local\Programs\Python\Launcher\py.exe), and a real SessionStart hook invocation using it returned actual Mnemosyne data ("Mnemosyne: 1 free-form memory..." stats line), confirming the subprocess call succeeded end to end, not just that resolution picked a path.  One transient ETIMEDOUT was seen on a back-to-back invocation immediately prior (two hook invocations fired within about 20 seconds of each other, sharing this machine's disk/CPU), not reproduced on retry. Likely first-invocation cold start (embedding model import inside mnemosyne_session_context.py) colliding with the 5000ms MNEMOSYNE_BRIDGE_TIMEOUT_MS budget, not a resolution bug. Worth watching if it recurs, not treated as a blocker.  Both lib/mnemosyne-env.ts and hosts/claude/hooks/session-start-memory-hook.ts remain uncommitted as of this check. The installed skill copy (~/.claude/skills/knight-code/lib/mnemosyne-env.ts) is stale against even the last real commit (769c35e), let alone this uncommitted work, so the Stop hook's skill-drift gate will keep firing until this is committed and published via `bun run skills:install`.
