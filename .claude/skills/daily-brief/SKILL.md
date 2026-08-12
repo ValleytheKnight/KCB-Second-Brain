@@ -66,6 +66,10 @@ Collect the information needed for personalized curation:
 - Read `03-professional/COMPETITIVE-WATCHLIST.md` (if exists) for:
   - Companies/people to track
 
+- Read every `04-projects/*/PROJECT-OVERVIEW.md` for:
+  - Current status and any unchecked items under each project's "Next Steps"
+  - This is the project-side input for the Recommended Actions section (Step 3.5)
+
 #### Deduplication — Previous Brief Scan
 
 Read up to 3 most recent daily briefs from `01-daily/briefs/` (most recent first):
@@ -173,6 +177,35 @@ dedup_urls: ["https://primary-source-url-for-each-story-covered"]
 
 ## Executive Summary
 [2-3 sentences highlighting the most important developments across all your interest areas]
+
+---
+
+## Recommended Actions Today
+
+Synthesized from both today's news (above research) and the current state of every `04-projects/*/PROJECT-OVERVIEW.md`. Not a generic to-do list, each one earns its place by a stated reason. Target at least 3, but **0 is a valid and honest output** if nothing genuinely rises to the level of a recommended action today, if so, write "No specific actions recommended today, nothing urgent surfaced from news or project state." instead of padding with busywork.
+
+Draw from two sources, mixed together and ranked by actual priority, not grouped by source:
+- **News-driven:** a story from today's research that has a concrete, near-term implication for one of the user's projects or interests (not "read more about X", a real next action).
+- **Project-driven:** an unchecked item under a project's "Next Steps" that's stale, blocking something else, or newly relevant given today's news.
+
+```markdown
+### 1. [Action, imperative voice]
+**Why:** [news story it connects to, OR project + which Next Steps item, OR both if it's a genuine intersection]
+**Project(s):** [if applicable]
+📅 [YYYY-MM-DD, today or a reasonable near-term date]
+
+### 2. [Action]
+**Why:** [...]
+**Project(s):** [if applicable]
+📅 [date]
+
+### 3. [Action]
+**Why:** [...]
+**Project(s):** [if applicable]
+📅 [date]
+```
+
+(add a 4th/5th only if genuinely warranted, don't force a round number)
 
 ---
 
