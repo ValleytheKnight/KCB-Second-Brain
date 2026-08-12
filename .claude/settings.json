@@ -45,6 +45,28 @@
             "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/agent-tool-allowlist-gate.ts"]
           }
         ]
+      },
+      {
+        "matcher": "Grep|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun",
+            "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/vault-graph-first-gate.ts"]
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__vaultgraph__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun",
+            "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/vault-graph-consulted-marker-hook.ts"]
+          }
+        ]
       }
     ]
   }
