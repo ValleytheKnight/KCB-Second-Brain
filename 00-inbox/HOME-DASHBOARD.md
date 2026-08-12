@@ -10,12 +10,11 @@ Source note for Hearth cards. Embed the queries below as Dataview-query cards on
 
 ## Latest Daily Brief
 
-```dataview
-TABLE date, confidence
-FROM "01-daily/briefs"
-SORT date DESC
-LIMIT 1
-```
+For a Hearth card that shows the actual brief text (not just a link), use Hearth's **Note** card type and point it at `01-daily/LATEST-BRIEF.md`. This file is a stable filename the daily-brief routine overwrites every morning with the current day's content, so the card always shows today's brief without needing to be re-pointed.
+
+Embed reference (also works if you embed this whole dashboard note instead):
+
+![[01-daily/LATEST-BRIEF]]
 
 ## Recent Braindumps
 
