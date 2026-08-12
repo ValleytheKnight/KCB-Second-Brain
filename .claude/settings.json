@@ -1,0 +1,36 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun",
+            "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/vault-hygiene-gate.ts"]
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun",
+            "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/vault-hygiene-gate.ts"]
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__knight-code-base__vault_write|mcp__knight-code-base__vault_append|mcp__knight-code-base__vault_patch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun",
+            "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/vault-hygiene-gate.ts"]
+          }
+        ]
+      }
+    ]
+  }
+}
