@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "vaultgraph": {
+      "command": "bun",
+      "args": [
+        "run",
+        "C:/Users/Chris Brown/Documents/knight-code-base-companion/mcp/vaultgraph/src/cli.ts",
+        "serve",
+        "C:/Users/Chris Brown/Documents/Obsidian Vaults/Knight Code Base"
+      ]
+    }
+  }
+}
