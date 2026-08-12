@@ -8,6 +8,11 @@
             "type": "command",
             "command": "bun",
             "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/vault-hygiene-gate.ts"]
+          },
+          {
+            "type": "command",
+            "command": "bun",
+            "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/agent-tool-allowlist-gate.ts"]
           }
         ]
       },
@@ -18,6 +23,11 @@
             "type": "command",
             "command": "bun",
             "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/vault-hygiene-gate.ts"]
+          },
+          {
+            "type": "command",
+            "command": "bun",
+            "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/agent-tool-allowlist-gate.ts"]
           }
         ]
       },
@@ -28,6 +38,11 @@
             "type": "command",
             "command": "bun",
             "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/vault-hygiene-gate.ts"]
+          },
+          {
+            "type": "command",
+            "command": "bun",
+            "args": ["run", "C:/Users/Chris Brown/Documents/knight-code-base-companion/hooks/agent-tool-allowlist-gate.ts"]
           }
         ]
       }
