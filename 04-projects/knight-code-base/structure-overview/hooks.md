@@ -5,7 +5,7 @@ tags: ["knight-code", "structure", "hooks"]
 ---
 # Knight Code Hooks
 
-Knight Code wires 19 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
+Knight Code wires 20 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
 
 ## `agent-registry-gate.ts`
 
@@ -252,6 +252,69 @@ Invariants:
   - Always allows, and never blocks. Any internal error also allows.
   - Writes a marker only for a skills-mode query. A code-mode query says
     nothing about whether the skill/agent graph was consulted.
+
+## `knight-code-vault-sync-hook.ts`
+
+PostToolUse hook (Claude Code). Mirrors a Knight Code memory event into
+the Knight Code Base vault the moment it happens, so the vault stays a
+live view into Knight Code's memory rather than a stale snapshot from
+whenever scripts/export-knight-code-memory.ts was last run by hand.
+
+Fires on the seven memory MCP tools that create or change a record:
+decision_log, decision_supersede, promise_log, promise_fulfill,
+promise_abandon, dev_diary_log, learnings_log. A create event writes a
+new note; a lifecycle event (supersede/fulfill/abandon) finds the note
+already written for that id and updates its status in place, it does not
+delete the note, matching this project's own "add/replace, never delete"
+export convention.
+
+The MCP tool_response shape used here (a plain array of content blocks,
+`[{type:"text", text:"..."}]`, not wrapped in a `content` object) was
+confirmed empirically before this was written, by wiring a throwaway
+diagnostic hook to a real decision_search call and reading the captured
+payload. This is undocumented in the official Claude Code hooks
+reference, so if a future Claude Code version changes this shape, the
+regex extraction below will simply find nothing and this hook no-ops,
+per its fail-open design, rather than writing malformed notes.
+
+Deliberately writes with plain fs calls, not through any tool this
+project's own hygiene gate watches: these are historical records being
+mirrored close to verbatim, not new prose someone is actively
+authoring, matching the same reasoning already applied to
+scripts/export-knight-code-memory.ts in the companion repo.
+
+Rendering logic (frontmatter shape, filename convention, section layout)
+intentionally duplicates scripts/export-knight-code-memory.ts in
+C:\Users\Chris Brown\Documents\knight-code-base-companion rather than
+importing across repos: this hook must stay a single self-contained
+file, the same pattern every other hook in this directory follows.
+If the export script's format ever changes, update both by hand.
+
+Triggered by .claude/settings.json:
+  {
+    "hooks": {
+      "PostToolUse": [
+        {
+          "matcher": "mcp__knight-code-memory__decision_log|mcp__knight-code-memory__decision_supersede|mcp__knight-code-memory__promise_log|mcp__knight-code-memory__promise_fulfill|mcp__knight-code-memory__promise_abandon|mcp__knight-code-memory__dev_diary_log|mcp__knight-code-memory__learnings_log",
+          "hooks": [
+            { "type": "command",
+              "command": "bun",
+              "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/knight-code-vault-sync-hook.ts"] }
+          ]
+        }
+      ]
+    }
+  }
+
+Invariants:
+  - Always allows, never blocks: PostToolUse cannot deny anything, and
+    this hook has nothing to deny even in principle, it only performs a
+    side-effect write.
+  - Fail open. Any internal error (bad JSON, missing fields, vault
+    unreachable) exits 0 with no output rather than surfacing to the
+    agent. Errors land in ~/.knightcode/hook-errors.log.
+  - A "Rejected: ..." tool response (the memory server's own validation
+    failure text) is a no-op here, since nothing was actually logged.
 
 ## `mnemosyne-routing-advisory-hook.ts`
 
