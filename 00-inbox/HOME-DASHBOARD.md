@@ -35,8 +35,11 @@ Requires the **Heatmap Calendar** plugin (installed) plus Dataview. Counts brain
 const counts = {};
 const pages = dv.pages('"00-inbox" or "02-personal/braindumps" or "03-professional/braindumps" or "04-projects" or "01-daily/briefs"').where(function(p) { return p.type === "braindump" || p.type === "daily-brief"; });
 for (const p of pages) {
-  const d = p.date;
+  let d = p.date;
   if (!d) continue;
+  if (typeof d !== "string") {
+    d = d.toFormat ? d.toFormat("yyyy-MM-dd") : String(d);
+  }
   counts[d] = (counts[d] || 0) + 1;
 }
 const entries = [];
