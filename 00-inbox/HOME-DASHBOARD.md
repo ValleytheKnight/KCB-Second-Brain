@@ -21,16 +21,11 @@ Embed reference (also works if you embed this whole dashboard note instead):
 Shows the full text of your last 3 braindumps, newest first, not just links. Uses `dataviewjs` since braindumps live across several folders and get created ad hoc (no single stable filename to point a Note card at, unlike the daily brief above). Add this as a **Dataview** card in Hearth, or embed this whole dashboard note.
 
 ```dataviewjs
-const pages = dv.pages('"00-inbox" or "02-personal/braindumps" or "03-professional/braindumps" or "04-projects"')
-  .where(p => p.type === "braindump")
-  .sort(p => p.date, 'desc')
-  .limit(3);
-
-for (const p of pages) {
-  dv.header(4, p.file.link);
-  dv.paragraph(`![[${p.file.path}]]`);
-}
+const pages = dv.pages('"00-inbox" or "02-personal/braindumps" or "03-professional/braindumps" or "04-projects"').where(function(p) { return p.type === "braindump"; }).sort(function(p) { return p.date; }, "desc").limit(3);
+for (const p of pages) { dv.header(4, p.file.link); dv.paragraph("![[" + p.file.path + "]]"); }
 ```
+
+If Hearth's input field mangles backticks (curly-quote autocorrect) even in this version, paste it as one single line exactly as shown, no line breaks, no smart quotes, plain straight double-quotes only.
 
 ## Active Projects at a Glance
 
