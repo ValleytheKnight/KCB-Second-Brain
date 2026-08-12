@@ -1,0 +1,81 @@
+---
+type: "structure-overview"
+date: "2026-08-12"
+tags: ["knight-code", "structure", "repo-layout"]
+---
+# Knight Code Repo Layout
+
+Knight Code's repo root holds 71 top-level directories (excluding dotfiles and node_modules), one per skill, agent, host adapter, or supporting system. This is a shallow directory listing, not a description of each one; see the skills and agents sections above for what the skill/agent-named directories actually do.
+## Top-level directories
+
+- `api-and-interface-design/`
+- `autoplan/`
+- `bin/`
+- `browse/`
+- `code-review/`
+- `codebase-design/`
+- `context-restore/`
+- `context-save/`
+- `cso/`
+- `css-resource-variables/`
+- `design-impeccable/`
+- `devex-review/`
+- `devknight/`
+- `docs/`
+- `document-generate/`
+- `document-release/`
+- `domain-modeling/`
+- `doubt-driven-development/`
+- `electron-build/`
+- `fantasy-craft/`
+- `frontend-design/`
+- `frontend-ui-engineering/`
+- `grill-me/`
+- `grill-with-docs/`
+- `health/`
+- `hosts/`
+- `impeccable/`
+- `improve-codebase-architecture/`
+- `incremental-implementation/`
+- `investigate/`
+- `lib/`
+- `loreGod/`
+- `lorebrain/`
+- `loremaster/`
+- `master-copywriter/`
+- `mcp/`
+- `mnemosyne-audit/`
+- `observability-and-instrumentation/`
+- `obsidian-anchor-flow/`
+- `obsidian-bases/`
+- `obsidian-canvas-positioning-toolkit/`
+- `obsidian-canvas-text-scaler/`
+- `obsidian-cli/`
+- `obsidian-kanban-complete-mover/`
+- `obsidian-linked-text-styles/`
+- `obsidian-markdown/`
+- `office-hours/`
+- `performance-optimization/`
+- `pick-ui-library/`
+- `plan-ceo-review/`
+- `plan-design-review/`
+- `plan-eng-review/`
+- `planning-and-task-breakdown/`
+- `powershell-windows/`
+- `prototype/`
+- `scrape/`
+- `scripts/`
+- `security-and-hardening/`
+- `setup-pre-commit/`
+- `shamu/`
+- `ship/`
+- `simplify/`
+- `spec/`
+- `test/`
+- `test-driven-development/`
+- `test-fixtures/`
+- `ttrpg-rathgar-gold-theme/`
+- `wayfinder/`
+- `windows-shell-reliability/`
+- `writing-great-skills/`
+- `writing-skills/`
