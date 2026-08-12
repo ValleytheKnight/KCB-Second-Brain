@@ -27,6 +27,29 @@ for (const p of pages) { dv.header(4, p.file.link); dv.paragraph("![[" + p.file.
 
 If Hearth's input field mangles backticks (curly-quote autocorrect) even in this version, paste it as one single line exactly as shown, no line breaks, no smart quotes, plain straight double-quotes only.
 
+## Activity Heatmap
+
+Requires the **Heatmap Calendar** plugin (installed) plus Dataview. Counts braindumps and daily briefs per day, not whole-vault edits, so it actually reflects capture activity rather than every file touch. Add as a **Dataview** card in Hearth, pasting only the code below (no fence lines).
+
+```dataviewjs
+const counts = {};
+const pages = dv.pages('"00-inbox" or "02-personal/braindumps" or "03-professional/braindumps" or "04-projects" or "01-daily/briefs"').where(function(p) { return p.type === "braindump" || p.type === "daily-brief"; });
+for (const p of pages) {
+  const d = p.date;
+  if (!d) continue;
+  counts[d] = (counts[d] || 0) + 1;
+}
+const entries = [];
+for (const d in counts) {
+  entries.push({ date: d, intensity: counts[d], content: String(counts[d]), color: "green" });
+}
+const calendarData = {
+  colors: { green: ["#c6e48b", "#7bc96f", "#49af5d", "#2e8840", "#196127"] },
+  entries: entries
+};
+renderHeatmapCalendar(this.container, calendarData);
+```
+
 ## Active Projects at a Glance
 
 ```dataview
