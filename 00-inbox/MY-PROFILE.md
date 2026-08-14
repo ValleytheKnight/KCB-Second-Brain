@@ -25,6 +25,7 @@ tags: ["#profile", "#config", "#cog"]
 - [[04-projects/knightos/PROJECT-OVERVIEW|KnightOS]]
 - [[04-projects/dnd-campaign-felled-god/PROJECT-OVERVIEW|D&D Campaign: Revenge of the Felled God]]
 - [[04-projects/protocol-whisper-app/PROJECT-OVERVIEW|Protocol Whisper App]] (idea stage)
+- [[04-projects/obsidian-competitor/PROJECT-OVERVIEW|Obsidian Competitor]] (idea stage)
 
 ## Related
 - [[MY-INTERESTS|My Interests & News Sources]]

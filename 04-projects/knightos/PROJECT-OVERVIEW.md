@@ -33,9 +33,9 @@ A tabbed multi-project shell built in Electron: one tab per project directory, f
 - [[resources/|Resources]]
 
 ## Next Steps
-- [ ] Finish Milestone 1 Task 9 (drag-to-reorder tabs, reopen-closed-tab shortcut, per-tab color coding) #task
+- [ ] Finish Milestone 1 Task 9 (drag-to-reorder tabs, reopen-closed-tab shortcut, per-tab color coding) 📅 2026-08-18 #task
 - [ ] Complete remaining Milestone 1 items #task
-- [ ] Start Milestone 6 build (agent interaction convergence, hook-based session monitoring) #task
+- [ ] Start Milestone 6 build (agent interaction convergence, hook-based session monitoring), soft-gated on watching OpenAI Ultrafast's GA status (📅 2026-08-20 check-in, see Knight Code overview) before locking in latency assumptions #task
 
 ---
 

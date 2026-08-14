@@ -29,10 +29,12 @@ Actively developed and used daily. Obsidian plugins and themes Chris is building
 - [[braindumps/|Project Braindumps]]
 - [[planning/|Planning Documents]]
 - [[resources/|Resources]]
+- [[04-projects/knight-code-base/README|knight-code-base/]] is the auto-synced mirror of the actual repo (memory export, structure overview), not a place to track things by hand; see that folder's README for the split.
 
 ## Next Steps
 - [ ] Note improvement ideas for Knight Code as they come up #task
 - [ ] Track ideas/progress for nested Obsidian plugins/themes (see [[04-projects/obsidian-plugins-themes/PROJECT-OVERVIEW|Obsidian Plugins & Themes]]) #task
+- [ ] Audit Knight Code's API key and credential storage strategy (LLMjacking threat flagged in the 2026-08-14 daily brief) 📅 2026-08-20 #task
 
 ## Closing Notes
 
