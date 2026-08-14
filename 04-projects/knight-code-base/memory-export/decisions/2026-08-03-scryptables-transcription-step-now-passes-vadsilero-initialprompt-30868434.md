@@ -7,11 +7,11 @@ source: "user"
 confidence: 9
 tags: ["knight-code", "decision"]
 ---
-# Decision: Protocol Whisper's transcription step now passes vad="silero", initial_prompt (read fresh each run f...
+# Decision: Scryptable's transcription step now passes vad="silero", initial_prompt (read fresh each run f...
 
 ## Decision
 
-Protocol Whisper's transcription step now passes vad="silero", initial_prompt (read fresh each run from a new persistent vocabulary-master.txt), and refine_whisper_precision=0.2 to whisper_timestamped.transcribe(), in addition to the already-adopted condition_on_previous_text=False.
+Scryptable's transcription step now passes vad="silero", initial_prompt (read fresh each run from a new persistent vocabulary-master.txt), and refine_whisper_precision=0.2 to whisper_timestamped.transcribe(), in addition to the already-adopted condition_on_previous_text=False.
 
 ## Rationale
 
