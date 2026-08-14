@@ -2,6 +2,8 @@
 
 > Lifecycle: `WORKFLOW.md` (V-model harness) · Universal surface: `AGENTS.md`
 
+**Any vault or plugin operations work must read `Obsidian Vault Operations.md` in full first.** It has the same standing as this file: authoritative doctrine, not optional background reading.
+
 ## V-Model Checkpoints (ALWAYS APPLY)
 
 Work walks the **V**: decompose left (spec → plan), build at the apex, verify right with **evidence** traced to criterion IDs (`AC-n`). See `WORKFLOW.md` for the full diagram.
