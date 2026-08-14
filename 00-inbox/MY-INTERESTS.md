@@ -18,7 +18,8 @@ tags: ["#interests", "#daily-brief", "#config"]
 - GitHub repos related to the above
 
 ## Preferred News Sources
-*Not all-inclusive, broad search on these topics is also welcome.*
+*Not all-inclusive, broad search on these topics is also welcome
+Other Sites: Hacker News, X, 
 
 **LLMs / AI industry, general**
 - Anthropic News (anthropic.com/news)

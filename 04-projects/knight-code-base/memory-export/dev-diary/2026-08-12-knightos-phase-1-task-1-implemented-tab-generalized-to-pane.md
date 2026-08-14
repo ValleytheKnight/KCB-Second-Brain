@@ -1,0 +1,8 @@
+---
+type: "dev-diary"
+date: "2026-08-12"
+tags: ["knight-code", "dev-diary", "knightos", "phase-1-multi-window", "task-1"]
+---
+# KnightOS Phase 1 Task 1 implemented: Tab generalized to Pane
+
+Replaced the terminal-only `Tab` type with a `Pane` type (`kind: 'terminal'` discriminant, per the Phase 1 Multi-Window spec's Section 3 data model) across the KnightOS renderer, preload bridge, and main process, at C:\Users\Chris Brown\Documents\DevPrograms\KnightOS.  Renamed: `Tab` -> `Pane` (src/renderer/src/tab.ts), `ProjectState.tabs/activeTabId/gitStatusByTab` -> `panes/activePaneId/gitStatusByPane` (src/renderer/src/project.ts), `moveTabByOneStep` -> `movePaneByOneStep`, `ClosedTabRecord` -> `ClosedPaneRecord`. TerminalManager (src/main/terminal-manager.ts), GitStatusManager (src/main/git-status-manager.ts), main/index.ts, and preload/api.ts all now address by `paneId` rather than `tabId`. Session schema v2 (`PersistedTab`/`PersistedProject.tabs`) deliberately untouched, that migration is Task 11's job.  Updated App.tsx, ShopRail.tsx, CommandPalette.tsx, command-palette.ts and their tests (project.test.ts, tab.test.ts, command-palette.test.ts) to match. Every new Pane literal carries `kind: 'terminal'`.  Verification: `npm run typecheck` clean (both tsconfig.node.json and tsconfig.web.json). `npx vitest run`: 190/191 passing. The one failure (`getGitStatus > reports real ahead and behind counts against a tracked upstream`) reproduces identically on unmodified `master` via `git stash`, a Windows temp-dir git-clone timing/EPERM flake, not caused by this change.  Spec's Task 1 acceptance/verification checkboxes checked off at Projects/KnightOS/01 Planning/Phase 1 Multi-Window System Feature Spec.md.

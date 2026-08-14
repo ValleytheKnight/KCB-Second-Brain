@@ -9,6 +9,14 @@ tags: ["#project", "#overview"]
 
 # Protocol Whisper App
 
+> [!question] Status: Idea
+
+```button
+name Promote Project
+type command
+action QuickAdd: Promote Project
+```
+
 ## What is this project?
 A native WinUI3 shell wrapping the existing, working Protocol Whisper pipeline (Craig Discord recording -> Whisper transcription -> TASMAS stem-merging -> loremaster handoff). It would replace today's manual, one-command-at-a-time Claude Code chat session with real dialog boxes for every human decision point, plus a scripted QA layer the manual pipeline doesn't have.
 

@@ -9,6 +9,14 @@ tags: ["#project", "#overview"]
 
 # KnightOS
 
+> [!tip] Status: Active
+
+```button
+name Promote Project
+type command
+action QuickAdd: Promote Project
+```
+
 ## What is this project?
 A tabbed multi-project shell built in Electron: one tab per project directory, full terminal, git status, session persistence.
 

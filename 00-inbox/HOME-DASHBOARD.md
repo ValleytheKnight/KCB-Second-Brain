@@ -53,6 +53,75 @@ const calendarData = {
 renderHeatmapCalendar(this.container, calendarData);
 ```
 
+## Quick Capture
+
+The Buttons plugin's `button` code blocks don't work inside Hearth cards (Embed or otherwise). Buttons requires a real open Markdown editor view to find an "active file," which an embedded render inside Hearth's board never has, so clicks fail with "No active file found." Use Hearth's native **Commands** card type instead: Add card, then Commands, then Add command, then search for and pick `QuickAdd: New Improvement Idea`, then again for `QuickAdd: New Project Idea`. That card kind calls the command directly and isn't affected by the active-file requirement.
+
+**New Improvement Idea** picks a project from `04-projects/`, prompts for idea text, and appends it as a checkbox with a timestamp to that project's `improvements.md`. **New Project Idea** prompts for a project name and one-line description, creates `04-projects/<slug>/PROJECT-OVERVIEW.md` and a matching `improvements.md`, and opens the new overview note.
+
+## Recent Ideas
+
+Shows the 5 most recently captured open improvement ideas across all projects. Add as a separate **Dataview** card if you want it visible alongside the Quick Capture buttons.
+
+```dataviewjs
+const pages = dv.pages('"04-projects"').where(function(p) { return p.type === "improvements-log"; });
+const rows = [];
+for (const p of pages) {
+  const content = await dv.io.load(p.file.path);
+  const lines = content.split("\n").filter(function(l) { return l.trim().startsWith("- [ ]"); });
+  for (const l of lines) rows.push({ project: p.project || p.file.folder, line: l.trim() });
+}
+rows.sort(function(a, b) { return b.line.localeCompare(a.line); });
+const shown = rows.slice(0, 5);
+if (shown.length === 0) {
+  dv.paragraph("*No open ideas yet.*");
+} else {
+  for (const r of shown) dv.paragraph(`**${r.project}** ${r.line.replace("- [ ] ", "")}`);
+}
+```
+
+## Ideas Needing Action
+
+One place for everything that needs a decision or a start: projects still in the idea phase (`status: idea` in `PROJECT-OVERVIEW.md`), plus every open improvement idea across all projects (unchecked lines under `## Open` in each project's `improvements.md` that haven't been triaged/actioned yet). Unlike Recent Ideas above, this is the full list, not capped at 5. Add as a **Dataview** card in Hearth.
+
+```dataviewjs
+function extractSection(content, heading) {
+  const idx = content.indexOf(heading);
+  if (idx === -1) return "";
+  const after = idx + heading.length;
+  const nextHeadingMatch = content.slice(after).match(/\n##\s/);
+  const end = nextHeadingMatch ? after + nextHeadingMatch.index : content.length;
+  return content.slice(after, end).trim();
+}
+
+const ideaProjects = dv.pages('"04-projects"').where(function(p) { return p.type === "project-overview" && p.status === "idea"; });
+dv.header(4, "Idea-Phase Projects");
+if (ideaProjects.length === 0) {
+  dv.paragraph("*None.*");
+} else {
+  for (const p of ideaProjects.sort(function(p) { return p.project; })) {
+    const content = await dv.io.load(p.file.path);
+    const description = extractSection(content, "## What is this project?");
+    dv.header(5, `[[${p.file.path}|${p.project}]]`);
+    dv.paragraph(description || "*No description yet.*");
+  }
+}
+
+const logPages = dv.pages('"04-projects"').where(function(p) { return p.type === "improvements-log"; });
+const rows = [];
+for (const p of logPages) {
+  const content = await dv.io.load(p.file.path);
+  const lines = content.split("\n").filter(function(l) { return l.trim().startsWith("- [ ]"); });
+  for (const l of lines) rows.push({ project: p.project || p.file.folder, line: l.trim().replace("- [ ] ", "") });
+}
+dv.header(4, "Open Improvement Ideas");
+if (rows.length === 0) {
+  dv.paragraph("*None.*");
+} else {
+  for (const r of rows) dv.paragraph(`**${r.project}** ${r.line}`);
+}
+```
+
 ## Active Projects at a Glance
 
 ```dataview

@@ -13,8 +13,21 @@ Find verified, relevant news for personalized daily briefings with strict verifi
 ## When to Invoke
 - User wants their daily news briefing
 - User says "daily brief", "news", "what's happening", "morning brief"
+- User says "pull the daily brief", "check the cloud brief", "did the daily brief run" (see Cloud Routine Check below; this is a pull-existing-output request, not a re-run request)
 - User wants to stay updated on their interests
 - Morning routine or regular check-in time
+
+## Cloud Routine Check (ALWAYS run first)
+
+**This skill has a cloud twin.** A scheduled cloud routine named "Daily Brief" (`trig_01Q556EFWNooEE4QwDLmL564`, environment `env_019q1mmBhyqxfMaT6psBRXm8`) already runs this skill daily at 13:00 UTC (8am America/Chicago) against `https://github.com/ValleytheKnight/KCB-Second-Brain`, writes `01-daily/briefs/daily-brief-YYYY-MM-DD.md` and overwrites `01-daily/LATEST-BRIEF.md`, then commits and pushes to `main`. Manage it via `/schedule` or the `RemoteTrigger` tool directly (see `.claude/skills/schedule/SKILL.md`).
+
+Before doing any local research, **always check whether today's brief already exists from the cloud run**:
+
+1. `git fetch origin main` (or the relevant remote), then check whether `01-daily/briefs/daily-brief-<today>.md` exists on `origin/main`, either by pulling (if the working tree is clean) or `git show origin/main:01-daily/briefs/daily-brief-<today>.md` (if it isn't, to avoid disturbing uncommitted local work).
+2. If it exists: that's today's brief. Show it to the user instead of re-running research from scratch. Only fall through to a full local run if the user explicitly asks for a fresh/local run, or flags the cloud output as weak or wrong.
+3. If it doesn't exist yet (routine hasn't fired, or was disabled or failed): say so plainly, check the routine's status with `RemoteTrigger {action: "get", trigger_id: "trig_01Q556EFWNooEE4QwDLmL564"}` and `list_runs`/`get_run_log` if something looks off, then offer to run the local version now.
+
+**Quality note:** the cloud routine runs on `claude-haiku-4-5-20251001` by default, which has produced weaker source verification than a local run (citing homepage/index URLs as sources, mislabeling tier). Per the Model Routing table in `CLAUDE.md`, data-collection and research work should run on Sonnet; if the cloud output looks weak, either fix it locally (this skill, full rigor) or update the routine's `session_context.model` to `claude-sonnet-5` via `RemoteTrigger {action: "update", ...}`.
 
 ## Agent Mode Awareness
 
@@ -47,6 +60,7 @@ Find verified, relevant news for personalized daily briefings with strict verifi
 1. Run `date '+%Y-%m-%d %H:%M'` using Bash to get the actual current date and time
 2. Store this value and use it for the `created:` frontmatter field
 3. NEVER guess or fabricate the time — always use the value returned by the `date` command
+4. Compute the **freshness cutoff** = today's date minus 7 days. Write it down (e.g. "cutoff: 2026-08-05") and hold every candidate against this literal date, not a vibe of "recent."
 
 ## Process Flow
 
@@ -99,9 +113,15 @@ Apply comprehensive news research methodology:
 #### Verification Standards (MANDATORY)
 
 **Date Verification:**
-- ALL news MUST be from last 7 days ONLY
+- ALL news MUST be from last 7 days ONLY (on/after the computed cutoff date)
 - Verify publication dates with verified timestamps
 - NEVER include older news without explicit disclosure
+
+**Mechanical fetch-and-date-check (MANDATORY, no exceptions):**
+- Every candidate source MUST be a **permalink to a specific article/post**, one that has a slug, a date, or an ID in the URL. Homepage and index URLs (`anthropic.com/news`, `openai.com/news/company-announcements/`, `news.ycombinator.com`, `agentic.ai/news`, `obsidian.md/changelog/`) are **never valid sources**; they're where you find permalinks, not something you cite. If WebSearch only returns an index page, click through and cite the actual article.
+- Before a candidate can be included, run **WebFetch on its permalink** and extract the real publish/byline date printed on the page. Do not rely on training-data memory of when something "probably" shipped, and do not accept a vague month-only date like "August 2026"; if the fetched page doesn't show a specific date, the source fails verification and is dropped.
+- Compare the fetched date against the cutoff computed in Pre-Flight. If it's before the cutoff, discard the candidate, no exceptions, no "still relevant" override. (A source failing this check is exactly how a month-old JetBrains post ended up in a past brief despite the 7-day rule; don't repeat that.)
+- Aggregator mentions (Hacker News, Reddit, etc.) may support a story only as a secondary corroboration link, and only when a real dated permalink is doing the primary citation. They never substitute for a primary source.
 
 **Source Credibility Assessment:**
 - **Tier 1 Sources (Highest Credibility):** Major news organizations (Reuters, AP, Bloomberg, WSJ, NYT), official company announcements, government statements
@@ -462,7 +482,8 @@ Daily brief is a **verify-retry loop**, not a single search. See `.claude/skills
 **The loop (per interest area):** search → fetch a candidate → run the verifier → keep it or discard and re-search with an adjusted query → repeat until enough verified items or a stop condition fires. In `agent_mode: team`, run one loop per interest cluster as isolated workers (orchestrator-workers), then synthesize.
 
 **The verifier (deterministic, runs every candidate):**
-- Publication date is within the last 7 days. Mechanical date check, not a guess.
+- Source is a permalink (not a homepage/index URL), fetched with WebFetch, with a real date printed on the page. If it doesn't resolve to a permalink or the fetch doesn't turn up a specific date, it fails here and never reaches the next checks.
+- That fetched publication date is on/after the freshness cutoff computed in Pre-Flight. Mechanical comparison against the stored cutoff date, not a guess or training-data recollection.
 - At least 2 independent credible sources for the claim.
 - Source tier is identified (1 / 2 / 3). Tier 3 needs cross-reference before it survives.
 - Not already seen (story dedup): a candidate whose URL or headline is already in the brief is dropped.

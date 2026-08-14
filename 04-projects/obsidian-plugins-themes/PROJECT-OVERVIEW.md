@@ -9,6 +9,14 @@ tags: ["#project", "#overview"]
 
 # Obsidian Plugins & Themes
 
+> [!tip] Status: Active
+
+```button
+name Promote Project
+type command
+action QuickAdd: Promote Project
+```
+
 ## What is this project?
 Obsidian plugins and themes Chris builds, vibe-coded and nested inside the Knight Code repo. Repos are on GitHub (public and private).
 

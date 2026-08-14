@@ -9,6 +9,14 @@ tags: ["#project", "#overview"]
 
 # D&D Campaign: "Revenge of the Felled God"
 
+> [!tip] Status: Active
+
+```button
+name Promote Project
+type command
+action QuickAdd: Promote Project
+```
+
 ## What is this project?
 A D&D campaign managed by two dedicated agents:
 - **loremaster**: writer, runs live in conversation, never spawned.
@@ -26,7 +34,7 @@ Most recent automated QA run (2026-08-10) failed its sanity check. A loremaster 
 - [[resources/|Resources]]
 
 ## Next Steps
-- [ ] Run a loremaster pass to fix the 2026-08-10 loreGod QA sanity-check failure
+- [x] Run a loremaster pass to fix the 2026-08-10 loreGod QA sanity-check failure
 
 ---
 

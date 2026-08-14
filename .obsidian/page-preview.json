@@ -1,0 +1,12 @@
+{
+  "preview": false,
+  "search": false,
+  "editor": false,
+  "tab-header": true,
+  "file-explorer": true,
+  "properties": false,
+  "bookmarks": false,
+  "outline": false,
+  "bases": false,
+  "graph": false
+}

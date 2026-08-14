@@ -5,7 +5,7 @@ tags: ["knight-code", "structure", "hooks"]
 ---
 # Knight Code Hooks
 
-Knight Code wires 20 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
+Knight Code wires 21 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
 
 ## `agent-registry-gate.ts`
 
@@ -215,6 +215,49 @@ heuristic guess about whether an edit really touches Electron's security
 surface. A false deny would block legitimate work with no clean way through,
 which produces workarounds rather than compliance. Gates need exact
 conditions; this one cannot have them.
+
+## `formal-workflow-gate.ts`
+
+PreToolUse hook (Claude Code) on Edit/Write/MultiEdit. DENIES edits to source
+files when a formal development workflow is active and still in planning phases
+(ceo/design/eng/planning), before task breakdown is complete.
+
+Why a deny and not a nudge. Editing implementation before the plan is done is
+the exact behavior this hook is meant to prevent. An advisory would be read as
+"just reminding you" and skipped by agents eager to start building. Real enforcement
+requires a hard gate, not guidance.
+
+Why order rather than prohibition. Edits to the state root and to orchestrator-owned
+spec files must remain allowed, or the orchestrator itself locks itself out. What
+must not happen is changes to the application codebase before the plan (reviews plus
+task breakdown) is on disk and marked complete. So the gate allows:
+  - Anything under ~/.knightcode/ (state root, needed for phase transitions)
+  - Plan/spec files the orchestrator itself creates for this feature
+  - Any edits once phase reaches "implementation" or "done"
+
+Default-open. Most edits in the repo are unrelated to an in-flight formal workflow.
+No active feature pointer, no deny.
+
+Fails open, in three ways that each prevent a deadlock:
+  - No active workflow (active.json does not exist): allow.
+  - KNIGHTCODE_FORMAL_WORKFLOW_GATE=off: explicit operator override.
+  - Any internal error: allow.
+
+Triggered by .claude/settings.json:
+  {
+    "hooks": {
+      "PreToolUse": [
+        {
+          "matcher": "Edit|Write|MultiEdit",
+          "hooks": [
+            { "type": "command",
+              "command": "bun",
+              "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/formal-workflow-gate.ts"] }
+          ]
+        }
+      ]
+    }
+  }
 
 ## `graph-consulted-marker-hook.ts`
 
