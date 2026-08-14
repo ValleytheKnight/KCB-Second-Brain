@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-12"
+date: "2026-08-14"
 tags: ["knight-code", "structure", "repo-layout"]
 ---
 # Knight Code Repo Layout
 
-Knight Code's repo root holds 72 top-level directories (excluding dotfiles and node_modules), one per skill, agent, host adapter, or supporting system. This is a shallow directory listing, not a description of each one; see the skills and agents sections above for what the skill/agent-named directories actually do.
+Knight Code's repo root holds 73 top-level directories (excluding dotfiles and node_modules), one per skill, agent, host adapter, or supporting system. This is a shallow directory listing, not a description of each one; see the skills and agents sections above for what the skill/agent-named directories actually do.
 ## Top-level directories
 
 - `api-and-interface-design/`
@@ -18,6 +18,7 @@ Knight Code's repo root holds 72 top-level directories (excluding dotfiles and n
 - `context-save/`
 - `cso/`
 - `css-resource-variables/`
+- `design-critique/`
 - `design-impeccable/`
 - `devex-review/`
 - `devknight/`

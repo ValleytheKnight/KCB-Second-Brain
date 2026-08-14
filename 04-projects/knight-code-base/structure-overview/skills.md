@@ -1,15 +1,16 @@
 ---
 type: "structure-overview"
-date: "2026-08-12"
+date: "2026-08-14"
 tags: ["knight-code", "structure", "skills"]
 ---
 # Knight Code Skills
 
-Knight Code installs 51 skills. Each entry below is pulled from the live skills knowledge graph (name, description, and its declared tools list); the tables that follow are copied from SKILL-CATALOG.md for the invoke method and any associated custom agent, which the graph does not model.
+Knight Code installs 54 skills. Each entry below is pulled from the live skills knowledge graph (name, description, and its declared tools list); the tables that follow are copied from SKILL-CATALOG.md for the invoke method and any associated custom agent, which the graph does not model.
 ## Every installed skill
 
 | Skill | Description | Declared tools |
 |---|---|---|
+| `impeccable` | Use when the user wants to design, redesign, shape, critique, audit, polish, clarify, distill, harden, optimize, adapt, animate, colorize, extract, or otherwise improve a frontend interface. Covers we | *), .claude/skills/impeccable/scripts/*), Bash(node, Bash(npx, impeccable |
 | `knightcode-api-and-interface-design` | Guides stable API and interface design. | inherits session tools |
 | `knightcode-autoplan` | Runs the CEO, design, and eng review skills sequentially and auto-decides on findings. | AskUserQuestion, Bash, Edit, Glob, Grep, Read, WebSearch, Write |
 | `knightcode-browse` | Fast headless browser for QA testing and site dogfooding. | AskUserQuestion, Bash, Read |
@@ -18,6 +19,7 @@ Knight Code installs 51 skills. Each entry below is pulled from the live skills 
 | `knightcode-context-restore` | Restore working context saved earlier by /context-save. | AskUserQuestion, Bash, Glob, Grep, Read |
 | `knightcode-context-save` | Save working context. | AskUserQuestion, Bash, Glob, Grep, Read, Write |
 | `knightcode-cso` | Chief Security Officer mode. | Agent, AskUserQuestion, Bash, Glob, Grep, Read, WebSearch, Write |
+| `knightcode-design-critique` | Critiques an existing, already-built frontend or UI against a fixed standard of UX, accessibility, and design-quality principles. | Bash, Glob, Grep, Read |
 | `knightcode-design-impeccable` | A modern, graphic, editorial-poster aesthetic  -  warm and confident  -  built on alternating cream and burnt orange sections, an amber brand color. | inherits session tools |
 | `knightcode-devex-review` | Live developer experience audit. | AskUserQuestion, Bash, Edit, Glob, Grep, Read, WebSearch |
 | `knightcode-document-generate` | Generate missing documentation from scratch for a feature, module, or entire project. | AskUserQuestion, Bash, Edit, Glob, Grep, Read, Write |
@@ -26,6 +28,7 @@ Knight Code installs 51 skills. Each entry below is pulled from the live skills 
 | `knightcode-doubt-driven-development` | Subjects every non-trivial decision to a fresh-context adversarial review before it stands. | inherits session tools |
 | `knightcode-electron-build` | Scaffolds, packages, signs, and ships Electron desktop apps. | inherits session tools |
 | `knightcode-fantasy-craft` | Master-level fantasy fiction craft system for structure, prose, and worldbuilding. | inherits session tools |
+| `knightcode-formal-dev-workflow` | Enforces formal app-development workflow: CEO review, design review, eng review, task breakdown, incremental implementation per feature, with hard hook enforcement blocking implementation until planni | Agent, AskUserQuestion, Bash, Edit, Glob, Grep, Read, WebSearch, Write |
 | `knightcode-frontend-design` | Create distinctive, production-grade frontend interfaces with high design quality. | inherits session tools |
 | `knightcode-frontend-ui-engineering` | Builds accessible, responsive, production-quality user-facing UI. | inherits session tools |
 | `knightcode-grill-me` | Interviews Chris round by round to find what he actually wants, not just his first ask. | inherits session tools |
