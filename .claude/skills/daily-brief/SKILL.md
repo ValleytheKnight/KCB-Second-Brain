@@ -19,13 +19,24 @@ Find verified, relevant news for personalized daily briefings with strict verifi
 
 ## Cloud Routine Check (ALWAYS run first)
 
-**This skill has a cloud twin.** A scheduled cloud routine named "Daily Brief" (`trig_01Q556EFWNooEE4QwDLmL564`, environment `env_019q1mmBhyqxfMaT6psBRXm8`) already runs this skill daily at 13:00 UTC (8am America/Chicago) against `https://github.com/ValleytheKnight/KCB-Second-Brain`, writes `01-daily/briefs/daily-brief-YYYY-MM-DD.md` and overwrites `01-daily/LATEST-BRIEF.md`, then commits and pushes to `main`. Manage it via `/schedule` or the `RemoteTrigger` tool directly (see `.claude/skills/schedule/SKILL.md`).
+**This skill has a cloud twin.** A scheduled cloud routine named "Daily Brief" (`trig_01Q556EFWNooEE4QwDLmL564`, environment `env_019q1mmBhyqxfMaT6psBRXm8`) runs this skill daily at 13:00 UTC (8am America/Chicago) against `https://github.com/ValleytheKnight/KCB-Second-Brain`, writes `01-daily/briefs/daily-brief-YYYY-MM-DD.md` and overwrites `01-daily/LATEST-BRIEF.md`, then commits and pushes to `main`. Manage it via `/schedule` or the `RemoteTrigger` tool directly (see `.claude/skills/schedule/SKILL.md`).
 
-Before doing any local research, **always check whether today's brief already exists from the cloud run**:
+**Never assume whether the cloud routine has run. Check the actual current time.**
 
-1. `git fetch origin main` (or the relevant remote), then check whether `01-daily/briefs/daily-brief-<today>.md` exists on `origin/main`, either by pulling (if the working tree is clean) or `git show origin/main:01-daily/briefs/daily-brief-<today>.md` (if it isn't, to avoid disturbing uncommitted local work).
-2. If it exists: that's today's brief. Show it to the user instead of re-running research from scratch. Only fall through to a full local run if the user explicitly asks for a fresh/local run, or flags the cloud output as weak or wrong.
-3. If it doesn't exist yet (routine hasn't fired, or was disabled or failed): say so plainly, check the routine's status with `RemoteTrigger {action: "get", trigger_id: "trig_01Q556EFWNooEE4QwDLmL564"}` and `list_runs`/`get_run_log` if something looks off, then offer to run the local version now.
+1. Get the real current time (`date -u '+%Y-%m-%d %H:%M'` via Bash, never guess it). Compare against the cron schedule (13:00 UTC / 8am America/Chicago).
+   - If current UTC time is **before** 13:00 today: the routine has not fired yet today. Don't check for today's file; tell the user it's not due yet (and give the local time it will run), then offer a local run if they want one now anyway.
+   - If current UTC time is **at or after** 13:00 today: the routine should have fired. Proceed to step 2 to confirm and pull it in.
+2. **Sync local work first, unconditionally, no permission prompt.** Chris works in the vault throughout the day, so uncommitted local changes are the expected state, not a blocker:
+   - `git status --porcelain` to see what's there. If anything is staged, unstaged, or untracked, `git add -A` and commit it (e.g. `chore(vault): sync daily work before pulling cloud daily brief`).
+   - `git push origin main`.
+3. **Pull in the cloud brief:**
+   - `git fetch origin main`, then `git pull origin main --no-rebase`.
+   - If the push in step 2 was rejected as non-fast-forward, that confirms the cloud routine already pushed its own commit; pull (as above) to bring it in.
+   - `LATEST-BRIEF.md` is the one file expected to conflict, since both local edits and the incoming cloud commit touch it. Resolve with `git checkout --theirs 01-daily/LATEST-BRIEF.md && git add 01-daily/LATEST-BRIEF.md`. It's a stable filename meant to be fully overwritten by each day's brief, so local edits to it are always stale leftovers from a previous day, never worth preserving. Commit the merge and push.
+   - If a conflict shows up in any file other than `LATEST-BRIEF.md`, stop and ask the user before resolving; that means real work is at risk.
+4. **Confirm the result:** check whether `01-daily/briefs/daily-brief-<today>.md` now exists locally.
+   - If it exists: that's today's brief. Show it to the user instead of re-running research from scratch. Only fall through to a full local run if the user explicitly asks for a fresh/local run, or flags the cloud output as weak or wrong.
+   - If it's still missing despite the time check saying it should have run: say so plainly, check the routine's status with `RemoteTrigger {action: "get", trigger_id: "trig_01Q556EFWNooEE4QwDLmL564"}` and `list_runs`/`get_run_log` to see if it failed or was disabled, then offer to run the local version now.
 
 **Quality note:** the cloud routine runs on `claude-haiku-4-5-20251001` by default, which has produced weaker source verification than a local run (citing homepage/index URLs as sources, mislabeling tier). Per the Model Routing table in `CLAUDE.md`, data-collection and research work should run on Sonnet; if the cloud output looks weak, either fix it locally (this skill, full rigor) or update the routine's `session_context.model` to `claude-sonnet-5` via `RemoteTrigger {action: "update", ...}`.
 
