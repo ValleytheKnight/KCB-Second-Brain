@@ -104,13 +104,13 @@ AI skills/tools + GitHub repos: github.com/trending, Hugging Face blog, r/LocalL
 ## Action Items
 
 ### Immediate (24-48 hours)
-- [ ] Decide whether to run a loremaster pass to fix the 2026-08-10 loreGod QA sanity-check failure 📅 2026-08-13
-- [ ] Update MY-INTERESTS.md with the new preferred sources list 📅 2026-08-13
+- [ ] Decide whether to run a loremaster pass to fix the 2026-08-10 loreGod QA sanity-check failure 📅 2026-08-13 #task
+- [ ] Update MY-INTERESTS.md with the new preferred sources list 📅 2026-08-13 #task
 
 ### Short-term (1-2 weeks)
-- [ ] Do the manual v1 test walkthrough for Anchor Flow and decide on pushing remaining local commits 📅 2026-08-19
-- [ ] Schedule a plan-ceo-review scoping pass for Protocol Whisper App before writing any WinUI3 code 📅 2026-08-19
-- [ ] Build out individual project overviews for each shipped/in-progress/idea-stage Obsidian project, KnightOS, the D&D campaign, and Protocol Whisper App 📅 2026-08-19
+- [ ] Do the manual v1 test walkthrough for Anchor Flow and decide on pushing remaining local commits 📅 2026-08-19 #task
+- [ ] Schedule a plan-ceo-review scoping pass for Protocol Whisper App before writing any WinUI3 code 📅 2026-08-19 #task
+- [ ] Build out individual project overviews for each shipped/in-progress/idea-stage Obsidian project, KnightOS, the D&D campaign, and Protocol Whisper App 📅 2026-08-19 #task
 
 ### Strategic Considerations
 - Worth deciding whether the five shipped plugins/themes get one combined "Obsidian Plugins & Themes" overview with a status table, or five individual overviews, given how many there are, a single overview with a status table is probably more maintainable than nine separate files.

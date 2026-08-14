@@ -34,7 +34,7 @@ Most recent automated QA run (2026-08-10) failed its sanity check. A loremaster 
 - [[resources/|Resources]]
 
 ## Next Steps
-- [x] Run a loremaster pass to fix the 2026-08-10 loreGod QA sanity-check failure
+- [x] Run a loremaster pass to fix the 2026-08-10 loreGod QA sanity-check failure #task
 
 ---
 

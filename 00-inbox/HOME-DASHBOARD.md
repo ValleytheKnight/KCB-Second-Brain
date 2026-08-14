@@ -29,28 +29,124 @@ If Hearth's input field mangles backticks (curly-quote autocorrect) even in this
 
 ## Activity Heatmap
 
-Requires the **Heatmap Calendar** plugin (installed) plus Dataview. Counts braindumps and daily briefs per day, not whole-vault edits, so it actually reflects capture activity rather than every file touch. Add as a **Dataview** card in Hearth, pasting only the code below (no fence lines).
+Self-contained, no heatmap plugin required, just Dataview. Counts braindumps, daily briefs, ideas, active/completed project overviews, completed tasks, and git commits (from `00-inbox/git-commit-counts.json`) per day, not whole-vault edits, so it actually reflects capture and shipping activity rather than every file touch. Renders its own 12-week grid directly in dataviewjs, with month labels on top and weekday labels on the left (the vault's installed **Codeless Heatmap Calendar** plugin is a different, Toggl-focused plugin with no code-block API, so nothing external is called here). Add as a **Dataview** card in Hearth, pasting only the code below (no fence lines). This is kept in sync with the live query stored in the Hearth card itself, so if you edit one, mirror the change in the other.
 
 ```dataviewjs
 const counts = {};
-const pages = dv.pages('"00-inbox" or "02-personal/braindumps" or "03-professional/braindumps" or "04-projects" or "01-daily/briefs"').where(function(p) { return p.type === "braindump" || p.type === "daily-brief"; });
+const pages = dv.pages('"00-inbox" or "02-personal/braindumps" or "03-professional/braindumps" or "04-projects" or "01-daily/briefs"');
 for (const p of pages) {
+  let shouldCount = false;
   let d = p.date;
+  if (!d && p.file.mtime) {
+    d = p.file.mtime.toFormat ? p.file.mtime.toFormat("yyyy-MM-dd") : String(p.file.mtime);
+  }
   if (!d) continue;
   if (typeof d !== "string") {
     d = d.toFormat ? d.toFormat("yyyy-MM-dd") : String(d);
   }
-  counts[d] = (counts[d] || 0) + 1;
+  if (p.type === "braindump" || p.type === "daily-brief" || p.type === "idea") shouldCount = true;
+  if (p.type === "project-overview" && (p.status === "active" || p.status === "complete")) shouldCount = true;
+  if (p.file && p.file.tasks) {
+    const completed = p.file.tasks.filter(function(t) { return t.completed; }).length;
+    if (completed > 0) {
+      counts[d] = (counts[d] || 0) + completed;
+      shouldCount = false;
+    }
+  }
+  if (shouldCount) counts[d] = (counts[d] || 0) + 1;
 }
-const entries = [];
-for (const d in counts) {
-  entries.push({ date: d, intensity: counts[d], content: String(counts[d]), color: "green" });
+try {
+  const raw = await dv.io.load("00-inbox/git-commit-counts.json");
+  if (raw) {
+    const gitCounts = JSON.parse(raw);
+    for (const d in gitCounts) {
+      counts[d] = (counts[d] || 0) + gitCounts[d];
+    }
+  }
+} catch (e) {}
+
+const shades = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
+function colorFor(n) {
+  if (!n) return shades[0];
+  if (n === 1) return shades[1];
+  if (n === 2) return shades[2];
+  if (n === 3) return shades[3];
+  return shades[4];
 }
-const calendarData = {
-  colors: { green: ["#c6e48b", "#7bc96f", "#49af5d", "#2e8840", "#196127"] },
-  entries: entries
-};
-renderHeatmapCalendar(this.container, calendarData);
+
+const days = 84;
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const start = new Date(today);
+start.setDate(start.getDate() - (days - 1));
+start.setDate(start.getDate() - start.getDay());
+
+const weeks = [];
+let cursor = new Date(start);
+while (cursor <= today) {
+  const week = [];
+  for (let i = 0; i < 7; i++) {
+    week.push(cursor <= today ? new Date(cursor) : null);
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  weeks.push(week);
+}
+
+const cols = `28px repeat(${weeks.length}, 12px)`;
+const wrapper = this.container.createEl("div");
+wrapper.style.display = "flex";
+wrapper.style.flexDirection = "column";
+wrapper.style.gap = "3px";
+
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthRow = wrapper.createEl("div");
+monthRow.style.display = "grid";
+monthRow.style.gridTemplateColumns = cols;
+monthRow.style.gap = "3px";
+monthRow.createEl("div");
+let lastMonth = -1;
+for (const week of weeks) {
+  const firstValid = week.find(function(d) { return d; });
+  const cell = monthRow.createEl("div");
+  cell.style.fontSize = "9px";
+  cell.style.color = "var(--text-muted)";
+  if (firstValid && firstValid.getMonth() !== lastMonth && firstValid.getDate() <= 7) {
+    cell.textContent = monthNames[firstValid.getMonth()];
+    lastMonth = firstValid.getMonth();
+  }
+}
+
+const bodyGrid = wrapper.createEl("div");
+bodyGrid.style.display = "grid";
+bodyGrid.style.gridTemplateColumns = cols;
+bodyGrid.style.gridAutoFlow = "row";
+bodyGrid.style.gap = "3px";
+
+const dayLabels = ["", "Mon", "", "Wed", "", "Fri", ""];
+for (let row = 0; row < 7; row++) {
+  const label = bodyGrid.createEl("div");
+  label.textContent = dayLabels[row];
+  label.style.fontSize = "9px";
+  label.style.color = "var(--text-muted)";
+  label.style.display = "flex";
+  label.style.alignItems = "center";
+  for (const week of weeks) {
+    const d = week[row];
+    const cell = bodyGrid.createEl("div");
+    if (!d) {
+      cell.style.width = "12px";
+      cell.style.height = "12px";
+      continue;
+    }
+    const key = d.toISOString().slice(0, 10);
+    const n = counts[key] || 0;
+    cell.style.width = "12px";
+    cell.style.height = "12px";
+    cell.style.borderRadius = "2px";
+    cell.style.background = colorFor(n);
+    cell.title = key + ": " + n + (n === 1 ? " entry" : " entries");
+  }
+}
 ```
 
 ## Quick Capture
@@ -125,7 +221,7 @@ if (rows.length === 0) {
 ## Active Projects at a Glance
 
 ```dataview
-TABLE status, project
+TABLE WITHOUT ID link(file.path, project) AS "Project", status AS "Status"
 FROM "04-projects"
 WHERE type = "project-overview"
 SORT project ASC
@@ -133,11 +229,26 @@ SORT project ASC
 
 ## Open Next Steps Across Projects
 
-```dataview
-TASK
-FROM "04-projects"
-WHERE !completed
-GROUP BY file.link
+```dataviewjs
+function titleCase(slug) {
+  return slug.split("-").map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(" ");
+}
+const pages = dv.pages('"04-projects"');
+const byFolder = {};
+for (const p of pages) {
+  for (const t of p.file.tasks) {
+    if (t.completed) continue;
+    const folder = p.file.folder;
+    if (!byFolder[folder]) byFolder[folder] = [];
+    byFolder[folder].push(t);
+  }
+}
+const folders = Object.keys(byFolder).sort();
+for (const folder of folders) {
+  const slug = folder.replace(/^04-projects\//, "");
+  dv.header(4, `${titleCase(slug)} (${byFolder[folder].length})`);
+  dv.taskList(byFolder[folder], false);
+}
 ```
 
 ---

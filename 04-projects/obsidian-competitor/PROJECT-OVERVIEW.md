@@ -65,7 +65,7 @@ Plugins to build in (Some arent plugins just my ideas)
 - This is not an exhaustive list, but the app should be all inclusive while also supporting a plugin community
 
 ## Next Steps
-- [ ] Scope and plan out with DevKnight agent
+- [ ] Scope and plan out with DevKnight agent #task
 
 ---
 

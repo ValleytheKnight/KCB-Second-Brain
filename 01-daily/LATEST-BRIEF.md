@@ -36,10 +36,10 @@ Two verified developments this week: Google's Gemini app crossed 1 billion month
 **Project(s):** Obsidian Plugins & Themes
 📅 2026-08-14
 
-### 2. Run a loremaster pass to fix the Aug 10 loreGod QA failure
-**Why:** The most recent automated QA run (Aug 10) failed its sanity check and no fix pass has run yet. This has been open for three days.
+### 2. [COMPLETED] Run a loremaster pass to fix the Aug 10 loreGod QA failure
+**Why:** The most recent automated QA run (Aug 10) failed its sanity check; the fix pass has since been completed and this item is no longer open.
 **Project(s):** D&D Campaign: Revenge of the Felled God
-📅 2026-08-14
+📅 Status: Done
 
 ### 3. Watch OpenAI's Ultrafast rollout before committing to a latency-sensitive agent design
 **Why:** If Ultrafast (up to 14x throughput via Cerebras) reaches general availability, it resets the competitive floor for low-latency tool-calling loops. Not actionable yet since it's limited preview, but worth a calendar check before KnightOS Milestone 6 (agent interaction convergence, hook-based session monitoring) locks in latency assumptions.
@@ -117,9 +117,9 @@ No items cleared verification this cycle.
 ## Opportunities & Recommendations
 
 ### Immediate Actions (This Week)
-- [ ] Finish the Anchor Flow manual v1 test walkthrough, then decide on pushing remaining local commits 📅 2026-08-14
-- [ ] Run a loremaster pass on the Felled God campaign to fix the Aug 10 loreGod QA sanity-check failure 📅 2026-08-14
-- [ ] Check OpenAI's Ultrafast general-availability status before KnightOS Milestone 6 latency assumptions get locked in 📅 2026-08-20
+- [ ] Finish the Anchor Flow manual v1 test walkthrough, then decide on pushing remaining local commits 📅 2026-08-14 #task
+- [x] Run a loremaster pass on the Felled God campaign to fix the Aug 10 loreGod QA sanity-check failure 📅 2026-08-14 #task
+- [ ] Check OpenAI's Ultrafast general-availability status before KnightOS Milestone 6 latency assumptions get locked in 📅 2026-08-20 #task
 
 ### Research Needed
 - **OpenAI Ultrafast GA timeline and pricing:** worth a follow-up once it leaves limited preview, to see if it's relevant to Knight Code's agent latency budget.

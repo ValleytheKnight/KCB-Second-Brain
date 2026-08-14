@@ -35,7 +35,7 @@ Idea stage, real project scaffold exists but no code. Full idea write-up done 20
 - [[resources/|Resources]]
 
 ## Next Steps
-- [ ] Schedule a plan-ceo-review scoping pass before any WinUI3 code gets written
+- [ ] Schedule a plan-ceo-review scoping pass before any WinUI3 code gets written #task
 
 ---
 

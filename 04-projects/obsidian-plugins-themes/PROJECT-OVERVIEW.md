@@ -47,9 +47,9 @@ Obsidian plugins and themes Chris builds, vibe-coded and nested inside the Knigh
 - [[resources/|Resources]]
 
 ## Next Steps
-- [ ] Anchor Flow: do the manual v1 test walkthrough, then decide on pushing remaining local commits
-- [ ] Linked Text Styles: build the style-insertion logic
-- [ ] Decide on a start timeline for Spellcraft / the mobile PDF exporter (currently backlog)
+- [ ] Anchor Flow: do the manual v1 test walkthrough, then decide on pushing remaining local commits #task
+- [ ] Linked Text Styles: build the style-insertion logic #task
+- [ ] Decide on a start timeline for Spellcraft / the mobile PDF exporter (currently backlog) #task
 
 ---
 

@@ -33,9 +33,9 @@ A tabbed multi-project shell built in Electron: one tab per project directory, f
 - [[resources/|Resources]]
 
 ## Next Steps
-- [ ] Finish Milestone 1 Task 9 (drag-to-reorder tabs, reopen-closed-tab shortcut, per-tab color coding)
-- [ ] Complete remaining Milestone 1 items
-- [ ] Start Milestone 6 build (agent interaction convergence, hook-based session monitoring)
+- [ ] Finish Milestone 1 Task 9 (drag-to-reorder tabs, reopen-closed-tab shortcut, per-tab color coding) #task
+- [ ] Complete remaining Milestone 1 items #task
+- [ ] Start Milestone 6 build (agent interaction convergence, hook-based session monitoring) #task
 
 ---
 

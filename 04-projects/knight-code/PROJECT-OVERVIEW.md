@@ -3,13 +3,13 @@ type: project-overview
 project: Knight Code
 slug: knight-code
 created: 2026-08-12
-status: complete
+status: active
 tags: ["#project", "#overview"]
 ---
 
 # Knight Code
 
-> [!success] Status: Complete
+> [!tip] Status: Active
 
 ```button
 name Promote Project
@@ -31,8 +31,8 @@ Actively developed and used daily. Obsidian plugins and themes Chris is building
 - [[resources/|Resources]]
 
 ## Next Steps
-- [ ] Note improvement ideas for Knight Code as they come up
-- [ ] Track ideas/progress for nested Obsidian plugins/themes (see [[04-projects/obsidian-plugins-themes/PROJECT-OVERVIEW|Obsidian Plugins & Themes]])
+- [ ] Note improvement ideas for Knight Code as they come up #task
+- [ ] Track ideas/progress for nested Obsidian plugins/themes (see [[04-projects/obsidian-plugins-themes/PROJECT-OVERVIEW|Obsidian Plugins & Themes]]) #task
 
 ## Closing Notes
 
