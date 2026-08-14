@@ -1,6 +1,6 @@
 ---
 type: "structure-overview"
-date: "2026-08-12"
+date: "2026-08-14"
 tags: ["knight-code", "structure", "hooks"]
 ---
 # Knight Code Hooks
@@ -220,7 +220,7 @@ conditions; this one cannot have them.
 
 PreToolUse hook (Claude Code) on Edit/Write/MultiEdit. DENIES edits to source
 files when a formal development workflow is active and still in planning phases
-(ceo/design/eng/planning), before task breakdown is complete.
+(ceo/design/eng/security/planning), before task breakdown is complete.
 
 Why a deny and not a nudge. Editing implementation before the plan is done is
 the exact behavior this hook is meant to prevent. An advisory would be read as
