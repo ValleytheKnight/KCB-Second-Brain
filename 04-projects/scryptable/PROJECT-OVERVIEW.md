@@ -1,13 +1,13 @@
 ---
 type: project-overview
-project: Protocol Whisper App
-slug: protocol-whisper-app
+project: Scryptable
+slug: scryptable
 created: 2026-08-12
 status: active
 tags: ["#project", "#overview"]
 ---
 
-# Scryptable
+# Scrow yptable
 
 > [!tip] Status: Active
 
@@ -18,24 +18,22 @@ action QuickAdd: Promote Project
 ```
 
 ## What is this project?
-A native WinUI3 shell wrapping the existing, working Protocol Whisper pipeline (Craig Discord recording -> Whisper transcription -> TASMAS stem-merging -> loremaster handoff). It would replace today's manual, one-command-at-a-time Claude Code chat session with real dialog boxes for every human decision point, plus a scripted QA layer the manual pipeline doesn't have.
+A PySide6 (Qt for Python) desktop app for Windows, shippable to real outside users, wrapping the existing, working Protocol Whisper pipeline (Craig Discord recording -> Whisper transcription -> TASMAS stem-merging -> loremaster handoff). Replaces today's manual, one-command-at-a-time Claude Code chat session with real dialog boxes for every human decision point, plus a QA review screen the manual pipeline doesn't have. AI (the loremaster handoff) is opt-in and pluggable; every mechanical step runs fully locally with zero AI subscription required.
 
-The underlying Python pipeline is real and already proven across two live episode runs. The app itself has no code written yet.
+The underlying Python pipeline is real and proven across two live episode runs. The app has no implementation code yet, but all planning gates are complete.
 
-- Location: DevKnight Workshop vault, `Projects/Protocol Whisper App/` (00 Overview, 01 Planning, 03 Diagrams, 04 Execution, 06 Lessons Learned notes already exist)
-- Owned by: DevKnight (the router agent for native Windows GUI/Electron work)
-- No GitHub repo yet.
+- Location: DevKnight Workshop vault, `Projects/Scryptable/` (renamed from `Projects/Protocol Whisper App/`), full 00-08 folder structure populated.
+- Repo: local at `Documents\DevPrograms\Scryptable\` (git init, branch `master`, no commits yet); private GitHub at `github.com/ValleytheKnight/Scryptable`, `origin` wired, nothing pushed.
 
 ## Current Status
-Idea stage, real project scaffold exists but no code. Full idea write-up done 2026-07-30, migrated into DevKnight's real project structure the same day.
+CEO review, design review, engineering review, and security review are all APPROVED. Task Breakdown is complete: 22 vertically-sliced tasks across 7 phases, with the four Phase 3.5 security findings folded in as real acceptance criteria. Project state is "implementation," meaning the build gate is open, but no code has been written. Waiting on Chris's explicit go-ahead to start Task 1 (app shell scaffold). See [[braindumps/braindump-2026-08-15-current-status|current status braindump]] for the full picture.
 
 ## Project Resources
 - [[braindumps/|Project Braindumps]]
-- [[planning/|Planning Documents]]
-- [[resources/|Resources]]
+- [[improvements|Improvement Ideas]]
 
 ## Next Steps
-- [x] Schedule a plan-ceo-review scoping pass before any WinUI3 code gets written 📅 2026-08-19 #task
+- [ ] Get Chris's go-ahead to start Task 1: app shell scaffold #task
 
 ---
 

@@ -1,0 +1,8 @@
+---
+type: "dev-diary"
+date: "2026-08-16"
+tags: ["knight-code", "dev-diary", "scryptable", "pencil", "logo", "design-draft"]
+---
+# Scryptable logo concept, three iterations in Pencil
+
+Pencil MCP reconnected this session; get_app_state worked directly, confirming learnings_log f19f448e's stale-app-target diagnosis. Found an existing "Logo Concepts" frame (M3a8n) in whisper_app_design.pen with two pre-existing hand-assembled path logos (Logo A, Logo B), left untouched, not touched or treated as a source for new work.  Added a third slot, "Logo C" (frame oAMyr), using Generate(type:"svg") per Pencil's standing rule against hand-drawn path artwork. Three directions tried, each a full delete-and-regenerate since Generate appends rather than replaces:  1. Quill on paper with a separate audio-waveform element behind the feather. Chris's correction: the feather itself must be the waveform, not near one. 2. Feather barbs reshaped as literal waveform bars radiating from the shaft. Rendered as an abstract dark bar-burst, mostly black with only two orange bars, didn't read as a quill. Chris called it worse than the original and asked to revert. 3. Reverted to a plain quill with a normal feather and paper, waveform element removed entirely, a pair of headphones wrapped around the quill instead (headband over the feather, cups resting against it). Currently showing as mostly black with a small orange accent stroke, not full brand primary #FF8400 (locked, decision 70afd8c5), a real color-consistency gap against Logo A/B not yet fixed.  Current state (headphones-around-quill) shown to Chris live for review, not yet locked. Design draft only, per the standing rule, never wired into app code without a real decision logged behind it.
