@@ -21,11 +21,17 @@ Find verified, relevant news for personalized daily briefings with strict verifi
 
 **This skill has a cloud twin.** A scheduled cloud routine named "Daily Brief" (`trig_01Q556EFWNooEE4QwDLmL564`, environment `env_019q1mmBhyqxfMaT6psBRXm8`) runs this skill daily at 13:00 UTC (8am America/Chicago) against `https://github.com/ValleytheKnight/KCB-Second-Brain`, writes `01-daily/briefs/daily-brief-YYYY-MM-DD.md` and overwrites `01-daily/LATEST-BRIEF.md`, then commits and pushes to `main`. Manage it via `/schedule` or the `RemoteTrigger` tool directly (see `.claude/skills/schedule/SKILL.md`).
 
-**Never assume whether the cloud routine has run. Check the actual current time.**
+**Never assume whether the cloud routine has run. Check DATE, TIME, and GIT.**
 
-1. Get the real current time (`date -u '+%Y-%m-%d %H:%M'` via Bash, never guess it). Compare against the cron schedule (13:00 UTC / 8am America/Chicago).
-   - If current UTC time is **before** 13:00 today: the routine has not fired yet today. Don't check for today's file; tell the user it's not due yet (and give the local time it will run), then offer a local run if they want one now anyway.
-   - If current UTC time is **at or after** 13:00 today: the routine should have fired. Proceed to step 2 to confirm and pull it in.
+1. Get the real current date and time (`date '+%Y-%m-%d %H:%M'` for local, `date -u '+%Y-%m-%d %H:%M'` for UTC, never guess).
+2. Check if a brief for TODAY already exists in `01-daily/briefs/daily-brief-YYYY-MM-DD.md`:
+   - **If today's brief already exists:** That's the cloud routine's output. Show it to the user. Only fall through to local run if the user explicitly asks for a fresh run or flags the brief as weak.
+   - **If today's brief does NOT exist:** Compare current local time against 08:00 Chicago time (13:00 UTC):
+     - If current local time is **before 08:00 Chicago:** the routine has not fired yet today. Tell the user it's scheduled for 08:00 this morning and will be ready in X hours. Offer a local run if they want one now.
+     - If current local time is **at or after 08:00 Chicago:** proceed to step 3 (git verification).
+3. **Check git history for today's commits** (`git log --oneline -20 --date=short --format="%ad %s"` and look for commits dated today):
+   - **If today has commits:** The routine ran and pushed. The brief file should exist; if it doesn't, there's a data loss issue. Investigate and offer local run.
+   - **If no commits today:** The routine did not push to the repository. It either failed, was disabled, or never triggered. Check the routine's status via RemoteTrigger and offer to run a local brief while investigating.
 2. **Sync local work first, unconditionally, no permission prompt.** Chris works in the vault throughout the day, so uncommitted local changes are the expected state, not a blocker:
    - `git status --porcelain` to see what's there. If anything is staged, unstaged, or untracked, `git add -A` and commit it (e.g. `chore(vault): sync daily work before pulling cloud daily brief`).
    - `git push origin main`.

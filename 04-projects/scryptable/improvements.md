@@ -1,8 +1,8 @@
 ---
 title: Improvement Ideas
-project: protocol-whisper-app
+project: scryptable
 type: improvements-log
-created: 2026-08-12
+created: 2026-08-14
 ---
 
 # Improvement Ideas
@@ -19,7 +19,7 @@ action QuickAdd: Promote Project
 
 ## Open
 
-- 2026-08-12: 
+- [ ] 2026-08-14 22:56: need to design a overlay style turtorial and help documentation
 
 ## Triaged / Actioned
 

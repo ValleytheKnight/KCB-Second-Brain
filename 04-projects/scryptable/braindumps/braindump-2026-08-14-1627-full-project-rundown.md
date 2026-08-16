@@ -154,7 +154,7 @@ Speaker Mapping wizard (with dark mode variant), Fresh Open empty state, Transcr
 ## Action Items
 
 ### Immediate (24-48 hours)
-- [ ] Resume Eng Review (architecture, tests, performance) where it was paused 📅 2026-08-15
+- [x] Resume Eng Review (architecture, tests, performance) where it was paused 📅 2026-08-15
 - [ ] Rename the old "Protocol Whisper App" decision-log notes to Scryptable naming 📅 2026-08-15
 
 ### Short-term (1-2 weeks)

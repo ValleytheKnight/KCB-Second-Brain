@@ -14,7 +14,7 @@ A durable synthesis of how Chris's active work fits together, distilled from the
 Nine-plus distinct efforts running at once, across three ecosystems:
 
 - **Obsidian plugins/themes** (nested inside the Knight Code repo): 5 shipped, 2 in active build, 2 backlog ideas. See [[04-projects/obsidian-plugins-themes/PROJECT-OVERVIEW]].
-- **Electron/native apps**: [[04-projects/knightos/PROJECT-OVERVIEW|KnightOS]] (tabbed multi-project shell, Milestone 1 in progress) and [[04-projects/protocol-whisper-app/PROJECT-OVERVIEW|Protocol Whisper App]] (idea stage, wraps an already-proven Python pipeline).
+- **Electron/native apps**: [[04-projects/knightos/PROJECT-OVERVIEW|KnightOS]] (tabbed multi-project shell, Milestone 1 in progress) and [[04-projects/Scryptable/PROJECT-OVERVIEW|Protocol Whisper App]] (idea stage, wraps an already-proven Python pipeline).
 - **A narrative campaign**: [[04-projects/dnd-campaign-felled-god/PROJECT-OVERVIEW|Revenge of the Felled God]], run partly by dedicated agents.
 - **An "Obsidian but better" concept**: [[04-projects/obsidian-competitor/PROJECT-OVERVIEW|Obsidian Competitor]], idea stage.
 - **[[04-projects/knight-code/PROJECT-OVERVIEW|Knight Code]] itself**, the agent tooling system all of the above runs on top of.

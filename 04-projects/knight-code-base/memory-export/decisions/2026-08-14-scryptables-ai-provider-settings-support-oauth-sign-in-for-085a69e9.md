@@ -4,8 +4,10 @@ type: "decision"
 date: "2026-08-14"
 source: "user"
 confidence: 7
-tags: ["knight-code", "decision"]
+tags: ["knight-code", "decision", "superseded"]
+status: "superseded"
 ---
+
 # Decision: Scryptable's AI Provider settings support OAuth sign-in for Anthropic specifically (using an existin...
 
 ## Decision

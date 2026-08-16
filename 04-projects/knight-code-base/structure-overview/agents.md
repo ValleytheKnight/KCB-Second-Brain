@@ -1,6 +1,6 @@
 ---
 type: "structure-overview"
-date: "2026-08-12"
+date: "2026-08-15"
 tags: ["knight-code", "structure", "agents"]
 ---
 # Knight Code Agents and Personas
@@ -10,7 +10,7 @@ Knight Code registers 8 real custom agents through the agent-manager MCP server 
 
 | Agent | Description |
 |---|---|
-| `devknight` | Router agent for native Windows GUI toolkit development (WinUI3/WPF) and Electron desktop app development, one-stop-shop entry point for end-to-end Windows application development including UI/UX. And |
+| `devknight` | Router agent for native Windows GUI toolkit development (WinUI3/WPF), Electron desktop app development, and Python/PySide6 (Qt for Python) desktop app development, one-stop-shop entry point for end-to |
 | `impeccable-asset-producer` | Produces clean reusable raster assets from approved Impeccable mock references without redesigning the direction. |
 | `impeccable-documenter` | Records DESIGN.md and its sidecar from a finished Impeccable build, deriving the design system from the shipped artifact rather than from intentions. |
 | `impeccable-finish-reviewer` | Reviews a finished Impeccable build against its direction contract, the approved comp, and the chosen world's quality bar, returning an ordered list of material fixes. |

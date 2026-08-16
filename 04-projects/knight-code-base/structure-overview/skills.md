@@ -1,6 +1,6 @@
 ---
 type: "structure-overview"
-date: "2026-08-14"
+date: "2026-08-15"
 tags: ["knight-code", "structure", "skills"]
 ---
 # Knight Code Skills

@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-14"
+date: "2026-08-15"
 tags: ["knight-code", "structure", "hooks"]
 ---
 # Knight Code Hooks
 
-Knight Code wires 21 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
+Knight Code wires 22 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
 
 ## `agent-registry-gate.ts`
 
@@ -253,6 +253,56 @@ Triggered by .claude/settings.json:
             { "type": "command",
               "command": "bun",
               "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/formal-workflow-gate.ts"] }
+          ]
+        }
+      ]
+    }
+  }
+
+## `formal-workflow-push-gate.ts`
+
+PreToolUse hook (Claude Code) on Bash. Denies `git push` and
+`gh pr create` BEFORE they run if an active formal-dev-workflow feature
+(see formal-workflow-gate.ts) is at phase "implementation" or "done" and
+has not recorded a passing implementation-time security scan.
+
+Why this exists. formal-workflow-gate.ts's Phase 3.5 (Security Review)
+only checks the PLAN, before any code exists. Nothing re-checks the CODE
+once Phase 5 (Implementation) writes it, so a real vulnerability
+introduced during implementation could reach a push or a PR with zero
+security check ever having run against the actual diff. This hook closes
+that gap at the one moment that matters: before code leaves the machine.
+
+Decidability. Per docs/HOOK_AUTHORING_STANDARD.md, this is exactly the
+shape that gets a PreToolUse deny rather than an advisory: the condition
+(does a passing scan marker exist) is mechanically decidable before the
+push happens. formal-dev-workflow/SKILL.md.tmpl's Phase 5 checklist
+writes the marker after running /knightcode-cso against the implemented
+code, immediately before bumping phase to "done".
+
+Marker file: ~/.knightcode/projects/<slug>/formal-workflow/
+  <feature>-implementation-scan.json, shape:
+  { "scannedAt": "ISO-8601", "criticalFindings": 0 }
+Missing marker, or criticalFindings > 0, denies. Any other phase
+(ceo/design/eng/security/planning) or no active workflow at all: allow,
+this hook only fires once real code could exist to push.
+
+Invariants:
+  - Fail open. Any internal error (state files missing, malformed JSON,
+    no active workflow) exits 0 with no output.
+  - Each denial appends one line to ~/.knightcode/hook-invocations.log.
+  - Invoked as `bun run <file>.ts`, exec form, never a bare shebang.
+
+Triggered by .claude/settings.json:
+  {
+    "hooks": {
+      "PreToolUse": [
+        {
+          "matcher": "Bash",
+          "hooks": [
+            { "type": "command",
+              "command": "bun",
+              "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/formal-workflow-push-gate.ts"] }
           ]
         }
       ]
