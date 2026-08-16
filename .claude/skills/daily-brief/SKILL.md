@@ -13,43 +13,22 @@ Find verified, relevant news for personalized daily briefings with strict verifi
 ## When to Invoke
 - User wants their daily news briefing
 - User says "daily brief", "news", "what's happening", "morning brief"
-- User says "pull the daily brief", "check the cloud brief", "did the daily brief run" (see Cloud Routine Check below; this is a pull-existing-output request, not a re-run request)
+- User says "pull the daily brief", "did the daily brief run" (see Local-Only Operation below)
 - User wants to stay updated on their interests
 - Morning routine or regular check-in time
 
-## Cloud Routine Check (ALWAYS run first)
+## Local-Only Operation (current default)
 
-**This skill has a cloud twin.** A scheduled cloud routine named "Daily Brief" (`trig_01Q556EFWNooEE4QwDLmL564`, environment `env_019q1mmBhyqxfMaT6psBRXm8`) runs this skill daily at 13:00 UTC (8am America/Chicago) against `https://github.com/ValleytheKnight/KCB-Second-Brain`, writes `01-daily/briefs/daily-brief-YYYY-MM-DD.md` and overwrites `01-daily/LATEST-BRIEF.md`, then commits and pushes to `main`. Manage it via `/schedule` or the `RemoteTrigger` tool directly (see `.claude/skills/schedule/SKILL.md`).
+**The cloud routine is disabled.** A scheduled cloud routine named "Daily Brief" (`trig_01Q556EFWNooEE4QwDLmL564`, environment `env_019q1mmBhyqxfMaT6psBRXm8`) used to run this skill daily at 13:00 UTC, but its sandbox blocks outbound network access to most real news domains (`EGRESS_BLOCKED` on TechCrunch, Anthropic, Obsidian, and others), which made its verification unreliable no matter how the prompt was hardened. Checked claude.ai's Settings and found no user-facing network/egress control for cloud environments across every section (General, Account, Privacy, Billing, Usage, Capabilities, Reflect, Time and focus, Claude Code, Cowork, Claude in Chrome, Skills, Connectors, Plugins, Memory), so this isn't fixable from account settings. Chris chose to disable it (`RemoteTrigger {action: "update", trigger_id: "trig_01Q556EFWNooEE4QwDLmL564", body: {"enabled": false}}`) and run this skill locally instead, where WebFetch has full network access.
 
-**Never assume whether the cloud routine has run. Check DATE, TIME, and GIT.**
+**When invoked, just run the brief locally.** No cloud-check step needed first:
 
-1. Get the real current date and time (`date '+%Y-%m-%d %H:%M'` for local, `date -u '+%Y-%m-%d %H:%M'` for UTC, never guess).
-2. Check if a brief for TODAY already exists in `01-daily/briefs/daily-brief-YYYY-MM-DD.md`:
-   - **If today's brief already exists:** That's the cloud routine's output. Show it to the user. Only fall through to local run if the user explicitly asks for a fresh run or flags the brief as weak.
-   - **If today's brief does NOT exist:** Compare current local time against 08:00 Chicago time (13:00 UTC):
-     - If current local time is **before 08:00 Chicago:** the routine has not fired yet today. Tell the user it's scheduled for 08:00 this morning and will be ready in X hours. Offer a local run if they want one now.
-     - If current local time is **at or after 08:00 Chicago:** proceed to step 3 (git verification).
-3. **Check git history for today's commits** (`git log --oneline -20 --date=short --format="%ad %s"` and look for commits dated today):
-   - **If today has commits:** The routine ran and pushed. The brief file should exist; if it doesn't, there's a data loss issue. Investigate and offer local run.
-   - **If no commits today:** The routine did not push to the repository. It either failed, was disabled, or never triggered. Check the routine's status via RemoteTrigger and offer to run a local brief while investigating.
-2. **Sync local work first, unconditionally, no permission prompt.** Chris works in the vault throughout the day, so uncommitted local changes are the expected state, not a blocker:
-   - `git status --porcelain` to see what's there. If anything is staged, unstaged, or untracked, `git add -A` and commit it (e.g. `chore(vault): sync daily work before pulling cloud daily brief`).
-   - `git push origin main`.
-3. **Pull in the cloud brief:**
-   - `git fetch origin main`, then `git pull origin main --no-rebase`.
-   - If the push in step 2 was rejected as non-fast-forward, that confirms the cloud routine already pushed its own commit; pull (as above) to bring it in.
-   - `LATEST-BRIEF.md` is the one file expected to conflict, since both local edits and the incoming cloud commit touch it. **Before resolving, read both sides of the conflict, don't default to `--theirs` mechanically.** The old assumption ("local edits to LATEST-BRIEF.md are always stale leftovers from a previous day") only holds when the local side genuinely is an older, already-superseded pointer. It does NOT hold when the local side is itself a same-day or newer verified brief, which happens whenever this skill runs a local brief before the cloud commit is pulled in (e.g. filling a gap left by a failed cloud run).
-     - Compare `date:` in both sides' frontmatter. If the local side is the same date or newer than the incoming cloud side, treat it as the fresher candidate, not a stale leftover.
-     - Check the incoming cloud side's own honesty signals: does its frontmatter claim `sources_verified: true` while the brief body shows failed fetches, `EGRESS_BLOCKED`, or fallback-to-unverified language? A brief that claims verification it didn't actually achieve is a compromised candidate regardless of date, and should lose to a genuinely verified one even if the genuinely verified one is a day older.
-     - Resolve toward whichever side is actually more current AND actually more verified. If they conflict (one is newer, the other more verified), prefer verification quality over recency, an unverified newer brief is worse than a verified slightly-older one, and say so to the user.
-     - Whichever way you resolve, keep the other side's brief as its own dated file in `01-daily/briefs/` (it's not lost, just not the LATEST pointer), and tell the user which one you kept as LATEST and why in one sentence.
-     - `git checkout --ours 01-daily/LATEST-BRIEF.md` or `git checkout --theirs 01-daily/LATEST-BRIEF.md` as appropriate, then `git add 01-daily/LATEST-BRIEF.md`. Commit the merge and push.
-   - If a conflict shows up in any file other than `LATEST-BRIEF.md`, stop and ask the user before resolving; that means real work is at risk.
-4. **Confirm the result:** check whether `01-daily/briefs/daily-brief-<today>.md` now exists locally.
-   - If it exists: that's today's brief. Show it to the user instead of re-running research from scratch. Only fall through to a full local run if the user explicitly asks for a fresh/local run, or flags the cloud output as weak or wrong.
-   - If it's still missing despite the time check saying it should have run: say so plainly, check the routine's status with `RemoteTrigger {action: "get", trigger_id: "trig_01Q556EFWNooEE4QwDLmL564"}` and `list_runs`/`get_run_log` to see if it failed or was disabled, then offer to run the local version now.
+1. Get the real current date and time (`date '+%Y-%m-%d %H:%M'`, never guess).
+2. Check if a brief for TODAY already exists in `01-daily/briefs/daily-brief-YYYY-MM-DD.md`. If it does, show it instead of re-running, unless the user explicitly asks for a fresh run.
+3. If not, proceed straight to Process Flow below.
+4. **Sync local work first, unconditionally, no permission prompt.** Chris works in the vault throughout the day, so uncommitted local changes are the expected state, not a blocker: `git status --porcelain`, `git add -A` and commit anything found (e.g. `chore(vault): sync daily work before running daily brief`), then `git push origin main` after the brief is written.
 
-**Quality note:** the cloud routine runs on `claude-haiku-4-5-20251001` by default, which has produced weaker source verification than a local run (citing homepage/index URLs as sources, mislabeling tier). Per the Model Routing table in `CLAUDE.md`, data-collection and research work should run on Sonnet; if the cloud output looks weak, either fix it locally (this skill, full rigor) or update the routine's `session_context.model` to `claude-sonnet-5` via `RemoteTrigger {action: "update", ...}`.
+**If the cloud routine is ever re-enabled** (Anthropic adds a network allowlist option, or Chris wants a degraded-but-honest fallback again): re-enable via `RemoteTrigger {action: "update", ..., body: {"enabled": true}}`, and reinstate a cloud-check step that reads both sides of any `LATEST-BRIEF.md` merge conflict rather than blindly taking `--theirs`, comparing both the `date:` frontmatter and whether the incoming side's `sources_verified` claim is actually backed by successfully fetched permalinks (a brief that hit fetch failures and still claims verified must lose to a genuinely verified one, even if older). See [[cloud-sandbox-egress-blocking]] and [[remotetrigger-events-field-placement]] in memory for the full history of what went wrong with the cloud twin.
 
 ## Agent Mode Awareness
 
