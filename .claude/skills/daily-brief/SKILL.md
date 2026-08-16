@@ -105,12 +105,15 @@ Collect the information needed for personalized curation:
 
 Read up to 3 most recent daily briefs from `01-daily/briefs/` (most recent first):
 - Extract `dedup_urls` from their frontmatter (if present)
+- Extract `dedup_repos` from their frontmatter (if present), same purpose, for the Top GitHub Repos section
 - Also scan their headlines/story titles as semantic fallback for cross-source matching
-- Build a set of **covered stories** to avoid repeating
+- Build a set of **covered stories** and a set of **covered repos** to avoid repeating
 
 **Matching rules (in priority order):**
 1. **URL match (primary):** If a candidate story's main source URL already appears in `dedup_urls`, it's a known story
-2. **Headline match (fallback):** If the URL is different but the headline describes the same event as a previous story, treat as duplicate — this catches the same story reported by different outlets
+2. **Headline match (fallback):** If the URL is different but the headline describes the same event as a previous story, treat as duplicate, this catches the same story reported by different outlets
+
+**Repo dedup (Top GitHub Repos section):** a repo whose URL already appears in `dedup_repos` from the last 3 briefs is excluded, unless it has a genuinely new milestone since it was last mentioned (major version release, a large star-count jump, a notable new feature). If including it again for that reason, prefix its entry with "**Update:** _first featured [date]_" and state what changed.
 
 During news research (Step 2), apply dedup rules:
 - **Skip** stories already covered unless there is a **material update** (new data, resolution, escalation, reversal)
@@ -126,6 +129,7 @@ Apply comprehensive news research methodology:
 - Focus on strategic relevance to user's role and projects
 - Identify emerging patterns and developments
 - Diversify sources for balanced perspective
+- Also search GitHub trending / GitHub search for repos in Claude/Anthropic tooling, AI/agentic use, app development, and Obsidian ecosystem, for the Top GitHub Repos section (see Process Flow step 3)
 
 #### Verification Standards (MANDATORY)
 
@@ -206,6 +210,7 @@ interests: ["interest1", "interest2"]
 projects_referenced: ["project1"]
 items_count: [number]
 dedup_urls: ["https://primary-source-url-for-each-story-covered"]
+dedup_repos: ["https://github.com/owner/repo-for-each-repo-featured"]
 ---
 
 # Daily Brief - [Date]
@@ -344,6 +349,24 @@ Draw from two sources, mixed together and ranked by actual priority, not grouped
 - [Source listings with credibility tiers and links]
 
 **Confidence:** [High/Medium/Low] - [Reasoning]
+
+---
+
+## Top GitHub Repos
+
+Curated, not a raw trending dump. Target 3-5 repos genuinely relevant to Chris's interests: Claude/Anthropic tooling, general AI/agentic use, app development (Electron, WinUI3, Python), and Obsidian plugin/theme development. Skip anything already surfaced in a previous brief (see Deduplication below) unless it has a genuinely new milestone (major version, large star jump, notable new feature) since it was last mentioned.
+
+```markdown
+### [Repo Name](https://github.com/owner/repo)
+**Why it's here:** [Claude/Anthropic tooling | AI/agentic use | app development | Obsidian ecosystem]
+**What it does:** [1-2 sentence description]
+**Signal:** [star count/trend, e.g. "+450 this week" or "12k stars, steady growth"]
+**Relevance:** [Why this specifically matters to Chris's projects, if it does; skip this line if purely informational]
+```
+
+(3-5 entries; fewer is fine if fewer genuinely qualify. Never pad with a repo that's a stretch fit just to hit a target count.)
+
+Save each included repo's full GitHub URL to `dedup_repos` in frontmatter (see below).
 
 ---
 
