@@ -116,7 +116,7 @@ Apply comprehensive news research methodology:
 - Identify emerging patterns and developments
 - Diversify sources for balanced perspective
 - Also search GitHub trending / GitHub search for repos in Claude/Anthropic tooling, AI/agentic use, app development, and Obsidian ecosystem, for the Top GitHub Repos section (see Process Flow step 3)
-- Also browse r/ObsidianMD (https://www.reddit.com/r/ObsidianMD/) and the Obsidian forum feature-requests category (https://forum.obsidian.md/c/feature-requests/8) for the Plugin Ideas Watch section (see Process Flow step 3)
+- Also browse the Obsidian forum feature-requests category (https://forum.obsidian.md/c/feature-requests/8) for the Plugin Ideas Watch section (see Process Flow step 3; forum-only, Reddit was evaluated and dropped, see that section for why)
 
 #### Verification Standards (MANDATORY)
 
@@ -360,18 +360,22 @@ Save each included repo's full GitHub URL to `dedup_repos` in frontmatter (see b
 
 ## Plugin Ideas Watch
 
-Browse r/ObsidianMD (https://www.reddit.com/r/ObsidianMD/) and the Obsidian forum feature-requests category (https://forum.obsidian.md/c/feature-requests/8) for genuinely good **plugin** ideas: things a community plugin could build, not things only Obsidian's core team could ship, and not theme/CSS-only requests.
+Browse the Obsidian forum feature-requests category for genuinely good **plugin** ideas: things a community plugin could build, not things only Obsidian's core team could ship, and not theme/CSS-only requests.
+
+**Source: forum-only.** Reddit (r/ObsidianMD) was evaluated and dropped as a source: WebFetch and plain `curl` both fail on `reddit.com` with a 403 bot-block (not a header/User-Agent problem, Reddit's anti-bot layer blocks it outright), and the only working alternative, Reddit's official OAuth API, requires registering a developer account and accepting Reddit's Responsible Builder Policy, which Chris decided wasn't worth the overhead for this feature. Do not attempt to fetch reddit.com in this section; it will fail.
+
+**How to fetch the forum (Discourse JSON API, no auth needed):** run `curl -s "https://forum.obsidian.md/c/feature-requests/8.json"` via Bash. This returns structured topic data with `id`, `slug`, `title`, and `created_at` for every recent thread in the category, exactly what's needed for a dated permalink. Build each thread's permalink as `https://forum.obsidian.md/t/<slug>/<id>`. Filter to threads with `created_at` on/after the freshness cutoff before considering them as candidates.
 
 **Inclusion filter (all three must hold):**
 1. **It's a plugin idea.** Buildable as a community plugin using the Obsidian Plugin API (new command, panel, sidebar view, data processing, sync behavior, integration with an external tool, etc.).
 2. **It's not a theme.** Pure visual/CSS restyling requests (color schemes, icon packs, font changes) are excluded. That's theme territory, not plugin territory.
 3. **It's not a native-only feature.** If the request requires changes only Obsidian's core app could make (changes to the file format, the core sync engine, the app shell, mobile OS-level integration Obsidian itself doesn't expose an API for), it's excluded. No community plugin could satisfy it, regardless of how good the idea is.
 
-Target 0-5 ideas per brief. **0 is a valid and honest output** if nothing on either source this week clears the filter or survives dedup. In that case write "No new plugin ideas surfaced this week that cleared the plugin/theme/native filter." instead of stretching weak candidates to hit a count.
+Target 0-5 ideas per brief. **0 is a valid and honest output** if nothing on the forum this week clears the filter or survives dedup. In that case write "No new plugin ideas surfaced this week that cleared the plugin/theme/native filter." instead of stretching weak candidates to hit a count.
 
 ```markdown
 ### [Idea title, plugin-shaped, e.g. "Bulk frontmatter editor"]
-**Source:** [r/ObsidianMD post title](permalink) OR [Forum thread title](permalink), [Publication Date]
+**Source:** [Forum thread title](permalink), [Publication Date]
 **What it is:** [1-2 sentence description of the requested plugin behavior]
 **Why it clears the filter:** [one line confirming it's plugin-buildable, not a theme, not native-only]
 **Signal:** [upvotes/comments count, or "new thread, low engagement" if thin]
