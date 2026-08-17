@@ -99,6 +99,8 @@ Read up to 3 most recent daily briefs from `01-daily/briefs/` (most recent first
 
 **Repo dedup (Top GitHub Repos section):** a repo whose URL already appears in `dedup_repos` from the last 3 briefs is excluded, unless it has a genuinely new milestone since it was last mentioned (major version release, a large star-count jump, a notable new feature). If including it again for that reason, prefix its entry with "**Update:** _first featured [date]_" and state what changed.
 
+**Plugin idea dedup (Plugin Ideas Watch section):** read `dedup_plugin_ideas` from ALL previous daily briefs, not just the last 3; this list should never repeat over the skill's lifetime. Before including a candidate idea, check it against every slug in that combined list. A semantically equivalent idea (same core plugin concept, even if worded differently or sourced from a different post) counts as a duplicate and must be excluded. Unlike repos, there is no update-on-new-milestone exception; an idea either has been suggested before or has not.
+
 During news research (Step 2), apply dedup rules:
 - **Skip** stories already covered unless there is a **material update** (new data, resolution, escalation, reversal)
 - If including an update, prefix with "**Update:** _first covered [date]_"
@@ -114,6 +116,7 @@ Apply comprehensive news research methodology:
 - Identify emerging patterns and developments
 - Diversify sources for balanced perspective
 - Also search GitHub trending / GitHub search for repos in Claude/Anthropic tooling, AI/agentic use, app development, and Obsidian ecosystem, for the Top GitHub Repos section (see Process Flow step 3)
+- Also browse r/ObsidianMD (https://www.reddit.com/r/ObsidianMD/) and the Obsidian forum feature-requests category (https://forum.obsidian.md/c/feature-requests/8) for the Plugin Ideas Watch section (see Process Flow step 3)
 
 #### Verification Standards (MANDATORY)
 
@@ -195,6 +198,7 @@ projects_referenced: ["project1"]
 items_count: [number]
 dedup_urls: ["https://primary-source-url-for-each-story-covered"]
 dedup_repos: ["https://github.com/owner/repo-for-each-repo-featured"]
+dedup_plugin_ideas: ["short-slug-for-each-plugin-idea-featured"]
 ---
 
 # Daily Brief - [Date]
@@ -351,6 +355,31 @@ Curated, not a raw trending dump. Target 3-5 repos genuinely relevant to Chris's
 (3-5 entries; fewer is fine if fewer genuinely qualify. Never pad with a repo that's a stretch fit just to hit a target count.)
 
 Save each included repo's full GitHub URL to `dedup_repos` in frontmatter (see below).
+
+---
+
+## Plugin Ideas Watch
+
+Browse r/ObsidianMD (https://www.reddit.com/r/ObsidianMD/) and the Obsidian forum feature-requests category (https://forum.obsidian.md/c/feature-requests/8) for genuinely good **plugin** ideas: things a community plugin could build, not things only Obsidian's core team could ship, and not theme/CSS-only requests.
+
+**Inclusion filter (all three must hold):**
+1. **It's a plugin idea.** Buildable as a community plugin using the Obsidian Plugin API (new command, panel, sidebar view, data processing, sync behavior, integration with an external tool, etc.).
+2. **It's not a theme.** Pure visual/CSS restyling requests (color schemes, icon packs, font changes) are excluded. That's theme territory, not plugin territory.
+3. **It's not a native-only feature.** If the request requires changes only Obsidian's core app could make (changes to the file format, the core sync engine, the app shell, mobile OS-level integration Obsidian itself doesn't expose an API for), it's excluded. No community plugin could satisfy it, regardless of how good the idea is.
+
+Target 0-5 ideas per brief. **0 is a valid and honest output** if nothing on either source this week clears the filter or survives dedup. In that case write "No new plugin ideas surfaced this week that cleared the plugin/theme/native filter." instead of stretching weak candidates to hit a count.
+
+```markdown
+### [Idea title, plugin-shaped, e.g. "Bulk frontmatter editor"]
+**Source:** [r/ObsidianMD post title](permalink) OR [Forum thread title](permalink), [Publication Date]
+**What it is:** [1-2 sentence description of the requested plugin behavior]
+**Why it clears the filter:** [one line confirming it's plugin-buildable, not a theme, not native-only]
+**Signal:** [upvotes/comments count, or "new thread, low engagement" if thin]
+```
+
+(0-5 entries. Apply the same permalink-and-date verification standard as news sources: no citing a subreddit or forum category homepage, cite the actual post.)
+
+Save a short kebab-case slug for each included idea's core concept to `dedup_plugin_ideas` in frontmatter (see below), e.g. `bulk-frontmatter-editor`.
 
 ---
 

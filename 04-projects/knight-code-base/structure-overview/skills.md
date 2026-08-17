@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-15"
+date: "2026-08-16"
 tags: ["knight-code", "structure", "skills"]
 ---
 # Knight Code Skills
 
-Knight Code installs 54 skills. Each entry below is pulled from the live skills knowledge graph (name, description, and its declared tools list); the tables that follow are copied from SKILL-CATALOG.md for the invoke method and any associated custom agent, which the graph does not model.
+Knight Code installs 56 skills. Each entry below is pulled from the live skills knowledge graph (name, description, and its declared tools list); the tables that follow are copied from SKILL-CATALOG.md for the invoke method and any associated custom agent, which the graph does not model.
 ## Every installed skill
 
 | Skill | Description | Declared tools |
@@ -53,6 +53,8 @@ Knight Code installs 54 skills. Each entry below is pulled from the live skills 
 | `knightcode-planning-and-task-breakdown` | Decomposes a spec into ordered, sized tasks with acceptance criteria. | inherits session tools |
 | `knightcode-powershell-windows` | PowerShell-specific pitfalls, operator syntax, and error handling patterns. | inherits session tools |
 | `knightcode-prototype` | Builds multiple genuinely different UI versions behind a visual picker. | inherits session tools |
+| `knightcode-pytest-testing` | Writes production-grade pytest tests: fixtures, parametrize, markers, mocking, and conftest patterns. | inherits session tools |
+| `knightcode-python-performance` | Profiles and optimizes Python code: cProfile, memory/line profiling, and CPython-specific speedups. | inherits session tools |
 | `knightcode-scrape` | Pull data from a web page. | AskUserQuestion, Bash, Read |
 | `knightcode-security-and-hardening` | Hardens code against vulnerabilities while it is being written. | inherits session tools |
 | `knightcode-setup-pre-commit` | Set up Husky pre-commit hooks with lint-staged (Prettier), type checking, and tests in the current repo. | inherits session tools |
@@ -71,7 +73,7 @@ Copied directly from Knight Code's own SKILL-CATALOG.md.
 
 | Skill (installed as) | Invoke | Associated agent |
 |---|---|---|
-| `investigate` (`knightcode-investigate`) | Skill tool, or trigger phrases: "debug this", "fix this bug", "why is this broken", "investigate this error", "root cause analysis" | None, general-purpose, any session or agent can invoke it |
+| `investigate` (`knightcode-investigate`) | Skill tool, or trigger phrases: "debug this", "fix this bug", "why is this broken", "investigate this error", "root cause analysis". Ships three supporting technique files alongside `SKILL.md`: `reference-root-cause-tracing.md` (backward-tracing a deep-stack bug to its origin), `reference-defense-in-depth.md` (validating at every layer once root cause is found), `reference-condition-based-waiting.md` (replacing sleep-based test waits with condition polling, including `pytest-qt`) | None, general-purpose, any session or agent can invoke it |
 | `context-save` (`knightcode-context-save`) | Skill tool, or trigger phrases: "save progress", "save state", "save my work", "context save" | None, pairs with `context-restore` |
 | `context-restore` (`knightcode-context-restore`) | Skill tool, or trigger phrases: "resume", "restore context", "where was I", "pick up where I left off" | None, pairs with `context-save`, loads the most recent saved context across all branches by default |
 
@@ -110,6 +112,11 @@ Copied directly from Knight Code's own SKILL-CATALOG.md.
 | `domain-modeling` (`knightcode-domain-modeling`) | Skill tool, pinning down domain terminology, resolving a term that conflicts with what's already recorded in `CONTEXT.md`, or when `improve-codebase-architecture` needs the domain model kept current as a side effect | None. Ported from `github.com/mattpocock/skills`. Maintains `CONTEXT.md` (and `CONTEXT-MAP.md` for multi-context repos) as a project's domain glossary. Upstream's ADR half is adapted rather than ported as-is: this version calls `decision_log`/`decision_search` for hard-to-reverse, non-obvious, real-trade-off decisions instead of writing `docs/adr/` files, so architecture decisions don't end up split across two parallel record systems. Its reference file, `CONTEXT-FORMAT.md`, lives alongside the skill's own `SKILL.md` |
 | `grill-with-docs` (`knightcode-grill-with-docs`) | `/knightcode-grill-with-docs` only, `disable-model-invocation: true`. Composes `grill-me` and `domain-modeling` under one deliberate trigger, for when Chris wants both running together on purpose rather than leaving the combination to be inferred mid-interview | None. Ported from `github.com/mattpocock/skills`. Has no process of its own beyond the composition; both skills it names already run standalone (`grill-me` explicit or ambient, `domain-modeling` ambient) |
 | `improve-codebase-architecture` (`knightcode-improve-codebase-architecture`) | Skill tool, or `/improve-codebase-architecture`, `disable-model-invocation: true` by design (matches upstream), a full architecture scan is deliberate, not something to auto-trigger on a vague complaint | None. Ported from `github.com/mattpocock/skills`. Scans a codebase for deepening opportunities using `codebase-design`'s vocabulary, writes a self-contained Tailwind/Mermaid HTML report to the OS temp directory (never the repo) with before/after diagrams per candidate, then hands the picked candidate to `grill-me` to walk its decision tree and to `domain-modeling` to keep `CONTEXT.md` and any resulting decisions current. Its reference file, `HTML-REPORT.md` (scaffold, diagram patterns, styling and tone rules), lives alongside the skill's own `SKILL.md` |
+
+| Skill (installed as) | Invoke | Associated agent |
+|---|---|---|
+| `pytest-testing` (`knightcode-pytest-testing`) | Skill tool, writing or reviewing pytest tests: fixtures, parametrize, markers, mocking, conftest patterns, including `pytest-qt` tests for PySide6 widgets. Distinct from `test-driven-development` (what to test, red-green-refactor) and `investigate` (why a test fails) | None |
+| `python-performance` (`knightcode-python-performance`) | Skill tool, profiling or optimizing slow Python code: cProfile/line/memory profiling, CPython-specific speedups. Distinct from `performance-optimization`, which covers frontend/general slowness | None |
 
 | Skill (installed as) | Invoke | Associated agent |
 |---|---|---|

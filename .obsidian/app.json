@@ -1,3 +1,5 @@
 {
-  "propertiesInDocument": "hidden"
+  "propertiesInDocument": "hidden",
+  "settingsPopoutWindow": false,
+  "alwaysUpdateLinks": true
 }

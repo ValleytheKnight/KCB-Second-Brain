@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-15"
+date: "2026-08-16"
 tags: ["knight-code", "structure", "repo-layout"]
 ---
 # Knight Code Repo Layout
 
-Knight Code's repo root holds 74 top-level directories (excluding dotfiles and node_modules), one per skill, agent, host adapter, or supporting system. This is a shallow directory listing, not a description of each one; see the skills and agents sections above for what the skill/agent-named directories actually do.
+Knight Code's repo root holds 77 top-level directories (excluding dotfiles and node_modules), one per skill, agent, host adapter, or supporting system. This is a shallow directory listing, not a description of each one; see the skills and agents sections above for what the skill/agent-named directories actually do.
 ## Top-level directories
 
 - `Pen Designs/`
@@ -66,7 +66,10 @@ Knight Code's repo root holds 74 top-level directories (excluding dotfiles and n
 - `planning-and-task-breakdown/`
 - `powershell-windows/`
 - `prototype/`
+- `pytest-testing/`
+- `python-performance/`
 - `scrape/`
+- `scratchpad/`
 - `scripts/`
 - `security-and-hardening/`
 - `setup-pre-commit/`

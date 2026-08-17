@@ -23,7 +23,7 @@ A personal AI-agent tooling system Chris runs in Claude Code, at `C:\Users\Chris
 This is Chris's main/child project. Track it here on an ongoing basis, not as a one-time note.
 
 ## Current Status
-Actively developed and used daily. Obsidian plugins and themes Chris is building live nested inside this repo.
+Actively developed and used daily. Obsidian plugins and themes Chris is building live nested inside this repo. Skill catalog expanded 2026-08-16 with knightcode-pytest-testing and knightcode-python-performance (filled a confirmed gap: no PySide6/PyQt Claude skill exists anywhere on GitHub), plus three new reference docs folded into knightcode-investigate. Structural knowledge-graph coverage (the graphify/lorebrain pattern, previously campaign vault and Knight Code only) extended to sibling app projects Scryptable and KnightOS via per-project MCP instances, with a new hard-enforcement hook (project-graph-gate.ts) blocking blind Grep/Glob under any graphed project folder. See [[braindumps/braindump-2026-08-16-1418-scryptable-graphify-skills|2026-08-16 session braindump]] for full detail.
 
 ## Project Resources
 - [[braindumps/|Project Braindumps]]

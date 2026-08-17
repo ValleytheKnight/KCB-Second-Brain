@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-15"
+date: "2026-08-16"
 tags: ["knight-code", "structure", "hooks"]
 ---
 # Knight Code Hooks
 
-Knight Code wires 22 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
+Knight Code wires 23 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
 
 ## `agent-registry-gate.ts`
 
@@ -674,6 +674,66 @@ Invariants:
     commands run through Git Bash on Windows (PowerShell if absent), and
     in exec form through no shell at all; either way Windows cannot execute
     an extension-less script.
+
+## `project-graph-gate.ts`
+
+PreToolUse hook (Claude Code) on Grep/Glob. DENIES a text/pattern search
+under any DevPrograms app project root that has a real knightbrain_<slug>
+knowledge graph, so structural lookup (knightbrain_<slug>_query/_def/_refs)
+is the only path in, never a fallback that quietly stays reachable.
+
+Why prohibition, not just ordering. skill-graph-first-gate.ts (the sibling
+this is modeled on) enforces sequence, query once, then the gated files
+stay open, because SKILL-CATALOG.md and AGENTS.md carry real prose the
+graph does not model (exact wording, ordering, persona sections). An app
+project's source tree has no equivalent: everything Grep/Glob would find
+there, symbol locations, call sites, references, the graph already models
+structurally and keeps current automatically. So this gate blocks every
+time, not just the first, per Chris's own instruction: devknight (and any
+other agent) should never fall back to blind search on a graphed project.
+
+Registry is read live from ~/.claude.json rather than hardcoded, the same
+"no staleness excuse" reasoning the graphs themselves are built on: any
+mcpServers entry whose args invoke lorebrain's cli.ts in `mcp` mode with a
+`--tool-prefix` starting `knightbrain_` (knightbrain_scryptable,
+knightbrain_knightos, and whatever formal-dev-workflow's Phase 0a adds
+next) is a gated root, paired with that entry's own `--root` value. Adding
+a project's graph is enough to gate it; nothing here needs hand-editing.
+
+The other half of Chris's ask, alert rather than silently fall back when
+the MCP is actually down, cannot be mechanically verified from a hook: a
+PreToolUse hook is a fresh process with no view of this session's live
+tool registry, it can only tell a graph was ever indexed, not whether the
+matching MCP server answered a call five seconds ago. That judgment is
+therefore pushed into the denial message itself and into devknight's own
+definition: if the named knightbrain_<slug>_* tools are missing or error,
+that is the MCP being down, and the instructed response is to stop and
+tell Chris to run `/mcp`, never to quietly retry with Grep/Glob.
+
+Fails open, in three ways that each prevent a deadlock:
+  - No gated roots found (registry file missing, unreadable, or empty): allow.
+  - Target path is not under any gated root: allow.
+  - KNIGHTCODE_PROJECT_GRAPH_GATE=off: explicit operator override, for the
+    rare case Grep genuinely is the right tool (exact prose string, a
+    generated file, content the graph does not model) or the graph is
+    confirmed down and Chris has said to proceed without it anyway.
+  - Any internal error: allow.
+
+Triggered by .claude/settings.json:
+  {
+    "hooks": {
+      "PreToolUse": [
+        {
+          "matcher": "Grep|Glob",
+          "hooks": [
+            { "type": "command",
+              "command": "bun",
+              "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/project-graph-gate.ts"] }
+          ]
+        }
+      ]
+    }
+  }
 
 ## `question-log-hook.ts`
 

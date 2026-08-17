@@ -104,7 +104,7 @@ AI skills/tools + GitHub repos: github.com/trending, Hugging Face blog, r/LocalL
 ## Action Items
 
 ### Immediate (24-48 hours)
-- [ ] Decide whether to run a loremaster pass to fix the 2026-08-10 loreGod QA sanity-check failure 📅 2026-08-13 #task
+- [x] Decide whether to run a loremaster pass to fix the 2026-08-10 loreGod QA sanity-check failure #task 📅 2026-08-13 ✅ 2026-08-16
 - [ ] Update MY-INTERESTS.md with the new preferred sources list 📅 2026-08-13 #task
 
 ### Short-term (1-2 weeks)
