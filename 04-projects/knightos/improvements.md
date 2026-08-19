@@ -19,7 +19,8 @@ action QuickAdd: Promote Project
 
 ## Open
 
-- 2026-08-12: 
+- 2026-08-12:
+- [ ] 2026-08-17 18:32: adding pan/zoom-tile behavior to the exisiting canvas set up
 
 ## Triaged / Actioned
 
