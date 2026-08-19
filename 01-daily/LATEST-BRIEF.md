@@ -1,129 +1,154 @@
 ---
 type: "daily-brief"
 domain: "shared"
-date: "2026-08-17"
-created: "2026-08-17 16:15"
+date: "2026-08-19"
+created: "2026-08-19 02:52"
 sources_verified: true
 news_age_verified: true
 confidence: "medium-high"
 tags: ["#daily-brief", "#news", "#strategic-intelligence"]
 interests: ["LLMs", "agentic-workflows", "MCP", "Obsidian", "AI-tools", "PKM"]
-projects_referenced: ["Knight-Code", "Obsidian-Plugins-Themes", "Scryptable"]
-items_count: 1
+projects_referenced: ["Obsidian-Plugins-Themes", "KnightOS", "Knight-Code", "Obsidian-Competitor"]
+items_count: 2
 dedup_urls: [
-  "https://github.com/YishenTu/claudian/releases/tag/2.1.4"
+  "https://simonwillison.net/2026/Aug/16/markdown-svg-upgrades/",
+  "https://claude.com/blog/claude-tag-now-reads-even-more-of-the-room"
 ]
 dedup_repos: [
-  "https://github.com/Leutenegger/book-to-skill",
-  "https://github.com/yetone/cumora",
-  "https://github.com/hsusul/lore",
-  "https://github.com/niclasvestlund-YT/vibepulse",
-  "https://github.com/fellowgeek/mcp-memory",
-  "https://github.com/nduc99911/repo-context-mcp",
-  "https://github.com/laruence/wechatian",
-  "https://github.com/Awaker-OTE/readingspace-mn"
+  "https://github.com/jdshfhds/northcinder",
+  "https://github.com/decionis/agent-safe-pipeline",
+  "https://github.com/Avijit07x/claude-db",
+  "https://github.com/squall01337/mixamo-llm-mocap",
+  "https://github.com/haiqiang-zhang/obsidian-tasks-bridge-plugin"
 ]
-dedup_plugin_ideas: []
+dedup_plugin_ideas: ["new-tab-note-shortcuts"]
 ---
 
-# Daily Brief - August 17, 2026
+# Daily Brief - August 19, 2026
 
-**Good afternoon, Chris!**
+**Good morning, Chris!**
 
 ## Executive Summary
 
-Thin news week: only one story cleared the 7-day verification bar (a same-day release of Claudian, an Obsidian plugin that embeds Claude Code/Codex directly in a vault, worth a look given your own plugin work). GitHub search turned up a stronger signal this cycle instead: eight fresh repos across Claude tooling, MCP, and Obsidian dev, including an MCP server for persistent memory and a "git memory for coding agents" tool that both echo patterns Knight Code already uses. No verified Obsidian plugin ideas this week, Reddit access was blocked and the forum's results couldn't be pinned to a specific dated post, so that section reports zero rather than guessing.
+Another thin news week, only two stories cleared the 7-day verification bar: Simon Willison shipped an MP4-export upgrade to his markdown-SVG tool, and Anthropic gave Claude Tag (Claude in Slack) whole-channel context for deciding when to jump in. The bigger story this cycle is on your own plate: two stale project items (Anchor Flow's manual test walkthrough, KnightOS Milestone 1 Task 9) are now overdue, and the Spellcraft/mobile-PDF-exporter timeline decision is due today. GitHub search surfaced a strong AI-agent-safety pattern repo worth a look given Knight Code's own mutation/post-condition rules. The Obsidian forum turned up exactly one plugin idea that clears the plugin/theme/native filter, on thin engagement.
 
 ---
 
 ## Recommended Actions Today
 
-### 1. Skim Claudian's approach to embedding coding agents in a vault
-**Why:** Claudian (14.8k stars) shipped v2.1.4 today, and its whole premise, an Obsidian plugin that runs Claude Code/Codex as an in-vault collaborator, sits directly on top of what you're already doing with Knight Code and your own plugin builds. Worth 10 minutes to see what UX patterns it's landed on (dual-pane sidebar, file-tree actions, slash-command handling) before you build the same thing differently.
-**Project(s):** Knight Code, Obsidian Plugins & Themes
-📅 2026-08-18
-
-### 2. Anchor Flow: do the manual v1 test walkthrough
-**Why:** This Next Steps item was due 2026-08-14 and is now three days stale, blocking the decision on pushing remaining local commits.
+### 1. Do the Anchor Flow manual v1 test walkthrough
+**Why:** This Next Steps item was due 2026-08-14 and is now five days stale, still blocking the decision on pushing remaining local commits. It has carried over unresolved in the last three consecutive briefs (08-16, 08-17).
 **Project(s):** Obsidian Plugins & Themes
-📅 2026-08-17
+📅 2026-08-19
 
-### 3. Audit Knight Code's API key and credential storage strategy
-**Why:** Carried over from the 2026-08-14 brief (LLMjacking threat), due 2026-08-20 and still open. With `mcp-memory` and `repo-context-mcp` both landing this week as examples of MCP servers holding persistent state/credentials, it's a good moment to actually do this audit rather than let it slide further.
+### 2. Start or triage KnightOS Milestone 1 Task 9
+**Why:** Drag-to-reorder tabs, reopen-closed-tab shortcut, and per-tab color coding were due 2026-08-18 and are now a day overdue, with no other Milestone 1 items showing as started.
+**Project(s):** KnightOS
+📅 2026-08-19
+
+### 3. Decide on a start timeline for Spellcraft / the mobile PDF exporter
+**Why:** This decision was explicitly due today (2026-08-19) per the Obsidian Plugins & Themes Next Steps. Heavy research is already done (rendering pipeline, licensing, 22 scoped risk tests); this is a go/no-go/when call, not new work.
+**Project(s):** Obsidian Plugins & Themes
+📅 2026-08-19
+
+### 4. Audit Knight Code's API key and credential storage strategy
+**Why:** Carried over from the 2026-08-14 brief (LLMjacking threat), due 2026-08-20 and still open. This cycle's GitHub research turned up `decionis/agent-safe-pipeline`, a reference architecture for agents that can't self-authorize actions, directly relevant background reading before doing the audit.
 **Project(s):** Knight Code
 📅 2026-08-20
 
 ---
 
-## High Impact News
+## Technology Watch
 
-### Claudian ships v2.1.4, an Obsidian plugin embedding Claude Code/Codex in-vault
-**Relevance:** Direct overlap with your own Obsidian plugin work and Knight Code's agentic-tooling focus.
+### Simon Willison's markdown-svg-renderer adds MP4 export via ffmpeg.wasm
+**Relevance:** Willison is your named strongest source for LLM tooling and agentic patterns; this is a small but concrete example of in-browser tooling design worth knowing about if you ever need to export SVG output (e.g. from a Claude Code skill or Obsidian plugin) to a shareable video format.
 
-Claudian is a community Obsidian plugin (~14.8k stars) that embeds Claude Code, Codex, and other coding-agent CLIs as an in-vault AI collaborator. Today's v2.1.4 release fixes tab-attention state, slash-command dropdown ghosting, Codex fast-toggle behavior, auto-scroll after navigation, and restores Claude runtime context windows. The prior release (2.1.3, 2026-08-10) added native vault file-tree actions and a dual-pane sidebar with file tree, near-daily release cadence.
+Willison upgraded his `markdown-svg-renderer` tool, which renders SVG code embedded in Markdown, with new tabs to view SVGs as PNG, JPEG, MP4, or raw code. The new MP4 feature (added the same day) auto-detects SVG animations, estimates duration, and uses `ffmpeg.wasm` running entirely in the browser to compile animation frames into a downloadable video, useful for sharing SVG animations on platforms that don't render SVG natively.
 
-**Impact Assessment:**
-- **Projects Affected:** Knight Code, Obsidian Plugins & Themes
-- **Potential Effects:** A live, actively-maintained reference implementation for "agent inside an Obsidian vault," the same space Knight Code's Obsidian-facing tooling sits in
-- **Action Suggested:** See Recommended Action #1 above
+**Technology Implications:**
+- A working in-browser SVG-to-video pattern, relevant if any future Knight Code skill or Obsidian plugin needs to export animated SVG (e.g. diagram-design style output) to video
+- No dependency on external rendering services; entirely client-side via WASM
 
 **Sources:**
-- [Claudian v2.1.4 release](https://github.com/YishenTu/claudian/releases/tag/2.1.4) (Tier 1) - 2026-08-17
+- Simon Willison's Weblog (Tier 1, primary author source), 2026-08-16, https://simonwillison.net/2026/Aug/16/markdown-svg-upgrades/
 
-**Confidence:** High, verified via GitHub Releases API `published_at` timestamp, same-day.
+**Confidence:** High. Primary source, author's own blog, dated post fetched directly.
+
+---
+
+### Claude Tag (Claude in Slack) now reads whole-channel context before deciding to respond
+**Relevance:** Informational for anyone using Claude in Slack; not directly tied to a current Knight Code integration, but a relevant pattern if you ever wire Slack into your own workflows.
+
+Anthropic upgraded Claude Tag so it no longer judges whether to proactively respond based only on the single message in front of it. It now factors in context from across the whole channel, plus memory and standing instructions, making it roughly 30% better at deciding when (and when not) to jump into a conversation.
+
+**Technology Implications:**
+- A useful reference pattern for "when should an agent act unprompted" logic, adjacent to any future work giving Knight Code agents more autonomous trigger conditions
+
+**Sources:**
+- Claude/Anthropic Blog (Tier 1, official), 2026-08-13, https://claude.com/blog/claude-tag-now-reads-even-more-of-the-room
+
+**Confidence:** High. Official first-party source, dated post fetched directly.
+
+---
+
+### MCP: a security-inflection-point story just missed the cutoff, worth a follow-up next cycle
+No MCP news cleared verification this cycle. A Forkast News preview of the Aug 13-14 Seoul MCP Dev Summit (citing 21,000+ exposed MCP servers, roughly 92% missing OAuth, an OWASP MCP Top 10, and a Linux Foundation Agentic AI Foundation governance shift) was found but its permalink is dated Aug 11, one day before this week's cutoff, so it was dropped rather than stretched. Worth searching next run for an actual summit recap piece dated Aug 13-14 or later.
 
 ---
 
 ## Top GitHub Repos
 
-### [book-to-skill](https://github.com/Leutenegger/book-to-skill)
-**Why it's here:** Claude/Anthropic tooling
-**What it does:** Turns a technical-book PDF into a Claude Code Skill for study and reference while coding.
-**Signal:** 1,170 stars, created 2026-08-13
-**Relevance:** A novel skill-generation pattern worth knowing about given how much of Knight Code is built on custom skills.
-
-### [cumora](https://github.com/yetone/cumora)
-**Why it's here:** AI/agentic use
-**What it does:** Cross-platform team chat where AI agents are first-class teammates ("where agent teams gather").
-**Signal:** 697 stars, created 2026-08-17 (today)
-**Relevance:** Multi-agent coordination pattern adjacent to Knight Code's own agent-orchestration design.
-
-### [lore](https://github.com/hsusul/lore)
-**Why it's here:** Claude/Anthropic tooling
-**What it does:** "Git memory for coding agents", a local, searchable archive of Claude Code/Codex sessions.
-**Signal:** 145 stars, created 2026-08-10
-**Relevance:** Overlaps directly with Knight Code's own memory and harvest patterns; worth a look for prior art.
-
-### [mcp-memory](https://github.com/fellowgeek/mcp-memory)
+### [northcinder](https://github.com/jdshfhds/northcinder)
 **Why it's here:** MCP ecosystem
-**What it does:** MCP server providing persistent long-term memory with a SQLite backend.
-**Signal:** 179 stars, created 2026-08-13
-**Relevance:** Directly on your MCP and PKM/memory interests, a concrete example of externalized agent memory over MCP.
+**What it does:** Buyer-run, ad-neutral shopping-agent MCP server with deterministic ranking, signed purchase mandates, and a local audit trail, lets an AI agent shop on a user's behalf with cryptographically verifiable, auditable purchase authorization.
+**Signal:** 1,158 stars, created 2026-08-17
 
-### [wechatian](https://github.com/laruence/wechatian)
+### [agent-safe-pipeline](https://github.com/decionis/agent-safe-pipeline)
+**Why it's here:** AI/agentic use
+**What it does:** Reference architecture for AI agents that can propose actions but can't self-authorize them: immutable intent capture, an independent policy verdict (ALLOW/ESCALATE/BLOCK), verified human approval, and a single-use intent-bound execution grant.
+**Signal:** 533 stars, created 2026-08-13
+**Relevance:** Directly parallels the mutation/post-condition and verifier-before-mutation rules already in Knight Code's CLAUDE.md, worth a skim before the credential audit (see Recommended Action #4).
+
+### [claude-db](https://github.com/Avijit07x/claude-db)
+**Why it's here:** Claude/Anthropic tooling
+**What it does:** Persistent memory for Claude Code, bring-your-own-database backend so sessions can persist memory and state outside a fixed store.
+**Signal:** 88 stars, created 2026-08-15
+**Relevance:** Adjacent to Knight Code's own memory/harvest system; a different backend-flexibility take worth knowing about.
+
+### [mixamo-llm-mocap](https://github.com/squall01337/mixamo-llm-mocap)
+**Why it's here:** MCP ecosystem / app development crossover
+**What it does:** Turns any video into a Mixamo-rig animation via GVHMR pose estimation, spec-driven retargeting, and FK apply in Blender, driven through MCP so an LLM agent can direct the animation pipeline.
+**Signal:** 61 stars, created 2026-08-17
+
+### [obsidian-tasks-bridge-plugin](https://github.com/haiqiang-zhang/obsidian-tasks-bridge-plugin)
 **Why it's here:** Obsidian ecosystem
-**What it does:** WeChat-to-Obsidian bridge plugin; receives messages/media into the vault and lets agents send messages back via a file-based interface.
-**Signal:** 20 stars, created 2026-08-16
-**Relevance:** A novel "vault as agent workspace" integration pattern, small but conceptually interesting for future Obsidian plugin ideas.
+**What it does:** "Tasks Bridge," an integration layer connecting Obsidian's Tasks plugin to external systems.
+**Signal:** 3 stars, created 2026-08-09 (just outside this week's window but included as a direct hit; flagged as very early-stage/speculative)
+**Relevance:** Directly on-topic given your standing rule of managing all tasks via the Obsidian Tasks plugin; worth watching even at this early stage.
 
 ---
 
 ## Plugin Ideas Watch
 
-No new plugin ideas surfaced this week that cleared the plugin/theme/native filter. Direct fetch access to r/ObsidianMD was blocked in this environment, and the Obsidian forum's feature-requests results couldn't be pinned to a specific, dated permalink within the 7-day window, they read as evergreen/aggregated summaries rather than confirmed recent posts. Reporting zero rather than including unverified candidates. Next run, this needs an authenticated Reddit route (WebFetch is blocked for reddit.com here) to get real coverage on that source.
+### New Tab Note Shortcuts
+**Source:** [New Tab Note Shortcuts](https://forum.obsidian.md/t/new-tab-note-shortcuts/117406), 2026-08-16
+**What it is:** A request for a Firefox-style shortcuts row on Obsidian's new-tab page, letting users pin frequently visited notes for one-click access instead of searching the file sidebar each time.
+**Why it clears the filter:** Buildable as a community plugin, a custom new-tab/start-page view with pinned-note shortcuts is achievable via the Workspace and commands API (similar in spirit to existing "Homepage" plugins); it's not a theme/CSS request, and nothing about it requires core-app-only changes.
+**Signal:** New thread, low engagement (1 reply, 0 likes)
 
 ---
 
 ## Opportunities & Recommendations
 
 ### Immediate Actions (Today/This Week)
-- [ ] Skim Claudian's plugin UX patterns 📅 2026-08-18
-- [ ] Anchor Flow manual v1 test walkthrough 📅 2026-08-17
+- [ ] Anchor Flow manual v1 test walkthrough 📅 2026-08-19
+- [ ] Start/triage KnightOS Milestone 1 Task 9 📅 2026-08-19
+- [ ] Decide Spellcraft / mobile PDF exporter timeline 📅 2026-08-19
 - [ ] Knight Code credential storage audit 📅 2026-08-20
 
 ### Research Needed
-- Find a working route to r/ObsidianMD content for the new Plugin Ideas Watch section (WebFetch blocked on reddit.com)
-- Watch whether Claudian's approach influences design decisions for your own Obsidian plugin work
+- Follow up next cycle for an MCP Seoul Dev Summit recap dated Aug 13-14 or later (this week's only lead predated the cutoff by one day)
+- Skim `decionis/agent-safe-pipeline` before doing the Knight Code credential audit
 
 ### People to Inform/Consult
 - None flagged this cycle
@@ -136,51 +161,62 @@ No new plugin ideas surfaced this week that cleared the plugin/theme/native filt
 - None new this cycle
 
 ### Emerging Risks to Monitor
-- Credential/API key exposure in MCP servers holding persistent state (see mcp-memory, repo-context-mcp above), relevant background for the Knight Code credential audit
+- MCP server security remains an open industry concern (the dropped Forkast/Seoul summit preview cited roughly 92% of exposed MCP servers missing OAuth); relevant background as Knight Code's own MCP servers proliferate (vaultgraph, project-graph instances)
+- Two consecutive project items (Anchor Flow walkthrough, KnightOS Task 9) have now gone stale past their due dates; worth checking whether due dates on Next Steps items are realistic or need a workflow adjustment
 
 ---
 
 ## Verification Report
 
 ### Source Analysis
-- **Tier 1 Sources:** 1 - GitHub Releases API (Claudian)
-- **Tier 1 Sources (repos):** 8 - GitHub Search API, `created:>2026-08-08` filter, dates from `created_at`
-- **Cross-References Performed:** All dates verified directly via GitHub API responses, not WebSearch snippets
+- **Tier 1 Sources:** 2 (Simon Willison's Weblog, Claude/Anthropic Blog, both fetched directly)
+- **Tier 1 Sources (repos):** 5, GitHub, dates confirmed via repo `created_at`
+- **Cross-References Performed:** All permalinks fetched directly and dated on-page before inclusion; a candidate MCP security story (Forkast News) was found and excluded specifically because its date fell one day outside the window rather than being softened in
 
 ### Fact-Checking Results
-- **Verified Claims:** 1 news item + 8 repos, all with API-confirmed dates
-- **Unverified Claims:** 0 (candidates that failed date verification were dropped, not softened, see notes below)
+- **Verified Claims:** 2 news items + 5 repos + 1 forum plugin idea, all with directly-fetched/API-confirmed dates
+- **Unverified Claims:** 0 included (candidates that failed date verification were dropped, not softened, see Technology Watch note above and dropped-candidates list below)
 - **Conflicting Information:** None
 
 ### Freshness Verification
-- ✅ All news and repo items verified on/after the 2026-08-10 cutoff
-- Publication date range: 2026-08-10 to 2026-08-17
+- All news, repo, and forum items verified on/after the 2026-08-12 cutoff (one repo, obsidian-tasks-bridge-plugin, created 2026-08-09, is technically outside the window but included transparently as a direct topical hit, flagged above)
+- Publication date range: 2026-08-13 to 2026-08-19
 
 ### Confidence Assessment
 - **Overall Confidence:** 80%
-- **High Confidence Items:** 9 (1 news + 8 repos, all API-dated)
-- **Medium Confidence Items:** 0
-- **Low Confidence Items:** 0 (Plugin Ideas Watch correctly returned 0 rather than a low-confidence guess)
+- **High Confidence Items:** 7 (2 news + 5 repos, all directly fetched/API-dated)
+- **Medium Confidence Items:** 1 (New Tab Note Shortcuts plugin idea, thin engagement, single source)
+- **Low Confidence Items:** 0
 
-**Note on this cycle's thin news:** several candidate leads (MCP spec update, Claude for Government beta, Claude Code point-release notes, an MCP "950 servers" claim) either predated the cutoff or lacked a verifiable dated permalink and were dropped rather than included with a soft caveat, per this skill's mechanical fetch-and-date-check rule.
+**Candidates dropped this cycle (date or relevance failures, not included even softened):**
+- MCP spec update (blog.modelcontextprotocol.io): dated late July, well before cutoff
+- 9to5Mac piece on Claude Code auto-mode default: dated Aug 7, before cutoff, no fresher primary permalink found
+- Anthropic Compliance API expansion (Claude Cowork/Claude Code): dated Aug 11, before cutoff
+- "Claude in Chrome side panel is now Claude Cowork" rebrand: dated Aug 12 (on the cutoff) but out of scope for tracked interest areas, left out as low relevance
+- Forkast News MCP Seoul Dev Summit preview: dated Aug 11, one day before cutoff
+- Hugging Face blog post on agentic PKM/Obsidian integration: no verifiable dated permalink found
+- General Anthropic business/finance news (IPO plans, compute deals): out of scope
+- `flickzoz/mcp-guard` repo: description unconfirmed, low confidence, left out of the featured list
+- A wave of "DSH"-branded plugin ecosystem repos trending this week: not in Chris's stated interest areas despite superficial naming overlap with Claude/Anthropic
 
 ---
 
 ## Complete Sources
 
-### Strategic News
-1. [Claudian v2.1.4 release notes](https://github.com/YishenTu/claudian/releases/tag/2.1.4)
-
 ### Technology Watch
-1. [book-to-skill](https://github.com/Leutenegger/book-to-skill)
-2. [cumora](https://github.com/yetone/cumora)
-3. [lore](https://github.com/hsusul/lore)
-4. [mcp-memory](https://github.com/fellowgeek/mcp-memory)
-5. [repo-context-mcp](https://github.com/nduc99911/repo-context-mcp)
-6. [vibepulse](https://github.com/niclasvestlund-YT/vibepulse)
-7. [wechatian](https://github.com/laruence/wechatian)
-8. [readingspace-mn](https://github.com/Awaker-OTE/readingspace-mn)
+1. Simon Willison's Weblog. "markdown-svg-renderer upgrades" (Aug 16, 2026). https://simonwillison.net/2026/Aug/16/markdown-svg-upgrades/
+2. Claude/Anthropic Blog. "Claude Tag now reads even more of the room" (Aug 13, 2026). https://claude.com/blog/claude-tag-now-reads-even-more-of-the-room
+
+### GitHub Repos
+3. northcinder. https://github.com/jdshfhds/northcinder
+4. agent-safe-pipeline. https://github.com/decionis/agent-safe-pipeline
+5. claude-db. https://github.com/Avijit07x/claude-db
+6. mixamo-llm-mocap. https://github.com/squall01337/mixamo-llm-mocap
+7. obsidian-tasks-bridge-plugin. https://github.com/haiqiang-zhang/obsidian-tasks-bridge-plugin
+
+### Plugin Ideas Watch
+8. Obsidian Forum. "New Tab Note Shortcuts" (Aug 16, 2026). https://forum.obsidian.md/t/new-tab-note-shortcuts/117406
 
 ---
 
-*Curated by COG News Curator | All news verified within 7-day freshness window | Sources cross-referenced for accuracy*
+*Curated by COG News Curator | All news verified within 7-day freshness window via direct WebFetch of dated permalinks | Sources cross-referenced for accuracy*
