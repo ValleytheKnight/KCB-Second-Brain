@@ -27,6 +27,7 @@ Find verified, relevant news for personalized daily briefings with strict verifi
 2. Check if a brief for TODAY already exists in `01-daily/briefs/daily-brief-YYYY-MM-DD.md`. If it does, show it instead of re-running, unless the user explicitly asks for a fresh run.
 3. If not, proceed straight to Process Flow below.
 4. **Sync local work first, unconditionally, no permission prompt.** Chris works in the vault throughout the day, so uncommitted local changes are the expected state, not a blocker: `git status --porcelain`, `git add -A` and commit anything found (e.g. `chore(vault): sync daily work before running daily brief`), then `git push origin main` after the brief is written.
+5. **Update `01-daily/LATEST-BRIEF.md` after writing the dated brief file.** Copy the full contents of the new `01-daily/briefs/daily-brief-YYYY-MM-DD.md` over `01-daily/LATEST-BRIEF.md` (overwrite, don't append), then commit (`chore(daily-brief): update LATEST-BRIEF pointer to YYYY-MM-DD`) and push. `LATEST-BRIEF.md` is the pointer other tools/notes read for "today's brief," so it must never lag behind the dated file. If step 2 above found today's brief already exists and was shown without a fresh run, skip this step, `LATEST-BRIEF.md` should already match it.
 
 **If the cloud routine is ever re-enabled** (Anthropic adds a network allowlist option, or Chris wants a degraded-but-honest fallback again): re-enable via `RemoteTrigger {action: "update", ..., body: {"enabled": true}}`, and reinstate a cloud-check step that reads both sides of any `LATEST-BRIEF.md` merge conflict rather than blindly taking `--theirs`, comparing both the `date:` frontmatter and whether the incoming side's `sources_verified` claim is actually backed by successfully fetched permalinks (a brief that hit fetch failures and still claims verified must lose to a genuinely verified one, even if older). See [[cloud-sandbox-egress-blocking]] and [[remotetrigger-events-field-placement]] in memory for the full history of what went wrong with the cloud twin.
 
@@ -467,6 +468,8 @@ Save a short kebab-case slug for each included idea's core concept to `dedup_plu
 
 Save to: `01-daily/briefs/daily-brief-YYYY-MM-DD.md`
 
+Then update `01-daily/LATEST-BRIEF.md` per step 5 under Local-Only Operation above (overwrite with the new brief's full contents, commit, push). This step is not optional, `LATEST-BRIEF.md` is a pointer file other notes and tools read for "today's brief," and it silently goes stale if only the dated file is written.
+
 ### 4. Handle Special Cases
 
 **When No Recent News Found:**
@@ -528,6 +531,7 @@ Last significant development was [date if known] regarding [topic if known].
 
 ### 5. Confirm Completion
 - Confirm file was created
+- Confirm `01-daily/LATEST-BRIEF.md` was updated to match and pushed
 - Show user: "Daily brief saved to [file path]"
 - Optionally show executive summary
 - Ask if they want to explore any topic deeper or capture thoughts via braindump skill
