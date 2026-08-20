@@ -33,7 +33,7 @@ CEO review, design review, engineering review, and security review are all APPRO
 - [[improvements|Improvement Ideas]]
 
 ## Next Steps
-- [ ] Get Chris's go-ahead to start Task 4: Craig archive import (zip-slip containment) #task
+- [x] Get Chris's go-ahead to start Task 4: Craig archive import (zip-slip containment) #task
 
 ---
 

@@ -88,7 +88,7 @@ confidence: "high"
 - [x] Decide whether to remove the stale KnightOS-task10 git worktree (branch already merged into master) 📅 2026-08-17
 
 ### Short-term (1-2 weeks)
-- [ ] Give go-ahead (or hold) on Scryptable Task 4: Craig archive import with zip-slip path-traversal containment 📅 2026-08-23
+- [x] Give go-ahead (or hold) on Scryptable Task 4: Craig archive import with zip-slip path-traversal containment 📅 2026-08-23
 
 ### Strategic Considerations
 - No other app projects are known to be missing a knightbrain graph right now, but worth a periodic check as new DevPrograms folders appear. Phase 0a should catch this going forward automatically.
