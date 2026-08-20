@@ -34,10 +34,11 @@ Actively developed and used daily. Obsidian plugins and themes Chris is building
 ## Next Steps
 - [ ] Note improvement ideas for Knight Code as they come up #task
 - [ ] Track ideas/progress for nested Obsidian plugins/themes (see [[04-projects/obsidian-plugins-themes/PROJECT-OVERVIEW|Obsidian Plugins & Themes]]) #task
-- [ ] Audit Knight Code's API key and credential storage strategy (LLMjacking threat flagged in the 2026-08-14 daily brief) 📅 2026-08-20 #task
+- [x] Audit Knight Code's API key and credential storage strategy (LLMjacking threat flagged in the 2026-08-14 daily brief) 📅 2026-08-20 #task
 
 ## Closing Notes
 
+- 2026-08-20: Credential storage audit complete. Fixed F1 (CRITICAL): `~/.claude.json` held five plaintext MCP bearer tokens (Obsidian REST API keys, lorebrain-vault, knight-code-base) unprotected, while on-disk copies of the same secrets were already Read-denied. Added `Read(~/.claude.json)` to the deny list in `.claude/settings.json`. Fixed F2 (MEDIUM): redaction engine (`lib/redact-patterns.ts`) had no pattern for `Bearer <hex>` tokens; added `bearer.hex_token` (HIGH tier), regenerated Mnemosyne's ported config (13 to 14 patterns), `redact-guard.test.ts` 20/20 pass. Gmail password handling and the three `~/.knightcode/*` credential files needed no changes (correctly permissioned, gitignored, Read-denied).
 - 2026-08-12 18:36: implemented. mcp server can be found in [[mcp-servers]]. forced spec workflow is not a gate when planning new apps or plugins
 
 ---
