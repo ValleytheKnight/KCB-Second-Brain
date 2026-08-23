@@ -8,6 +8,18 @@
         "serve",
         "/home/vtk/Documents/Obsidian Vaults/Knight Code Base"
       ]
+    },
+    "obsidian_knight_code_base": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-obsidian"
+      ],
+      "env": {
+        "OBSIDIAN_API_KEY": "e2c7f46b19be9b0d9757b97447b983b3a608bd66fdb3fc06860ef398b8e88312",
+        "OBSIDIAN_HOST": "127.0.0.1",
+        "OBSIDIAN_PORT": "27125"
+      }
     }
   }
 }
