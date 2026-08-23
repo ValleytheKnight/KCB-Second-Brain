@@ -116,9 +116,9 @@ No new plugin ideas surfaced this week that cleared the plugin/theme/native filt
 ## Opportunities & Recommendations
 
 ### Immediate Actions (Today/This Week)
-- [ ] Knight Code credential storage audit 📅 2026-08-20
+- [x] Knight Code credential storage audit 📅 2026-08-20
 - [x] Give go-ahead for Scryptable Task 4 (Craig archive import) 📅 2026-08-20
-- [ ] Skim Agent Skills GA notes before further skill-catalog/GitHub-hosted-skills work 📅 2026-08-21
+- [x] Skim Agent Skills GA notes before further skill-catalog/GitHub-hosted-skills work 📅 2026-08-21
 
 ### Research Needed
 - Follow up next cycle for an MCP Seoul Dev Summit recap dated Aug 13 or later (second cycle in a row the only lead predated the cutoff by one day)
