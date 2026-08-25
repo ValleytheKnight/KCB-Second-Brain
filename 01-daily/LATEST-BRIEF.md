@@ -33,10 +33,11 @@ A quiet week overall. The one concrete item: the Anthropic Python SDK hit v1.0 a
 
 ## Recommended Actions Today
 
-### 1. Check Knight Code's `anthropic` Python dependency against SDK v1.0
+### 1. ~~Check Knight Code's `anthropic` Python dependency against SDK v1.0~~ ✅ DONE
 **Why:** Anthropic's Python SDK v1.0 (2026-08-20) removes deprecated surface (legacy Text Completions API, `temperature`/`top_p`/`top_k` on Messages, tool runner's client-side `compaction_control`) and moves the HTTP layer from `httpx` to `httpx2`. If any Knight Code script or MCP server pins `anthropic<1.0` or touches those removed params, an unpinned upgrade will break it.
 **Project(s):** [[04-projects/knight-code/PROJECT-OVERVIEW|Knight Code]]
 📅 2026-08-25
+**Result:** No exposure. Knight Code is bun/TypeScript, no Python `anthropic` package anywhere in the repo (checked by the Knight Code session directly).
 
 ### 2. Clear the two overdue Obsidian plugin Next Steps
 **Why:** "Linked Text Styles: build the style-insertion logic" was due 2026-08-21 and "Decide on a start timeline for Spellcraft / the mobile PDF exporter" was due 2026-08-19. Both are past due with no news-driven urgency, just aging backlog.
