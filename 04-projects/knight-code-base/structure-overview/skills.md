@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-16"
+date: "2026-08-26"
 tags: ["knight-code", "structure", "skills"]
 ---
 # Knight Code Skills
 
-Knight Code installs 56 skills. Each entry below is pulled from the live skills knowledge graph (name, description, and its declared tools list); the tables that follow are copied from SKILL-CATALOG.md for the invoke method and any associated custom agent, which the graph does not model.
+Knight Code installs 66 skills. Each entry below is pulled from the live skills knowledge graph (name, description, and its declared tools list); the tables that follow are copied from SKILL-CATALOG.md for the invoke method and any associated custom agent, which the graph does not model.
 ## Every installed skill
 
 | Skill | Description | Declared tools |
@@ -16,6 +16,7 @@ Knight Code installs 56 skills. Each entry below is pulled from the live skills 
 | `knightcode-browse` | Fast headless browser for QA testing and site dogfooding. | AskUserQuestion, Bash, Read |
 | `knightcode-code-review` | Reviews a diff against repo coding standards and the originating spec. | inherits session tools |
 | `knightcode-codebase-design` | Shared vocabulary for designing deep modules with small, testable interfaces. | inherits session tools |
+| `knightcode-codemode` | Batch several of Knight Code's own MCP tool calls into one script instead of paying a schema-load-plus-round-trip cost per call. | inherits session tools |
 | `knightcode-context-restore` | Restore working context saved earlier by /context-save. | AskUserQuestion, Bash, Glob, Grep, Read |
 | `knightcode-context-save` | Save working context. | AskUserQuestion, Bash, Glob, Grep, Read, Write |
 | `knightcode-cso` | Chief Security Officer mode. | Agent, AskUserQuestion, Bash, Glob, Grep, Read, WebSearch, Write |
@@ -45,6 +46,7 @@ Knight Code installs 56 skills. Each entry below is pulled from the live skills 
 | `knightcode-obsidian-cli` | CLI to read, create, search, and manage vault content, or develop Obsidian plugins. | inherits session tools |
 | `knightcode-obsidian-markdown` | Create and edit Obsidian Flavored Markdown with wikilinks, embeds, callouts, properties, and other Obsidian-specific syntax. | inherits session tools |
 | `knightcode-office-hours` | Startup-mode forcing questions on demand reality, wedge, and future fit. | AskUserQuestion, Bash, Edit, Glob, Grep, Read, WebSearch, Write |
+| `knightcode-pattern-review` | | Review the current session's tool-usage telemetry and hygiene-gate log for repeated behavior, either the same multi-step action run 3+ times, or the same correction/preference recurring, and propose | AskUserQuestion, Bash, Glob, Grep, Read, Write |
 | `knightcode-performance-optimization` | Optimizes application performance across frontend, backend, queries, and databases. | inherits session tools |
 | `knightcode-pick-ui-library` | Picks the right UI library for a frontend task from a curated list. | inherits session tools |
 | `knightcode-plan-ceo-review` | CEO/founder-mode plan review. | AskUserQuestion, Bash, Glob, Grep, Read, WebSearch |
@@ -66,6 +68,14 @@ Knight Code installs 56 skills. Each entry below is pulled from the live skills 
 | `knightcode-windows-shell-reliability` | Reliable command execution on Windows: paths, encoding, and common binary pitfalls. | inherits session tools |
 | `knightcode-writing-great-skills` | Design principles for judging whether a skill is well-built. | inherits session tools |
 | `knightcode-writing-skills` | Use when creating new skills, editing existing skills, or verifying skills work before deployment | inherits session tools |
+| `winui:winui-code-review` | Code quality review for WinUI 3 apps  -  MVVM compliance, x:Bind correctness, accessibility, theming, security, and performance. Use before committing to catch issues that the compiler and UI tests won' | inherits session tools |
+| `winui:winui-design` | Use when designing, reviewing, or fixing WinUI 3: layout planning, control choice, Fluent Design alignment, Light/Dark/High Contrast theming, typography, spacing, brushes, accessibility, and XAML data | inherits session tools |
+| `winui:winui-dev-workflow` | Build and run workflow for WinUI 3 apps  -  project creation, BuildAndRun.ps1 script, winapp run, error diagnosis, and prerequisites. Use when building, running, or fixing build errors in a WinUI 3 proj | inherits session tools |
+| `winui:winui-packaging` | MSIX packaging, code signing, and distribution for WinUI 3 apps  -  build for release, certificate generation (winapp cert generate), certificate trust, code signing (winapp sign), self-contained deploy | inherits session tools |
+| `winui:winui-session-report` | Analyze the current or a recent agent session (GitHub Copilot CLI or Claude Code) and generate a diagnostic report. Use when asking for session feedback, debugging agent behavior, or reviewing what ha | inherits session tools |
+| `winui:winui-setup` | Install and verify the prerequisites the win-dev-skills WinUI 3 toolchain depends on  -  .NET SDK 10, the WinApp CLI, the WinUI 3 .NET templates, and Developer Mode. Use when setting up a new machine, a | inherits session tools |
+| `winui:winui-ui-testing` | Automated UI testing for Windows desktop apps  -  generate a batch test script with the `winapp ui` UI Automation harness, run all tests in one pass, read results. Covers element assertions, interaction | inherits session tools |
+| `winui:winui-wpf-migration` | Migrate WPF applications to WinUI 3  -  namespace replacement (System.Windows → Microsoft.UI.Xaml), control mapping (DataGrid→ListView, WrapPanel→ItemsRepeater, TabControl→TabView), threading (Dispatche | inherits session tools |
 
 ## Invoke method and associated agent, by category
 
@@ -122,6 +132,10 @@ Copied directly from Knight Code's own SKILL-CATALOG.md.
 |---|---|---|
 | `browse` (`knightcode-browse`) | Skill tool, or `/browse`, or the `$B <command>` binary directly | None, general headless-browser QA/dogfooding tool, any session or agent can invoke it |
 | `scrape` (`knightcode-scrape`) | Skill tool, or trigger phrases: "scrape this page", "get data from", "pull from", "extract from" | None, read-only, match path via `$B skill run` or prototype path via raw `$B` primitives |
+
+| Skill (installed as) | Invoke | Associated agent |
+|---|---|---|
+| `codemode` (`knightcode-codemode`) | Skill tool, or trigger phrases: "batch these tool calls", "run this as one codemode script", "reduce tool-call round trips" | None. A workflow chains several related calls to Knight Code's own local MCP servers into one TypeScript script, run via `bun run codemode/src/cli.ts run <script.ts>` against a session-lived daemon, instead of paying a schema-load-plus-round-trip cost per call. Manual invocation only, no compiled binary (`bun run` directly), no hook-triggered auto-invoke. v1 covers 10 named local servers; `spec-workflow` and any remote/OAuth MCP server are out of scope |
 
 | Skill (installed as) | Invoke | Associated agent |
 |---|---|---|

@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-16"
+date: "2026-08-26"
 tags: ["knight-code", "structure", "repo-layout"]
 ---
 # Knight Code Repo Layout
 
-Knight Code's repo root holds 77 top-level directories (excluding dotfiles and node_modules), one per skill, agent, host adapter, or supporting system. This is a shallow directory listing, not a description of each one; see the skills and agents sections above for what the skill/agent-named directories actually do.
+Knight Code's repo root holds 75 top-level directories (excluding dotfiles and node_modules), one per skill, agent, host adapter, or supporting system. This is a shallow directory listing, not a description of each one; see the skills and agents sections above for what the skill/agent-named directories actually do.
 ## Top-level directories
 
 - `Pen Designs/`
@@ -15,10 +15,10 @@ Knight Code's repo root holds 77 top-level directories (excluding dotfiles and n
 - `browse/`
 - `code-review/`
 - `codebase-design/`
+- `codemode/`
 - `context-restore/`
 - `context-save/`
 - `cso/`
-- `css-resource-variables/`
 - `design-critique/`
 - `design-impeccable/`
 - `devex-review/`
@@ -49,21 +49,18 @@ Knight Code's repo root holds 77 top-level directories (excluding dotfiles and n
 - `mcp/`
 - `mnemosyne-audit/`
 - `observability-and-instrumentation/`
-- `obsidian-anchor-flow/`
 - `obsidian-bases/`
-- `obsidian-canvas-positioning-toolkit/`
-- `obsidian-canvas-text-scaler/`
 - `obsidian-cli/`
-- `obsidian-kanban-complete-mover/`
-- `obsidian-linked-text-styles/`
 - `obsidian-markdown/`
 - `office-hours/`
+- `pattern-review/`
 - `performance-optimization/`
 - `pick-ui-library/`
 - `plan-ceo-review/`
 - `plan-design-review/`
 - `plan-eng-review/`
 - `planning-and-task-breakdown/`
+- `plans/`
 - `powershell-windows/`
 - `prototype/`
 - `pytest-testing/`
@@ -77,10 +74,11 @@ Knight Code's repo root holds 77 top-level directories (excluding dotfiles and n
 - `ship/`
 - `simplify/`
 - `spec/`
+- `specs/`
+- `taskings/`
 - `test/`
 - `test-driven-development/`
 - `test-fixtures/`
-- `ttrpg-rathgar-gold-theme/`
 - `wayfinder/`
 - `windows-shell-reliability/`
 - `writing-great-skills/`

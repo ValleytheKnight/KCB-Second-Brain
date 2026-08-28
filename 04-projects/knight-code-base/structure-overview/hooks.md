@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-16"
+date: "2026-08-26"
 tags: ["knight-code", "structure", "hooks"]
 ---
 # Knight Code Hooks
 
-Knight Code wires 23 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
+Knight Code wires 26 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
 
 ## `agent-registry-gate.ts`
 
@@ -95,6 +95,46 @@ Invariants:
     clean, small output is passed through untouched (no updatedToolOutput
     field at all) rather than round-tripped for no reason.
   - Errors land in ~/.knightcode/hook-errors.log.
+
+## `codemode-routing-advisory-hook.ts`
+
+PreToolUse hook (Claude Code) on every tool codemode's in-scope MCP
+servers expose. Never blocks: always allows, but injects a reminder on
+every matched call that codemode exists for batching 2+ related calls
+to these servers into one script, run through its daemon instead of
+paying per-call schema-load overhead N times.
+
+Fires on every call, not just the first one in a session. A one-time
+reminder was tried and rejected: relying on the check holding in memory
+for the rest of a session is exactly the failure mode this exists to
+prevent. Stateless by design, no marker file, no session tracking.
+
+Triggered by .claude/settings.json:
+  {
+    "hooks": {
+      "PreToolUse": [
+        {
+          "matcher": "mcp__knight-code-memory__.*|mcp__knight-code-agent-manager__.*|mcp__lorebrain__.*|mcp__knightbrain__.*|mcp__knightbrain_scryptable__.*|mcp__knightbrain_knightos__.*|mcp__knight-code-mnemosyne__.*|mcp__obsidian_felled_god__.*|mcp__obsidian_devknight__.*|mcp__obsidian_plugin_tester__.*",
+          "hooks": [
+            { "type": "command",
+              "command": "bun",
+              "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/codemode-routing-advisory-hook.ts"] }
+          ]
+        }
+      ]
+    }
+  }
+
+Invariants:
+  - Always allows. Any internal error also allows (fail open); a broken
+    hook must never block one of these calls from completing.
+  - Errors land in ~/.knightcode/hook-errors.log. A real match also logs
+    one line to ~/.knightcode/hook-invocations.log.
+
+ADVISORY BY DESIGN: whether the current call is part of a multi-call
+workflow that belongs in one codemode script is a judgment about intent
+this hook cannot verify mechanically, since it can only see the one call
+in front of it and not whatever calls have not happened yet.
 
 ## `devknight-orientation-hook.ts`
 
@@ -346,6 +386,51 @@ Invariants:
   - Writes a marker only for a skills-mode query. A code-mode query says
     nothing about whether the skill/agent graph was consulted.
 
+## `grep-nudge-hook.ts`
+
+PreToolUse hook (Claude Code) on Grep/Glob. Never blocks: always allows
+the call, but injects a short reminder that a matching knightbrain/
+lorebrain lookup tool might answer the same question without a blind
+text search. Grep/Glob is still genuinely the right tool sometimes (prose
+search, generated files, one-off strings a knowledge graph doesn't
+index), so this is a nudge, not a gate.
+
+Every invocation also logs to
+$KNIGHTCODE_STATE_ROOT/telemetry/grep-usage.jsonl (tool, timestamp, cwd,
+and the search pattern/path if present) so actual adherence to the
+"prefer the lookup tool" directive can be measured over time instead of
+assumed, the same verify-don't-just-hope posture as the rest of this
+project's hygiene tooling.
+
+Triggered by .claude/settings.json:
+  {
+    "hooks": {
+      "PreToolUse": [
+        {
+          "matcher": "Grep|Glob",
+          "hooks": [
+            { "type": "command",
+              "command": "bun",
+              "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/grep-nudge-hook.ts"] }
+          ]
+        }
+      ]
+    }
+  }
+
+ADVISORY BY DESIGN: whether a given search is better served by a
+knightbrain/lorebrain lookup tool than Grep/Glob is a heuristic judgment
+(prose search, generated files, and one-off strings those tools don't
+model are all legitimate Grep/Glob uses), not a condition a machine can
+decide, so this stays additionalContext rather than a PreToolUse deny.
+
+Invariants:
+  - Always allows. Any internal error also allows (fail open); a broken
+    hook must never block Grep/Glob from running.
+  - Errors land in ~/.knightcode/hook-errors.log. Telemetry write failures
+    are swallowed silently (best-effort, never worth blocking a search
+    over a full disk or a permissions error).
+
 ## `knight-code-vault-sync-hook.ts`
 
 PostToolUse hook (Claude Code). Mirrors a Knight Code memory event into
@@ -378,7 +463,7 @@ scripts/export-knight-code-memory.ts in the companion repo.
 
 Rendering logic (frontmatter shape, filename convention, section layout)
 intentionally duplicates scripts/export-knight-code-memory.ts in
-C:\Users\Chris Brown\Documents\knight-code-base-companion rather than
+/home/vtk/Documents/knight-code-base-companion rather than
 importing across repos: this hook must stay a single self-contained
 file, the same pattern every other hook in this directory follows.
 If the export script's format ever changes, update both by hand.
@@ -1089,6 +1174,47 @@ Invariants:
 ADVISORY BY DESIGN: SubagentStart injects context into a subagent as it
 begins. There is no action to deny and no turn to block, so context
 injection is the only mechanism this event offers.
+
+## `tool-usage-telemetry-hook.ts`
+
+PostToolUse hook (Claude Code) on matcher "*". Logs every tool call this
+session makes to $KNIGHTCODE_STATE_ROOT/telemetry/tool-usage.jsonl, one
+line per call: { timestamp, session_id, tool, cwd, summary }.
+
+This is the raw feed the pattern-review skill mines for Lane A (repeated
+action sequences): unlike grep-usage.jsonl, which exists to measure
+adherence to the "prefer the lookup tool" nudge, this file exists to let
+repetition across ANY tool surface as a skill/memory candidate, so the
+two telemetry files deliberately overlap on Grep/Glob rather than one
+being repurposed for the other's job.
+
+summary extraction, first match wins, tool-agnostic (no tool_name
+branching, just field presence): tool_input.command (truncated 200
+chars) -> tool_input.file_path -> tool_input.pattern ->
+tool_input.description -> omitted entirely.
+
+Triggered by .claude/settings.json:
+  {
+    "hooks": {
+      "PostToolUse": [
+        {
+          "matcher": "*",
+          "hooks": [
+            { "type": "command",
+              "command": "bun",
+              "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/tool-usage-telemetry-hook.ts"] }
+          ]
+        }
+      ]
+    }
+  }
+
+Invariants:
+  - Fail open. A malformed stdin payload, a full disk, or any internal
+    error must never block or affect the underlying tool call; this hook
+    produces no output and always exits 0.
+  - Errors land in ~/.knightcode/hook-errors.log. Telemetry write
+    failures are swallowed silently (best-effort only).
 
 ## `vault-agent-gate.ts`
 

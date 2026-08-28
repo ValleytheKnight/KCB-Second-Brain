@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-15"
+date: "2026-08-26"
 tags: ["knight-code", "structure", "agents"]
 ---
 # Knight Code Agents and Personas
 
-Knight Code registers 8 real custom agents through the agent-manager MCP server (the only sanctioned way to create or edit an agent in this project). Names and descriptions below come from the live skills knowledge graph; the tables that follow are copied from AGENTS.md for what each is for and how it is invoked.
+Knight Code registers 9 real custom agents through the agent-manager MCP server (the only sanctioned way to create or edit an agent in this project). Names and descriptions below come from the live skills knowledge graph; the tables that follow are copied from AGENTS.md for what each is for and how it is invoked.
 ## Registered agents (from the live graph)
 
 | Agent | Description |
@@ -18,6 +18,7 @@ Knight Code registers 8 real custom agents through the agent-manager MCP server 
 | `loreGod` | Read-only story QA and editorial authority for "Revenge of the Felled God." Reviews the campaign vault against craft standards and rules mastery, flags issues, reports to loremaster, never edits anyth |
 | `loremaster` | Campaign writer and worldbuilder for "Revenge of the Felled God." Fully versed in the campaign lore. Writes in the synthesized style of Tolkien, Gwynne, Abercrombie, Swan, and Ruocchio. Always asks be |
 | `Obsidian` | Dedicated Obsidian plugin/theme builder for ValleytheKnight's published and in-progress Obsidian community plugins and themes. Trained on the Obsidian plugin API, CodeMirror 6, Electron internals as t |
+| `winui:winui-dev` | Builds WinUI 3 desktop applications using Windows App SDK, XAML, and C#. Use for creating new apps, adding features, converting from WPF/Electron/web, fixing bugs, or any WinUI 3 / WinAppSDK / XAML ta |
 
 ## Custom agents, purpose and invocation
 
@@ -27,7 +28,7 @@ Copied directly from Knight Code's own AGENTS.md.
 |---|---|---|
 | `loremaster` | Campaign writer/worldbuilder for "Revenge of the Felled God," full lore context, writes in a synthesized Tolkien/Gwynne/Abercrombie/Swan/Ruocchio style. Always asks before assuming or adding to lore. Owns the campaign vault `revenge-of-the-felled-god`. | "wake up loremaster" / "goodnight loremaster" (session bookends), `FORGE [topic]` (build a lore piece), full Protocol Index in `loremaster/SKILL.md` |
 | `Obsidian` | Dedicated builder for ValleytheKnight's published/in-progress Obsidian plugins and themes. Trained on the plugin API, CodeMirror 6, Electron internals as they bear on Obsidian, submission policy, and every hygiene/testing lesson learned the hard way. | "activate obsidian" (turns on default-routing of Obsidian-shaped requests for the rest of the session) / "deactivate obsidian" (turns it back off), per `loremaster/tasking/Protocol Obsidian.md` |
-| `devknight` | Router agent for native Windows GUI toolkit development (WinUI3/WPF), one-stop-shop entry point for end-to-end Windows application development including UI/UX. Routes to Microsoft's official `win-dev-skills` plugin (`winui-dev` agent + 8 skills) for the mechanical inner loop, and to Knight Code's own `autoplan`/`review`/`ship`/`health`/`cso` for everything else. Owns a persistent shared workspace, the DevKnight Workshop Obsidian vault (`C:\Users\Chris Brown\Documents\Obsidian Vaults\DevKnight Workshop`), with its own execute/pause project protocol. | "activate devknight" / "deactivate devknight" (same on/off routing model as Obsidian). Full design: `devknight/devknight-design-spec.md`. |
+| `devknight` | Router agent for native Windows GUI toolkit development (WinUI3/WPF), one-stop-shop entry point for end-to-end Windows application development including UI/UX. Routes to Microsoft's official `win-dev-skills` plugin (`winui-dev` agent + 8 skills) for the mechanical inner loop, and to Knight Code's own `autoplan`/`review`/`ship`/`health`/`cso` for everything else. Owns a persistent shared workspace, the DevKnight Workshop Obsidian vault (`/home/vtk/Documents/Obsidian Vaults/DevKnight Workshop`), with its own execute/pause project protocol. | "activate devknight" / "deactivate devknight" (same on/off routing model as Obsidian). Full design: `devknight/devknight-design-spec.md`. |
 | `loreGod` | Read-only story QA and editorial authority for "Revenge of the Felled God." Reviews the campaign vault against craft standards and rules mastery, flags issues, reports to loremaster, never edits anything. | Runs on a Mon/Thu schedule via `loreGod/orchestrator.ps1`; can also be invoked live for an on-demand QA check. Full spec: `loreGod/loreGod-design-spec.md`. |
 | `impeccable`'s 4 sub-agents | `impeccable-finish-reviewer`, `impeccable-documenter`, `impeccable-asset-producer`, `impeccable-manual-edit-applier`. | Not a standalone user-invoked phrase, spawned internally by `impeccable`'s own commands. Definitions: `impeccable/agents/*.md`. |
 
