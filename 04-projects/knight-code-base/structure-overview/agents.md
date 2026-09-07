@@ -1,6 +1,6 @@
 ---
 type: "structure-overview"
-date: "2026-08-26"
+date: "2026-09-07"
 tags: ["knight-code", "structure", "agents"]
 ---
 # Knight Code Agents and Personas
@@ -10,7 +10,7 @@ Knight Code registers 9 real custom agents through the agent-manager MCP server 
 
 | Agent | Description |
 |---|---|
-| `devknight` | Router agent for native Windows GUI toolkit development (WinUI3/WPF), Electron desktop app development, and Python/PySide6 (Qt for Python) desktop app development, one-stop-shop entry point for end-to |
+| `devknight` | Router agent for native Windows GUI toolkit development (WinUI3/WPF), Electron desktop app development, Python/PySide6 (Qt for Python) desktop app development, and Tauri (Rust backend + native WebView |
 | `impeccable-asset-producer` | Produces clean reusable raster assets from approved Impeccable mock references without redesigning the direction. |
 | `impeccable-documenter` | Records DESIGN.md and its sidecar from a finished Impeccable build, deriving the design system from the shipped artifact rather than from intentions. |
 | `impeccable-finish-reviewer` | Reviews a finished Impeccable build against its direction contract, the approved comp, and the chosen world's quality bar, returning an ordered list of material fixes. |
@@ -28,7 +28,7 @@ Copied directly from Knight Code's own AGENTS.md.
 |---|---|---|
 | `loremaster` | Campaign writer/worldbuilder for "Revenge of the Felled God," full lore context, writes in a synthesized Tolkien/Gwynne/Abercrombie/Swan/Ruocchio style. Always asks before assuming or adding to lore. Owns the campaign vault `revenge-of-the-felled-god`. | "wake up loremaster" / "goodnight loremaster" (session bookends), `FORGE [topic]` (build a lore piece), full Protocol Index in `loremaster/SKILL.md` |
 | `Obsidian` | Dedicated builder for ValleytheKnight's published/in-progress Obsidian plugins and themes. Trained on the plugin API, CodeMirror 6, Electron internals as they bear on Obsidian, submission policy, and every hygiene/testing lesson learned the hard way. | "activate obsidian" (turns on default-routing of Obsidian-shaped requests for the rest of the session) / "deactivate obsidian" (turns it back off), per `loremaster/tasking/Protocol Obsidian.md` |
-| `devknight` | Router agent for native Windows GUI toolkit development (WinUI3/WPF), one-stop-shop entry point for end-to-end Windows application development including UI/UX. Routes to Microsoft's official `win-dev-skills` plugin (`winui-dev` agent + 8 skills) for the mechanical inner loop, and to Knight Code's own `autoplan`/`review`/`ship`/`health`/`cso` for everything else. Owns a persistent shared workspace, the DevKnight Workshop Obsidian vault (`/home/vtk/Documents/Obsidian Vaults/DevKnight Workshop`), with its own execute/pause project protocol. | "activate devknight" / "deactivate devknight" (same on/off routing model as Obsidian). Full design: `devknight/devknight-design-spec.md`. |
+| `devknight` | Router agent for native Windows GUI toolkit development (WinUI3/WPF), one-stop-shop entry point for end-to-end Windows application development including UI/UX. Routes to Microsoft's official `win-dev-skills` plugin (`winui-dev` agent + 8 skills) for the mechanical inner loop, and to Knight Code's own `autoplan`/`review`/`ship`/`health`/`cso` for everything else. Owns a persistent shared workspace, the DevKnight Workshop Obsidian vault (`/home/valleytheknight/Documents/Obsidian Vaults/DevKnight Workshop`), with its own execute/pause project protocol. | "activate devknight" / "deactivate devknight" (same on/off routing model as Obsidian). Full design: `devknight/devknight-design-spec.md`. |
 | `loreGod` | Read-only story QA and editorial authority for "Revenge of the Felled God." Reviews the campaign vault against craft standards and rules mastery, flags issues, reports to loremaster, never edits anything. | Runs on a Mon/Thu schedule via `loreGod/orchestrator.ps1`; can also be invoked live for an on-demand QA check. Full spec: `loreGod/loreGod-design-spec.md`. |
 | `impeccable`'s 4 sub-agents | `impeccable-finish-reviewer`, `impeccable-documenter`, `impeccable-asset-producer`, `impeccable-manual-edit-applier`. | Not a standalone user-invoked phrase, spawned internally by `impeccable`'s own commands. Definitions: `impeccable/agents/*.md`. |
 

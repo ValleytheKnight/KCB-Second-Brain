@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-26"
+date: "2026-09-07"
 tags: ["knight-code", "structure", "hooks"]
 ---
 # Knight Code Hooks
 
-Knight Code wires 26 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
+Knight Code wires 28 hooks into Claude Code's own lifecycle events (PreToolUse, PostToolUse, SessionStart, SubagentStart, Stop). Every write-time action passes through the relevant hygiene or structural check automatically, rather than depending on a session remembering to run it. Each entry below is that hook file's own header doc-comment, copied verbatim.
 
 ## `agent-registry-gate.ts`
 
@@ -275,12 +275,22 @@ task breakdown) is on disk and marked complete. So the gate allows:
   - Plan/spec files the orchestrator itself creates for this feature
   - Any edits once phase reaches "implementation" or "done"
 
+Project resolution is keyed off the edited file's own directory
+(tool_input.file_path), never the session's cwd. A session rooted in Knight
+Code editing a file that lives in a different project (or no project at
+all) must resolve to that file's own slug, not Knight Code's, or every
+unrelated edit in every session gets checked against Knight Code's one
+active workflow.
+
 Default-open. Most edits in the repo are unrelated to an in-flight formal workflow.
 No active feature pointer, no deny.
 
-Fails open, in three ways that each prevent a deadlock:
+Fails open, in four ways that each prevent a deadlock:
   - No active workflow (active.json does not exist): allow.
   - KNIGHTCODE_FORMAL_WORKFLOW_GATE=off: explicit operator override.
+  - bin/knight-workflow pause|clear: rename or delete active.json from the
+    command line instead of editing it by hand; the state root is already
+    exempt above, this just wraps the same escape hatch.
   - Any internal error: allow.
 
 Triggered by .claude/settings.json:
@@ -463,7 +473,7 @@ scripts/export-knight-code-memory.ts in the companion repo.
 
 Rendering logic (frontmatter shape, filename convention, section layout)
 intentionally duplicates scripts/export-knight-code-memory.ts in
-/home/vtk/Documents/knight-code-base-companion rather than
+/home/valleytheknight/Documents/knight-code-base-companion rather than
 importing across repos: this hook must stay a single self-contained
 file, the same pattern every other hook in this directory follows.
 If the export script's format ever changes, update both by hand.
@@ -1126,6 +1136,57 @@ Fails open: no skill sources, a check that cannot run, or any internal
 error all let the turn end. A broken gate must never trap a session.
 KNIGHTCODE_SKILL_STOP_GATE=off disables it outright.
 
+## `stop-teach-learning-record-gate.ts`
+
+Stop hook (Claude Code). Refuses to let a turn end where a `teach` skill
+lesson file was written or edited but neither a learning record nor
+NOTES.md was touched anywhere in the same session.
+
+Why this exists: Chris asked for this explicitly, after a session taught
+lesson 1 (git fundamentals) and got derailed into infrastructure work
+without ever writing a learning record, with nothing catching that gap.
+The skill's own session flow already says what to do (step 4: write a
+learning record when there is real evidence of understanding; step 5:
+otherwise update NOTES.md), this hook is the enforcement that makes
+skipping both steps impossible to do silently.
+
+Deliberately does not require a learning record specifically. Whether a
+session actually produced evidence-worthy understanding is a judgment
+call a hook cannot make (the same class of problem CLAUDE.md's Mnemosyne
+routing section names: a mechanical check standing in for a semantic
+judgment is a false guarantee). What a hook CAN check is whether the
+skill's own required follow-up, learning record OR a NOTES.md update,
+happened at all. Blocking on "learning record specifically" would be
+wrong on a session that only covered material without real evidence of
+understanding; requiring nothing would let the original gap recur.
+
+Reads the marker `teach-session-marker-hook.ts` writes per session. If no
+marker exists, or the marker shows no lesson file was touched, this
+session never invoked the teach skill's lesson-writing step and there is
+nothing to enforce.
+
+Blocks at most once per turn, honors stop_hook_active, same as every
+other Stop gate in this project.
+
+Triggered by .claude/settings.json:
+  {
+    "hooks": {
+      "Stop": [
+        {
+          "hooks": [
+            { "type": "command",
+              "command": "bun",
+              "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/stop-teach-learning-record-gate.ts"] }
+          ]
+        }
+      ]
+    }
+  }
+
+Fails open: no marker, an unreadable marker, or any internal error all let
+the turn end. A broken gate must never trap a session.
+KNIGHTCODE_TEACH_STOP_GATE=off disables it outright.
+
 ## `subagent-hygiene-hook.ts`
 
 SubagentStart hook (Claude Code). Closes the reach gap for Knight
@@ -1174,6 +1235,46 @@ Invariants:
 ADVISORY BY DESIGN: SubagentStart injects context into a subagent as it
 begins. There is no action to deny and no turn to block, so context
 injection is the only mechanism this event offers.
+
+## `teach-session-marker-hook.ts`
+
+PostToolUse hook (Claude Code) on Write/Edit and the obsidian_self_taught
+MCP write tools. Records, per session, which of three workspace-file
+categories the `teach` skill's session flow has touched so far: a lesson
+file, a learning record, or NOTES.md.
+
+This exists because `stop-teach-learning-record-gate.ts` needs to know,
+at Stop time, whether a lesson was taught this session and whether the
+matching follow-up (a learning record, or at minimum a NOTES.md update,
+per the skill's own session flow step 4/5) actually happened. A Stop hook
+cannot inspect prior tool calls itself, so this PostToolUse hook is the
+only place that can observe them as they happen.
+
+Marker is per session id (never reused, so no cross-session bleed) and
+pruned after a week, same convention as graph-consulted-marker-hook.ts.
+
+Triggered by .claude/settings.json:
+  {
+    "hooks": {
+      "PostToolUse": [
+        {
+          "matcher": "Write|Edit|mcp__obsidian_self_taught__obsidian_put_content|mcp__obsidian_self_taught__obsidian_patch_content|mcp__obsidian_self_taught__obsidian_append_content",
+          "hooks": [
+            { "type": "command",
+              "command": "bun",
+              "args": ["run", "${CLAUDE_PROJECT_DIR}/hosts/claude/hooks/teach-session-marker-hook.ts"] }
+          ]
+        }
+      ]
+    }
+  }
+
+Invariants:
+  - Always allows. Any internal error also allows (fail open); a broken
+    hook must never block a file write from completing.
+  - Matches on path shape only (lessons/, learning-records/, or NOTES.md
+    under any workspace), never on vault name, so this works for any
+    topic workspace the teach skill creates, not just one.
 
 ## `tool-usage-telemetry-hook.ts`
 

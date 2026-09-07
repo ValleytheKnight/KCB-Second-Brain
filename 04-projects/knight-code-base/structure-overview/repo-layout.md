@@ -1,11 +1,11 @@
 ---
 type: "structure-overview"
-date: "2026-08-26"
+date: "2026-09-06"
 tags: ["knight-code", "structure", "repo-layout"]
 ---
 # Knight Code Repo Layout
 
-Knight Code's repo root holds 75 top-level directories (excluding dotfiles and node_modules), one per skill, agent, host adapter, or supporting system. This is a shallow directory listing, not a description of each one; see the skills and agents sections above for what the skill/agent-named directories actually do.
+Knight Code's repo root holds 81 top-level directories (excluding dotfiles and node_modules), one per skill, agent, host adapter, or supporting system. This is a shallow directory listing, not a description of each one; see the skills and agents sections above for what the skill/agent-named directories actually do.
 ## Top-level directories
 
 - `Pen Designs/`
@@ -23,6 +23,7 @@ Knight Code's repo root holds 75 top-level directories (excluding dotfiles and n
 - `design-impeccable/`
 - `devex-review/`
 - `devknight/`
+- `diagram/`
 - `docs/`
 - `document-generate/`
 - `document-release/`
@@ -42,6 +43,8 @@ Knight Code's repo root holds 75 top-level directories (excluding dotfiles and n
 - `incremental-implementation/`
 - `investigate/`
 - `lib/`
+- `linux-security/`
+- `local-notes/`
 - `loreGod/`
 - `lorebrain/`
 - `loremaster/`
@@ -75,7 +78,10 @@ Knight Code's repo root holds 75 top-level directories (excluding dotfiles and n
 - `simplify/`
 - `spec/`
 - `specs/`
+- `system/`
 - `taskings/`
+- `tauri-dev/`
+- `teach/`
 - `test/`
 - `test-driven-development/`
 - `test-fixtures/`

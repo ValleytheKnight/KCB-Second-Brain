@@ -1,16 +1,17 @@
 ---
 type: "structure-overview"
-date: "2026-08-26"
+date: "2026-09-07"
 tags: ["knight-code", "structure", "skills"]
 ---
 # Knight Code Skills
 
-Knight Code installs 66 skills. Each entry below is pulled from the live skills knowledge graph (name, description, and its declared tools list); the tables that follow are copied from SKILL-CATALOG.md for the invoke method and any associated custom agent, which the graph does not model.
+Knight Code installs 64 skills. Each entry below is pulled from the live skills knowledge graph (name, description, and its declared tools list); the tables that follow are copied from SKILL-CATALOG.md for the invoke method and any associated custom agent, which the graph does not model.
 ## Every installed skill
 
 | Skill | Description | Declared tools |
 |---|---|---|
-| `impeccable` | Use when the user wants to design, redesign, shape, critique, audit, polish, clarify, distill, harden, optimize, adapt, animate, colorize, extract, or otherwise improve a frontend interface. Covers we | *), .claude/skills/impeccable/scripts/*), Bash(node, Bash(npx, impeccable |
+| `diagnose-crash` | > Diagnose why a program crashed on this machine, from a systemd-coredump core dump. Use when a process has segfaulted, aborted, or otherwise dumped core, when asked why an application crashed or disa | inherits session tools |
+| `diagram` | Render a visual diagram or HTML preview using Snip. Use when the user wants to visualize architecture, flows, schemas, state machines, UI mockups, or any structural concept. | inherits session tools |
 | `knightcode-api-and-interface-design` | Guides stable API and interface design. | inherits session tools |
 | `knightcode-autoplan` | Runs the CEO, design, and eng review skills sequentially and auto-decides on findings. | AskUserQuestion, Bash, Edit, Glob, Grep, Read, WebSearch, Write |
 | `knightcode-browse` | Fast headless browser for QA testing and site dogfooding. | AskUserQuestion, Bash, Read |
@@ -23,6 +24,7 @@ Knight Code installs 66 skills. Each entry below is pulled from the live skills 
 | `knightcode-design-critique` | Critiques an existing, already-built frontend or UI against a fixed standard of UX, accessibility, and design-quality principles. | Bash, Glob, Grep, Read |
 | `knightcode-design-impeccable` | A modern, graphic, editorial-poster aesthetic  -  warm and confident  -  built on alternating cream and burnt orange sections, an amber brand color. | inherits session tools |
 | `knightcode-devex-review` | Live developer experience audit. | AskUserQuestion, Bash, Edit, Glob, Grep, Read, WebSearch |
+| `knightcode-diagram` | Render a visual diagram or HTML preview using Snip. Use when the user wants to visualize architecture, flows, schemas, state machines, UI mockups, or any structural concept. | Bash, Read, Write |
 | `knightcode-document-generate` | Generate missing documentation from scratch for a feature, module, or entire project. | AskUserQuestion, Bash, Edit, Glob, Grep, Read, Write |
 | `knightcode-document-release` | Post-ship documentation update. | AskUserQuestion, Bash, Edit, Glob, Grep, Read, Write |
 | `knightcode-domain-modeling` | Build and sharpen a project's domain model. | inherits session tools |
@@ -39,6 +41,7 @@ Knight Code installs 66 skills. Each entry below is pulled from the live skills 
 | `knightcode-improve-codebase-architecture` | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick. | inherits session tools |
 | `knightcode-incremental-implementation` | Delivers changes incrementally. | inherits session tools |
 | `knightcode-investigate` | Systematic debugging with root cause investigation. | AskUserQuestion, Bash, Edit, Glob, Grep, Read, WebSearch, Write |
+| `knightcode-linux-security` | Hardens and sandboxes a Linux desktop system or a single locally-installed application, on Arch specifically: AppArmor, bubblewrap, seccomp, and kernel hardening. | inherits session tools |
 | `knightcode-master-copywriter` | World-class conversion copywriter and ruthless editor. | inherits session tools |
 | `knightcode-mnemosyne-audit` | Audits recent Mnemosyne memory writes for routing mistakes and hygiene issues. | Bash, Read, mcp__knight-code-memory__learnings_log, mcp__knight-code-memory__learnings_search, mcp__knight-code-mnemosyne__mnemosyne_export, mcp__knight-code-mnemosyne__mnemosyne_hygiene_audit |
 | `knightcode-observability-and-instrumentation` | Instruments code so production behavior is visible and diagnosable. | inherits session tools |
@@ -63,19 +66,14 @@ Knight Code installs 66 skills. Each entry below is pulled from the live skills 
 | `knightcode-ship` | Ship workflow: detect + merge base branch, run tests, review diff, bump VERSION, update CHANGELOG, commit, push, create PR. | Agent, AskUserQuestion, Bash, Edit, Glob, Grep, Read, WebSearch, Write |
 | `knightcode-simplify` | Simplifies code for clarity without changing behavior. | inherits session tools |
 | `knightcode-spec` | Turn vague intent into a precise, executable spec in five phases. | AskUserQuestion, Bash, Glob, Grep, Read |
+| `knightcode-tauri-dev` | Builds and hardens Tauri v2 desktop applications: project setup, the Rust/WebView trust boundary, capability-based permissions, and Linux packaging. | inherits session tools |
+| `knightcode-teach` | Runs a stateful, long-running teaching curriculum for Chris, one workspace per topic, backed by his Self Taught Obsidian vault. | Bash, Edit, Read, Write, mcp__knight-code-memory__learnings_log, mcp__knight-code-memory__promise_fulfill, mcp__knight-code-memory__promise_log, mcp__knight-code-memory__promise_search, mcp__obsidian_self_taught__obsidian_append_content, mcp__obsidian_self_taught__obsidian_get_file_contents, mcp__obsidian_self_taught__obsidian_list_files_in_dir, mcp__obsidian_self_taught__obsidian_list_files_in_vault, mcp__obsidian_self_taught__obsidian_put_content |
 | `knightcode-test-driven-development` | Drives development with tests. | inherits session tools |
 | `knightcode-wayfinder` | Plans oversized or foggy work as a shared map of GitHub Issue decision tickets. | inherits session tools |
 | `knightcode-windows-shell-reliability` | Reliable command execution on Windows: paths, encoding, and common binary pitfalls. | inherits session tools |
 | `knightcode-writing-great-skills` | Design principles for judging whether a skill is well-built. | inherits session tools |
 | `knightcode-writing-skills` | Use when creating new skills, editing existing skills, or verifying skills work before deployment | inherits session tools |
-| `winui:winui-code-review` | Code quality review for WinUI 3 apps  -  MVVM compliance, x:Bind correctness, accessibility, theming, security, and performance. Use before committing to catch issues that the compiler and UI tests won' | inherits session tools |
-| `winui:winui-design` | Use when designing, reviewing, or fixing WinUI 3: layout planning, control choice, Fluent Design alignment, Light/Dark/High Contrast theming, typography, spacing, brushes, accessibility, and XAML data | inherits session tools |
-| `winui:winui-dev-workflow` | Build and run workflow for WinUI 3 apps  -  project creation, BuildAndRun.ps1 script, winapp run, error diagnosis, and prerequisites. Use when building, running, or fixing build errors in a WinUI 3 proj | inherits session tools |
-| `winui:winui-packaging` | MSIX packaging, code signing, and distribution for WinUI 3 apps  -  build for release, certificate generation (winapp cert generate), certificate trust, code signing (winapp sign), self-contained deploy | inherits session tools |
-| `winui:winui-session-report` | Analyze the current or a recent agent session (GitHub Copilot CLI or Claude Code) and generate a diagnostic report. Use when asking for session feedback, debugging agent behavior, or reviewing what ha | inherits session tools |
-| `winui:winui-setup` | Install and verify the prerequisites the win-dev-skills WinUI 3 toolchain depends on  -  .NET SDK 10, the WinApp CLI, the WinUI 3 .NET templates, and Developer Mode. Use when setting up a new machine, a | inherits session tools |
-| `winui:winui-ui-testing` | Automated UI testing for Windows desktop apps  -  generate a batch test script with the `winapp ui` UI Automation harness, run all tests in one pass, read results. Covers element assertions, interaction | inherits session tools |
-| `winui:winui-wpf-migration` | Migrate WPF applications to WinUI 3  -  namespace replacement (System.Windows → Microsoft.UI.Xaml), control mapping (DataGrid→ListView, WrapPanel→ItemsRepeater, TabControl→TabView), threading (Dispatche | inherits session tools |
+| `omarchy` | > REQUIRED for end-user customization of Linux desktop, window manager, or system config. Use when editing ~/.config/hypr/, ~/.config/omarchy/, ~/.config/alacritty/, ~/.config/foot/, ~/.config/kitty/, | inherits session tools |
 
 ## Invoke method and associated agent, by category
 
@@ -98,6 +96,7 @@ Copied directly from Knight Code's own SKILL-CATALOG.md.
 | `impeccable` (`knightcode-impeccable`) | Skill tool, or `/impeccable <command> [target]` (23 commands, see the breakdown below) | None at the skill level, the real, separate `pbakaus/impeccable` open-source project, a standalone design-quality gate. Own PostToolUse/Stop hook wired into `.claude/settings.json` (automatic anti-pattern check after Edit/Write, deeper pass at session end). See "Impeccable command breakdown" and "Impeccable sub-agents" below |
 | `design-impeccable` (`knightcode-design-impeccable`) | Skill tool, pairs with `impeccable`, picks the visual direction (warm editorial-poster aesthetic) while `impeccable` governs quality | None, not an agent pairing, a skill-to-skill pairing with `impeccable` above |
 | `frontend-design` (`knightcode-frontend-design`) | Skill tool, invoked when building web components, pages, or applications | None |
+| `diagram` (`knightcode-diagram`) | Skill tool, or trigger phrases: "diagram this", "visualize this", "show me the architecture", "render a diagram", "mockup this" | None. Writes a Mermaid or HTML source file, renders it through the third-party Snip app (`snip render`), and reads back the user's on-screen annotation or approval before continuing |
 
 | Skill (installed as) | Invoke | Associated agent |
 |---|---|---|

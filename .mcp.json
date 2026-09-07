@@ -4,9 +4,9 @@
       "command": "bun",
       "args": [
         "run",
-        "/home/vtk/Documents/knight-code-base-companion/mcp/vaultgraph/src/cli.ts",
+        "/home/valleytheknight/Documents/knight-code-base-companion/mcp/vaultgraph/src/cli.ts",
         "serve",
-        "/home/vtk/Documents/Obsidian Vaults/Knight Code Base"
+        "/home/valleytheknight/Documents/Obsidian Vaults/Knight Code Base"
       ]
     },
     "obsidian_knight_code_base": {
