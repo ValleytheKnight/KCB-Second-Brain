@@ -36,7 +36,10 @@ See [[braindumps/braindump-2026-09-07-1552-omarchy-powerplan-widget|2026-09-07 s
 - [[braindumps/|Project Braindumps]]
 
 ## Next Steps
-- [ ] Confirm the README documents the manual privileged-helper install step clearly enough to follow cold 📅 2026-09-14 #task
+- [x] Confirm the README documents the manual privileged-helper install step clearly enough to follow cold #task
+
+## Closing Notes
+- 2026-09-08: Checked `~/Documents/omarchy-powerplan/README.md` directly. The privileged-helper install is already an explicit, separate numbered step under `## Install` (its own prose line plus the `sudo install` code block), with a `## Requirements` note explaining why: the helper must run as root, while `powerplan.py` itself never can since it loads from the user-owned plugin directory. No fix needed.
 
 ---
 
