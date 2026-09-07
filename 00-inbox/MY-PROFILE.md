@@ -26,6 +26,8 @@ tags: ["#profile", "#config", "#cog"]
 - [[04-projects/dnd-campaign-felled-god/PROJECT-OVERVIEW|D&D Campaign: Revenge of the Felled God]]
 - [[04-projects/Scryptable/PROJECT-OVERVIEW|Protocol Whisper App]] (idea stage)
 - [[04-projects/obsidian-competitor/PROJECT-OVERVIEW|Obsidian Competitor]] (idea stage)
+- [[04-projects/omarchy-image-theme/PROJECT-OVERVIEW|Omarchy Image Theme]] (paused at Security Review)
+- [[04-projects/omarchy-powerplan-widget/PROJECT-OVERVIEW|Power Plan (Omarchy Bar Widget)]] (shipped)
 
 ## Related
 - [[MY-INTERESTS|My Interests & News Sources]]
