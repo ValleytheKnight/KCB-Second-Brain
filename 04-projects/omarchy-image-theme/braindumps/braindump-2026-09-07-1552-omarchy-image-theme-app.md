@@ -40,3 +40,80 @@ MOCKUP CLEANUP ROUND: I did a full pass demanding fixes-in-parallel from 2 devkn
 ENG REVIEW: wallust ships as a Tauri v2 sidecar binary (a bundled, separately-run program, not welded into the app's own code), keeps the two already-approved error-state screens (Missing Dependency, Apply Failed) valid as built, since those assume wallust runs as its own process with a pass/fail signal. Batch mode streams live per-image progress instead of a single end-of-run result. File access for user-picked images/folders goes through the Rust backend doing its own direct reads rather than Tauri's generic file-access permission layer, since a fixed permission scope can't cover "pick any folder on disk."
 
 WHERE IT STANDS: Eng Review closed, state file shows CEO/Design/Eng phases complete, next is Security Review, then task breakdown, then actual implementation.
+
+## Content Analysis
+
+### Main Themes
+1. **First project through formal-dev-workflow end to end**, CEO, Design, and Eng review phases all complete, Security review next.
+2. **Design review discipline paid off**, insisting on cross-checking against the real installed Omarchy system (not just the plan) surfaced six concrete, load-bearing decisions that internal-consistency review alone would have missed.
+3. **Deliberate scope control**, the general theme-editor flow was cut to v2 specifically to protect v1 quality, and a vague "screenshot" mention was confirmed as already-scoped rather than allowed to creep.
+4. **Wallust bundling decision**, chosen for first-run experience over requiring a separate AUR install.
+5. **Agent-verification failure caught mid-build**, a falsely-reported "done" mockup pass, caught by direct canvas inspection rather than trusting the summary.
+
+### Supporting Ideas
+- The app wraps an existing hand-rolled shell script (`omarchy-theme-from-image`) rather than reimplementing the mechanism from scratch.
+- Six specific Omarchy-system behaviors had to be reverse-engineered by reading the actual scripts: name normalization, mode-detection cascade, collision-guard scope, wallpaper-advance-on-reapply, and the general theme-editor boundary.
+- Wallust ships as a Tauri v2 sidecar binary, not compiled into the app itself, keeping the two already-approved error-state screens valid.
+
+### Questions Raised
+- Has Security Review, stated as "next," started yet? Not addressed in this braindump.
+- Now that a general theme editor is deliberately deferred to v2, is there a tracked backlog item for it (matching how Obsidian Plugins & Themes tracks its own backlog ideas), or does it risk getting forgotten?
+
+### Decisions Contemplated
+- (All resolved by the time of writing) Bundle wallust vs. require separate AUR install, chosen: bundle. Edit-existing-theme in v1 vs. v2, chosen: v2. Sidecar binary vs. compiled-in wallust, chosen: sidecar.
+
+## Strategic Intelligence
+
+### Key Insights
+1. **Verifying against the live system, not just the plan, is what surfaced the real decisions.** All six "REAL DECISIONS" in this braindump came from reading the actual Omarchy scripts side by side with the mockups, none would have surfaced from a plan-only design review. This validates the CLAUDE.md V-model instinct to verify against ground truth, not just internal consistency.
+2. **Scope discipline under pressure held.** Cutting the theme-editor flow to v2 despite it being originally accepted scope shows the CEO-approved scope isn't treated as untouchable once a genuine build-quality tradeoff appears.
+3. **The same agent-trust failure recurs here as in the parallel Knight Code changes braindump** ([[braindump-2026-09-07-1552-recent-knight-code-changes]]), a "done" report was false and only caught by direct inspection. Two independent instances in one session is a real signal, not noise.
+
+### Pattern Recognition
+- **Connection to Previous Thinking:** this is the first project to exercise Knight Code's formal-dev-workflow fully; its outcome (gate held, one process gap found and fixed) is direct validation data for that system, worth referencing when formal-dev-workflow itself gets reviewed.
+- **Recurring Pattern:** "an agent's own completion report is a claim, not a fact" now appears twice in this session's braindumps (here and in the Knight Code changes roundup), see that file's Strategic Intelligence section for the cross-reference.
+- **Evolution:** DevKnight's toolchain expanded specifically to support this project (Tauri v2, Linux security/sandboxing skills), per [[braindump-2026-09-07-1552-recent-knight-code-changes]], this project is the reason those skills exist now.
+
+### Strategic Implications
+- Security Review is the immediate next gate; no vault content yet reflects its outcome.
+- The deferred general-theme-editor scope should be logged somewhere trackable (a backlog list, similar to how `obsidian-plugins-themes` tracks Spellcraft) so it isn't lost between now and any v2 planning.
+- No `PROJECT-OVERVIEW.md` exists yet for this project (confirmed: only a `braindumps/` folder exists under `04-projects/omarchy-image-theme/`), meaning the wider vault currently has no single place tracking this project's status apart from these braindumps.
+
+## Action Items
+
+### Immediate (24-48 hours)
+- [ ] Create `04-projects/omarchy-image-theme/PROJECT-OVERVIEW.md` so this project has a Next Steps/status home like every other active project 📅 2026-09-09
+
+### Short-term (1-2 weeks)
+- [ ] Confirm Security Review has started or completed, and log the outcome 📅 2026-09-14
+- [ ] Log the deferred general-theme-editor scope as a tracked v2 backlog item rather than leaving it only in this braindump 📅 2026-09-14
+
+### Strategic Considerations
+- Once this project completes its full formal-dev-workflow run, it's worth a retro on the process itself (what the gate caught, what it missed), since it's the first full-cycle case study.
+
+## Connections
+- **Related Braindumps:** [[braindump-2026-09-07-1552-recent-knight-code-changes]], [[braindump-2026-09-07-1552-omarchy-migration]]
+- **Relevant Projects:** [[04-projects/knight-code/PROJECT-OVERVIEW|Knight Code]] (DevKnight's Tauri support was built for this project)
+
+## Domain Classification
+- **Primary Domain:** project-specific (omarchy-image-theme) (95%)
+- **Reasoning:** entirely about this specific app's design, review process, and technical decisions.
+- **Cross-Domain Elements:** DevKnight's own capability expansion (Knight Code) is a side effect of this project's needs, cross-referenced above.
+- **Privacy Level:** private
+
+## Processing Notes
+
+### Emotional Context
+- **Energy Level:** Medium, a focused, detailed technical and process retrospective.
+- **Emotional Tone:** Focused (per frontmatter), reads as exacting and insistent about verification discipline ("I had to stop everything and demand...").
+- **Implications:** The strong emphasis on verifying against ground truth and catching scope creep reflects a deliberate standard for this project; future work on it should be held to the same bar rather than relaxed.
+
+### Confidence Assessment
+- **Overall Analysis:** 90% - highly detailed with specific script names, decisions, and outcomes.
+- **Domain Classification:** 95% - unambiguously specific to this one app.
+- **Strategic Insights:** 85% - insights are directly evidenced by stated events; the recommendation to create a PROJECT-OVERVIEW.md is based on a confirmed gap (checked directly, folder contains only `braindumps/`).
+- **Areas Requiring Clarification:** current status of Security Review (not addressed in source content).
+
+---
+
+*Processed by COG Brain Dump Analyst*

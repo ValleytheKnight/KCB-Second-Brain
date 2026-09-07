@@ -28,3 +28,78 @@ VAULT/COMPANION PATH BREAKAGE, found and fixed twice now: the CachyOS-to-Omarchy
 AGENT-REPORTING RELIABILITY, a live example: during the omarchy-image-theme mockup cleanup, one devknight dispatch reported a batch of V2-labeling and frame-deletion work as done. The next dispatch, closing out the same phase, didn't trust that summary, checked the canvas directly, and found the labeling wasn't applied anywhere and the obsolete frames were still sitting on canvas, undecorated. Fixed on the spot. Worth remembering generally: an agent's own "done" report is a claim, not a fact, verify state directly before treating a phase as closed.
 
 FORMAL-DEV-WORKFLOW got its first real full run: omarchy-image-theme is the first project to go through CEO review, Design review, and Eng review end to end under this system, currently sitting at Security review next. The phase-advance gate (no bumping `phase` without an explicit human sign-off via `AskUserQuestion`) held up correctly every time, including catching that a subagent can't call `AskUserQuestion` itself, it has to hand the exact gate question back to the coordinating session to relay.
+
+## Content Analysis
+
+### Main Themes
+1. **DevKnight's scope expanded to Tauri**, two new skills wired into its routing table, first real user is the omarchy-image-theme project.
+2. **`knight-watch` system watchers went live**, four watchers (crash, rkhunter, AIDE, ClamAV) turning system events into desktop notifications that open a session, replacing a package-owned Omarchy default that couldn't be safely customized in place.
+3. **Codemode project closed out**, a full task sequence plus a 3-workflow demonstration.
+4. **Vault/companion path breakage recurred**, same root cause as the Omarchy migration braindump, cross-referenced there.
+5. **Agent self-reporting proved unreliable in a live case**, a "done" report was false, caught only by direct inspection.
+6. **Formal-dev-workflow got its first end-to-end run**, and its phase-advance gate correctly caught a process gap (subagents can't call `AskUserQuestion` directly).
+
+### Supporting Ideas
+- Two real bugs in `knight-watch` were found only by running the chain, not by reading it: a mis-anchored grep pattern, and a polkit D-Bus timeout shorter than a human's response time.
+- Notification-triggered sessions have no terminal, so `pkexec` is required over `sudo` wherever a watcher needs elevated access.
+
+### Questions Raised
+- Are there other Omarchy-package-owned files besides `omarchy-crash-watch` that Knight Code has silently overridden and that will revert on the next system update?
+- Now that formal-dev-workflow has one full run under it, does the subagent/`AskUserQuestion` relay gap need a permanent structural fix, or was the one-time catch sufficient?
+
+### Decisions Contemplated
+- None explicitly framed as open decisions; this entry reads as a closed-out status roundup rather than a set of pending choices.
+
+## Strategic Intelligence
+
+### Key Insights
+1. **"Done" reports from agents are claims, not facts.** The omarchy-image-theme mockup-cleanup incident is direct, concrete evidence: a dispatch reported work complete that a later direct canvas check proved wasn't done. This is the same lesson independently surfacing in [[braindump-2026-09-07-1552-omarchy-migration]] regarding path-hygiene sweeps, worth treating as a standing operating principle, not a one-off catch.
+2. **Package-owned files are not safe override targets.** The `omarchy-crash-watch` replacement (rather than shadow) pattern should generalize to any future Omarchy-default override.
+3. **The phase-advance gate is already earning its keep.** Catching the subagent/`AskUserQuestion` limitation on its very first full run validates the formal-dev-workflow investment.
+
+### Pattern Recognition
+- **Connection to Previous Thinking:** the vault/companion path-breakage item is the same incident documented in more depth in [[braindump-2026-09-07-1552-omarchy-migration]], this braindump captures it as one line in a larger roundup; that one is the fuller account.
+- **Recurring Pattern:** this is the second explicit instance (in this same session's braindumps) of "verify the agent's claimed state directly instead of trusting the summary." Worth promoting to an explicit rule if it recurs a third time.
+- **Evolution:** DevKnight's skill roster keeps growing by adding a new stack (Tauri) rather than replacing anything, consistent with how PySide6 support was added earlier per the Knight Code project overview.
+
+### Strategic Implications
+- Consider adding a lightweight "verify, don't trust" checklist step to any workflow where a subagent reports phase completion, since this has now bitten twice.
+- `knight-watch` closing the AIDE/ClamAV notification gap is a real security-observability improvement worth reflecting in the Knight Code project overview's Current Status.
+
+## Action Items
+
+### Immediate (24-48 hours)
+- [ ] Audit whether any other Omarchy-package-owned files have been shadowed rather than properly replaced, the same failure class as `omarchy-crash-watch` 📅 2026-09-09
+
+### Short-term (1-2 weeks)
+- [ ] Decide whether "verify agent-reported completion directly before closing a phase" should become an explicit rule in the formal-dev-workflow skill, given it has now been caught twice in unrelated contexts 📅 2026-09-14
+
+### Strategic Considerations
+- Refresh the Knight Code project overview's Current Status section, it doesn't yet mention Tauri/knightcode-linux-security skill additions, knight-watch, or the codemode close-out, all real since its last update on 2026-08-20.
+
+## Connections
+- **Related Braindumps:** [[braindump-2026-09-07-1552-omarchy-migration]], [[braindump-2026-09-07-1552-omarchy-image-theme-app]]
+- **Relevant Projects:** [[04-projects/knight-code/PROJECT-OVERVIEW|Knight Code]], [[04-projects/omarchy-image-theme/PROJECT-OVERVIEW|Omarchy Image Theme]] (referenced, not yet created)
+
+## Domain Classification
+- **Primary Domain:** project-specific (Knight Code) (95%)
+- **Reasoning:** every item is a Knight Code system/tooling change (devknight, knight-watch, codemode, formal-dev-workflow).
+- **Cross-Domain Elements:** touches the omarchy-image-theme project as devknight's first Tauri user, but the change itself belongs to Knight Code.
+- **Privacy Level:** private
+
+## Processing Notes
+
+### Emotional Context
+- **Energy Level:** Medium, a dense factual roundup covering multiple workstreams.
+- **Emotional Tone:** Neutral, status-report register throughout.
+- **Implications:** Written for future-reference recall, not in-the-moment reflection; safe to treat every claim as a settled fact as of 2026-09-07.
+
+### Confidence Assessment
+- **Overall Analysis:** 90% - specific, technically detailed, internally consistent across five distinct workstreams.
+- **Domain Classification:** 95% - unambiguously Knight Code system/tooling content.
+- **Strategic Insights:** 85% - insights are directly evidenced; the "verify, don't trust" pattern is explicitly stated by the author, not inferred.
+- **Areas Requiring Clarification:** whether the Security Review phase for omarchy-image-theme (mentioned as "next") has since started or completed is not covered here, see the dedicated project braindump.
+
+---
+
+*Processed by COG Brain Dump Analyst*
