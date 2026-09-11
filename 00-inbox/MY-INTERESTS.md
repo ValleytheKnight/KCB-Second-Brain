@@ -17,7 +17,7 @@ tags: ["#interests", "#daily-brief", "#config"]
 - Obsidian (plugins, themes, ecosystem)
 - GitHub repos related to the above
 - Linux news (general)
-- CachyOS
+- Omarchy
 - Arch Linux
 - Gaming on Linux
 
@@ -58,11 +58,11 @@ Other Sites: Hacker News, X,
 - Hugging Face blog
 - r/LocalLLaMA (Reddit)
 
-**Linux / CachyOS / Arch / Linux gaming**
-- CachyOS news/forum (cachyos.org)
+**Linux / Omarchy / Arch / Linux gaming**
+- Omarchy (omarchy.org / DHH's release notes and blog, GitHub releases)
 - Arch Linux news (archlinux.org/news)
 - Phoronix (phoronix.com) - Linux kernel, driver, and gaming performance news
-- r/cachyos, r/archlinux, r/linux_gaming (Reddit)
+- r/omarchy, r/archlinux, r/linux_gaming (Reddit)
 - ProtonDB / Valve Proton release notes
 - GamingOnLinux (gamingonlinux.com)
 

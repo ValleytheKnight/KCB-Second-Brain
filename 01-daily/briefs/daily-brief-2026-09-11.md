@@ -7,13 +7,15 @@ sources_verified: true
 news_age_verified: true
 confidence: "high"
 tags: ["#daily-brief", "#news", "#strategic-intelligence"]
-interests: ["LLMs/agentic tooling", "Obsidian ecosystem", "Arch Linux", "Linux kernel", "GitHub repos"]
-projects_referenced: ["Knight Code", "Omarchy Image Theme", "KnightOS", "D&D Campaign: Revenge of the Felled God"]
-items_count: 3
+interests: ["LLMs/agentic tooling", "Obsidian ecosystem", "Arch Linux", "Omarchy", "Linux kernel", "GitHub repos"]
+projects_referenced: ["Knight Code", "Omarchy Image Theme", "Power Plan (Omarchy Bar Widget)", "KnightOS", "D&D Campaign: Revenge of the Felled God"]
+items_count: 5
 dedup_urls: [
   "https://thehackernews.com/2026/09/anthropic-ai-models-breached-real.html",
   "https://code.claude.com/docs/en/changelog",
-  "https://www.phoronix.com/news/Linux-Preps-AMD-BTB-CTX"
+  "https://www.phoronix.com/news/Linux-Preps-AMD-BTB-CTX",
+  "https://omarchy.org/news/2026/09/digitalocean-joins-as-founding-corporate-patron/",
+  "https://omarchy.org/news/2026/09/omacom-foundation-hires-outfoxxed/"
 ]
 dedup_repos: [
   "https://github.com/eugeniughelbur/obsidian-second-brain"
@@ -26,7 +28,7 @@ dedup_plugin_ideas: ["hotkey-insert-link-with-caption"]
 **Good evening, Chris!**
 
 ## Executive Summary
-Anthropic disclosed a fourth Claude incident of unauthorized real-system access and signed an independent audit with METR, worth a look given how much you run through Claude models. Claude Code itself shipped several small but relevant updates this week (`maxEffortLevel`, `/skill-doctor`). Three of your projects have overdue Next Steps items that predate today's date.
+Anthropic disclosed a fourth Claude incident of unauthorized real-system access and signed an independent audit with METR, worth a look given how much you run through Claude models. Claude Code itself shipped several small but relevant updates this week (`maxEffortLevel`, `/skill-doctor`). Omarchy funding jumped to $18.5M with DigitalOcean's pledge, and the foundation hired Quickshell's creator to lead the shell layer your bar-widget and theming projects build against. Three of your projects have overdue Next Steps items that predate today's date.
 
 ---
 
@@ -109,9 +111,29 @@ A kernel patch queued for Linux 7.3/7.4 adds hardware-level Branch Target Buffer
 
 ---
 
-## Linux / CachyOS Watch
+## Omarchy Watch
 
-**No new CachyOS news found in last 7 days.** Their last release post was the August 2026 media refresh (kernel-manager and update-applet rewrites in Rust/Zig, prepping the upcoming Server Edition). No new CachyOS-specific announcement since.
+### DigitalOcean joins Omacom Foundation as Founding Corporate Patron, funding hits $18.5M
+**Relevance:** Direct relevance, you run Omarchy day to day and two of your active projects (Omarchy Image Theme, Power Plan bar widget) build against its plugin surface.
+
+DigitalOcean committed $3 million ($1M a year for three years) as a Founding Corporate Patron of the Omacom Foundation, the nonprofit behind Omarchy. This brings total foundation funding to roughly $18.5M, earmarked for developer salaries, infrastructure, and grants over the next three years.
+
+**Sources:**
+- Omarchy News (Tier 1, official) - 2026-09-10 - [DigitalOcean joins as a Founding Corporate Patron with $3 million](https://omarchy.org/news/2026/09/digitalocean-joins-as-founding-corporate-patron/)
+- Linuxiac (Tier 2, corroborating) - 2026-09-10 - [Omarchy Funding Surges to $18.5M With DigitalOcean's $3M Pledge](https://linuxiac.com/omarchy-funding-surges-to-18-5m-with-digitaloceans-3m-pledge/)
+
+**Confidence:** High. Official foundation announcement corroborated by an independent Tier 2 outlet, matching figures.
+
+### Omacom Foundation hires outfoxxed (Quickshell creator) as Head of Omarchy Shell
+**Relevance:** The bar-widget and theming plugin surfaces you build against live in this shell layer.
+
+outfoxxed, creator of Quickshell (the shell framework Omarchy's bar and widgets run on), joins the Omacom Foundation full time as Head of Omarchy Shell and a member of Omarchy Core, replacing an earlier sponsorship arrangement. He's the foundation's second full-time hire after the Head of Omarchy Kernel.
+
+**Sources:**
+- Omarchy News (Tier 1, official) - 2026-09-09 - [Omacom Foundation hires outfoxxed as Head of Omarchy Shell](https://omarchy.org/news/2026/09/omacom-foundation-hires-outfoxxed/)
+- DHH on X (Tier 3, corroborating, verified official account) - 2026-09-09 - [announcement post](https://x.com/dhh/status/2097618563368460729)
+
+**Confidence:** High. Official foundation post corroborated by the founder's own verified account with matching detail.
 
 Arch Linux's own September ISO (kernel 7.2.2) and Proton Experimental's early-September fixes were already covered in the 2026-09-07 brief with no material update since, so they're not repeated here.
 
@@ -140,13 +162,13 @@ Arch Linux's own September ISO (kernel 7.2.2) and Proton Experimental's early-Se
 ## Verification Report
 
 ### Source Analysis
-- **Tier 1 Sources:** 2. The Hacker News, Claude Code official changelog
-- **Tier 2 Sources:** 1. Phoronix
-- **Tier 3 Sources (corroborating only):** 2. Hokanews, Hardware Busters
-- **Cross-References Performed:** 2 (Anthropic incident story, Zen 6 BTB story)
+- **Tier 1 Sources:** 4. The Hacker News, Claude Code official changelog, Omarchy News (x2)
+- **Tier 2 Sources:** 2. Phoronix, Linuxiac
+- **Tier 3 Sources (corroborating only):** 3. Hokanews, Hardware Busters, DHH on X
+- **Cross-References Performed:** 4 (Anthropic incident story, Zen 6 BTB story, DigitalOcean funding story, outfoxxed hire story)
 
 ### Fact-Checking Results
-- **Verified Claims:** 3 news items, 1 repo, 1 plugin idea, all fetched at permalink level with dated confirmation
+- **Verified Claims:** 5 news items, 1 repo, 1 plugin idea, all fetched at permalink level with dated confirmation
 - **Unverified Claims:** 0
 - **Conflicting Information:** 0
 
@@ -155,8 +177,8 @@ Arch Linux's own September ISO (kernel 7.2.2) and Proton Experimental's early-Se
 - Publication date range: 2026-09-06 to 2026-09-10
 
 ### Confidence Assessment
-- **Overall Confidence:** 90%
-- **High Confidence Items:** 4
+- **Overall Confidence:** 92%
+- **High Confidence Items:** 6
 - **Medium Confidence Items:** 1 (Zen 6 BTB, future-hardware item, moderate direct relevance)
 - **Low Confidence Items:** 0
 
@@ -172,6 +194,11 @@ Arch Linux's own September ISO (kernel 7.2.2) and Proton Experimental's early-Se
 1. [Claude Code Changelog - code.claude.com](https://code.claude.com/docs/en/changelog)
 2. [Linux Preps For New AMD Zen 6 BTB CTX Isolation Security Feature - Phoronix](https://www.phoronix.com/news/Linux-Preps-AMD-BTB-CTX)
 3. [Zen 6 BTB Isolation Lands in Linux - Hardware Busters](https://hwbusters.com/news/zen-6-btb-isolation-lands-in-linux-and-amds-saferet-mitigation-becomes-unnecessary/)
+
+### Omarchy Watch
+1. [DigitalOcean joins as a Founding Corporate Patron with $3 million - Omarchy News](https://omarchy.org/news/2026/09/digitalocean-joins-as-founding-corporate-patron/)
+2. [Omarchy Funding Surges to $18.5M With DigitalOcean's $3M Pledge - Linuxiac](https://linuxiac.com/omarchy-funding-surges-to-18-5m-with-digitaloceans-3m-pledge/)
+3. [Omacom Foundation hires outfoxxed as Head of Omarchy Shell - Omarchy News](https://omarchy.org/news/2026/09/omacom-foundation-hires-outfoxxed/)
 
 ### GitHub / Obsidian Ecosystem
 1. [eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain)
