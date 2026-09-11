@@ -4,8 +4,10 @@ type: "decision"
 date: "2026-09-07"
 source: "user"
 confidence: 9
-tags: ["knight-code", "decision"]
+tags: ["knight-code", "decision", "superseded"]
+status: "superseded"
 ---
+
 # Decision: omarchy-image-theme lives under DevPrograms and gets its own knowledge graph (knightbrain_omarchy-im...
 
 ## Decision
